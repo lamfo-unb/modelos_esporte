@@ -21,12 +21,14 @@ library(gsubfn)
 library(stringr)
 library(purrr)
 library(rvest) # the new package, version 0.3.0
+library(RCurl)
+library(XML)
 
 rm(list = ls())
 
 
 pathout <- "data/games"
-temporada <- 2004
+temporada <- 2014
 
 for(temporada in 2005:2017){
   all_match <- data.table()
@@ -35,8 +37,36 @@ for(temporada in 2005:2017){
   
   
   
-  
+  html_base_jogos <- "https://www.transfermarkt.com/"
   html1 <- read_html(link, encoding = "UTF-8")
+  texto <- htmlParse(html1)
+  texto.doc <- capture.output(texto)
+  links_jogos <- grep(".*spielbericht.(.*).\".*",paste0(texto.doc),value = T,perl=T)
+  links_jogos_direto <- gsub(".*id.*href../(.*)\".*","\\1",links_jogos)
+
+  i <- 1
+
+  
+  for(i in 1:380){
+    link_jogo <- paste0(html_base_jogos,links_jogos_direto[i])
+    html2 <- read_html(link_jogo, encoding = "UTF-8")
+    texto2 <- htmlParse(html2)
+    texto.doc2 <- capture.output(texto2)
+    
+    ## id jogadores
+    info_jogadores_id <- 
+      grep(".*aufstellung-rueckennummer-name.*id.\"(.*)\".*",texto.doc2,value = T,perl=T)
+    info_jogadores_id <- gsub(".*id.\"(.*)\".*","\\1",info_jogadores_id)
+    
+    ## nome jogadores
+    info_jogadores_nome <- 
+      grep(".*a.href.*profil.spieler.*span..",texto.doc2,value = T,perl=T)
+    info_jogadores_link <- gsub(".*href.\".(.*)\".*","\\1",info_jogadores_nome)
+    info_jogadores_nome <- gsub(".*spieler.*\".(.*)<.a.*","\\1",info_jogadores_nome)
+    
+  }
+  
+  
   
   tables <- html_table(html1, fill = TRUE)
   
