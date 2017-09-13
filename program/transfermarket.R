@@ -613,25 +613,27 @@ transfermarket <- function(temporadas_vec=0,jogos_vec=0,sobrescreve=T){
 
 #### Loop
 ## Funcao entre 2016 e 2011
-transfermarket(temporadas_vec = 2015,
-               jogos_vec = 0  , 
+transfermarket(temporadas_vec = 2009,
+               jogos_vec = 249  , 
                sobrescreve = F)
 
 
+temporada <- 2010
+
 ## Verificando cartões
 pathout <- "data/games"
-cartoes <- list.files(pathout,"cards_2015_J",full.names = T)
+cartoes <- list.files(pathout,paste0("cards_",temporada,"_J"),full.names = T)
 base_cartoes <- rbindlist(lapply(cartoes,readRDS))
 base_cartoes <- base_cartoes[is.na(tempo_evento),] 
 
 ## Verificando jogadores
-jogadores <- list.files(pathout,"jogadores_2015_J",full.names = T)
+jogadores <- list.files(pathout,paste0("jogadores_",temporada,"_J"),full.names = T)
 base_jogadores <- rbindlist(lapply(jogadores,readRDS))
 base_jogadores <- base_jogadores[is.na(id_jogo),] 
 
 
 ## Verificando gols
-gols <- list.files(pathout,"gols_2015_J",full.names = T)
+gols <- list.files(pathout,paste0("gols_",temporada,"_J"),full.names = T)
 golsv <- lapply(gols,readRDS)
 base_gols <- rbindlist(golsv)
-base_gols <- base_gols[is.na(tempo_evento),] 
+base_gols <- base_gols[is.na(tempo_evento),]
