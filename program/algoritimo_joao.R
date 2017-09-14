@@ -1,26 +1,50 @@
-
-teste <- readRDS("C:/Users/JoaoVictor/Desktop/artigo_futebol/dados_static/base_group_games_2014.rds")
+rm(list = ls())
+gc()
+# teste <- readRDS("C:/Users/JoaoVictor/Desktop/artigo_futebol/dados_static/base_group_games_2014.rds")
 library(tidyr)
 library(plyr)
-jogadores<- spread(dadosfifa, variavel, valor)
+
 library(tidyverse)
 library(data.table)
 library(stringr)
-View(dadosfifa[1123:1126,])
+# View(dadosfifa[1123:1126,])
+
+arquivos_pasta<- list.files("data/static",pattern = "sfifa",full.names = T)
+dadosfifa <- NULL
+i <- 1
+for(i in 1:length(arquivos_pasta)){
+  dados <-  readRDS(arquivos_pasta[i])
+  dadosfifa <- rbind(dadosfifa,dados)
+  
+}
 dadosfifa <- dadosfifa %>% select(variavel,valor,id_jogador,nome_jogador,temporada)
 dadosfifa<- unique(dadosfifa,by=c("variavel","valor","id_jogador"))
 dadosfifa<- dadosfifa[!which(dadosfifa$variavel=="Nº da camisa"),]
 dadosfifa<- dadosfifa[!which(dadosfifa$variavel=="Posição"),]
-arquivos_pasta<- list.files("C:/Users/JoaoVictor/Documents/modelos_esporte/data/static",pattern = "sfifa")
-dadosfifa <- NULL
-for(i in 1:length(arquivos_pasta)){
-  arquivo<- arquivos_pasta[i]
-  endereco <- paste("C:/Users/JoaoVictor/Documents/modelos_esporte/data/static/",arquivo,sep="")
-  dados <-  readRDS(endereco)
-  dadosfifa <- rbind(dadosfifa,dados)
-  
-}
+
+## Reflexo
+dadosfifa[,variavel:=ifelse(variavel=="Reflexos GL","Reflexos",variavel)]
+## Manejo
+dadosfifa[,variavel:=ifelse(variavel=="Manejo GL","Manejo",variavel)]
+## carrinho e dividida
+dadosfifac <- dadosfifa[variavel=="Dividida",]
+dadosfifa[,variavel:=ifelse(variavel=="Dividida","Div. em pé",variavel)]
+dadosfifac[,variavel:="Carrinho"]
+dadosfifa <- rbind(dadosfifa,dadosfifac)
+#removendo variaveis não pareadas
+tabela1 <- table(dadosfifa$variavel,dadosfifa$temporada)
+tabela1 <- rownames(tabela1[apply(tabela1,1,prod)==0,])
+
+dadosfifa <- dadosfifa[!(variavel %in% tabela1),]
+
+jogadores<- spread(dadosfifa, variavel, valor)
 jogadores<- jogadores[with(jogadores, order(temporada)), ]
+
+
+
+
+
+prod(1:4)
 str_detect(jogadores$Times,";")
 str_locate(jogadores$Times,";")[,1]
 jogadores$time_match <-ifelse(str_detect(jogadores$Times,";"),str_sub(jogadores$Times,0,(str_locate(jogadores$Times,";")[,1]-1)),jogadores$Times)

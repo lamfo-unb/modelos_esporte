@@ -114,8 +114,8 @@ cont_base <- 0
 
 pathout <- "data/static"
 
-i <- 1 # season
-j <- 1 # page season player
+i <- 2 # season
+j <- 11 # page season player
 k <- 1 # player in page
 l <- 1 # informacões player
 
@@ -124,12 +124,13 @@ link1 <- "https://www.fifaindex.com/pt-br/players/1/?gender=0&league=13"
 base_seasons <- raspagem0(link1)
 
 ## seasons
-for(i in 9:13){
+for(i in 2:2){
   pseason <- gsub("https://www.fifaindex.com/pt-br/players/","",base_seasons$link_season[i])
   pseason <- ifelse(pseason=="","fifa17",pseason)
   for(j in 1:25){
     name_file <- paste0("s",gsub("/","",pseason),"_pg",str_pad(j, 3, pad = "0"),".rds")
     if(file.exists(file.path(pathout,name_file))){
+      print(paste0("página pulada ",j))
       next
     }else{
       base_info_jogador_total <- data.table()
