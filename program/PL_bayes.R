@@ -128,7 +128,7 @@ base_seasons <- raspagem0(link1)
 for(i in 2:13){
   pseason <- gsub("https://www.fifaindex.com/pt-br/players/","",base_seasons$link_season[i])
   pseason <- ifelse(pseason=="","fifa17",pseason)
-  for(j in 2:25){
+  for(j in 1:25){
     name_file <- paste0("s",gsub("/","",pseason),"_pg",str_pad(j, 3, pad = "0"),".rds")
     if(file.exists(name_file)){
       next
@@ -151,7 +151,7 @@ for(i in 2:13){
           base_v_fifa_total <- rbind(base_v_fifa_total,base_v_fifa)
           ## pegando o primeiro e o último e sorteando outros 8 atualizações
           set.seed(30082017)
-          vecversoes <- c(1,sort(sample(2:nrow(base_v_fifa),8)),nrow(base_v_fifa))
+          vecversoes <- 1:nrow(base_v_fifa)
           for(l in vecversoes[-1]){ ## removendo a primeira atualização de cada importação (static)
             cont_base <- cont_base + 1
             base_info_jogador <- raspagem3(base_v_fifa$link_atualiza[l])
