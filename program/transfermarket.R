@@ -28,7 +28,7 @@ library(dplyr)
 temporadas_vec <- 2010
 temporada <- temporadas_vec[1]
 jogos_vec <- 0
-i <- 190
+i <- 1
 sobrescreve <- T
 temporada <-2016
 # download.file("https://www.transfermarkt.com/", destfile = "temp.html")
@@ -574,7 +574,13 @@ transfermarket <- function(temporadas_vec=0,jogos_vec=0,sobrescreve=T){
       
       
       ##> Salvando bases ----
-      
+        
+
+      name_file <- paste0("S_resultado_",temporada,"_J",i,".rds")
+      saveRDS(data.table(base_jogo_temp_times),
+                file.path(pathout,
+                          name_file))
+
       name_file <- paste0("S_times_",temporada,"_J",i,".rds")
       saveRDS(data.table(base_jogo_temp_time),
               file.path(pathout,
@@ -613,9 +619,9 @@ transfermarket <- function(temporadas_vec=0,jogos_vec=0,sobrescreve=T){
 
 #### Loop
 ## Funcao entre 2016 e 2011
-transfermarket(temporadas_vec = 2009,
-               jogos_vec = 249  , 
-               sobrescreve = F)
+transfermarket(temporadas_vec = 2016,
+               jogos_vec = 0  , 
+               sobrescreve = T)
 
 
 temporada <- 2010
