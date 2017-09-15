@@ -619,7 +619,7 @@ transfermarket <- function(temporadas_vec=0,jogos_vec=0,sobrescreve=T){
 
 #### Loop
 ## Funcao entre 2016 e 2011
-transfermarket(temporadas_vec = 2016,
+transfermarket(temporadas_vec = 2010:2015,
                jogos_vec = 0  , 
                sobrescreve = T)
 
