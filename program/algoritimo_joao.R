@@ -47,14 +47,17 @@ lista_selecoes <- read_csv("data/lista_selecoes.txt",col_names = T,
 lista_selecoes_pt <- read_csv("data/lista_selecoes_pt.txt",col_names = T,
                            locale = locale(encoding = "latin1"))
 
-lista_selecoes <- c(tolower(lista_selecoes$TEAM),tolower(lista_selecoes_pt$TEAM))
+library(stringi)
 
-jogadores[,time:= ifelse(tolower(time1) %in% lista_selecoes,
-                         ifelse(tolower(time2) %in% lista_selecoes,
+lista_selecoes <- stri_trans_general(c(tolower(lista_selecoes$TEAM),tolower(lista_selecoes_pt$TEAM))
+                        ,"Latin-ASCII")
+lista_selecoes <- c(lista_selecoes,"irlanda")
+jogadores[,time:= ifelse(stri_trans_general(tolower(time1),"Latin-ASCII") %in% lista_selecoes,
+                         ifelse(stri_trans_general(tolower(time2),"Latin-ASCII") %in% lista_selecoes,
                                 NA,time2),time1)]
 
-
 saveRDS(jogadores,"data/static/dados_jogadores.rds")
+
 
 ## Ajuste manual
 
@@ -65,16 +68,20 @@ jogadores$time_match3 <- ifelse(jogadores$time_match3=="Birm. City" | jogadores$
 jogadores$time_match3 <- ifelse(jogadores$time_match3=="Manchester City","Man City",jogadores$time_match3)
 jogadores$time_match3 <- ifelse(jogadores$time_match3=="Manchester United" | jogadores$time_match3=="Manchester Utd." | jogadores$time_match3=="Manchester Utd","Man Utd",jogadores$time_match3)
 jogadores$time_match3 <- ifelse(jogadores$time_match3=="Newcastle United" | jogadores$time_match3=="Newcastle Utd","Newcastle",jogadores$time_match3)
-jogadores$time_match3 <- ifelse(jogadores$time_match3=="Tottenham Hotspur" | jogadores$time_match3=="Tottenham","Spurs",jogadores$time_match3)
+jogadores$time_match3 <- ifelse(jogadores$time_match3=="Tottenham Hotspur" | jogadores$time_match3=="Spurs","Tottenham",jogadores$time_match3)
 jogadores$time_match3 <- ifelse(jogadores$time_match3=="West Bromwich","West Brom",jogadores$time_match3)
 jogadores$time_match3 <- ifelse(jogadores$time_match3=="West Ham United","West Ham",jogadores$time_match3)
-jogadores$time_match3 <- ifelse(jogadores$time_match3=="Wolverhampton Wanderers" | jogadores$time_match3=="Wolverhampton","Wolves",jogadores$time_match3)
+jogadores$time_match3 <- ifelse(jogadores$time_match3=="Wolverhampton Wanderers" | jogadores$time_match3=="Wolverhampton","Wolverhampton Wanderers",jogadores$time_match3)
 jogadores$time_match3 <- ifelse(jogadores$time_match3=="Wigan Athletic","Wigan",jogadores$time_match3)
 jogadores$time_match3 <- ifelse(jogadores$time_match3=="Swansea City","Swansea",jogadores$time_match3)
 jogadores$time_match3 <- ifelse(jogadores$time_match3=="Norwich City","Norwich",jogadores$time_match3)
 jogadores$time_match3 <- ifelse(jogadores$time_match3=="Leicester City","Leicester",jogadores$time_match3)
 jogadores$time_match3 <- ifelse(jogadores$time_match3=="Cardiff City","Cardiff",jogadores$time_match3)
 jogadores$time_match3 <- ifelse(jogadores$time_match3=="Bolton Wanderers","Bolton",jogadores$time_match3)
+jogadores$time_match3 <- ifelse(jogadores$time_match3=="QPR","Queens Park Rangers",jogadores$time_match3)
+
+
+
 
 
 
