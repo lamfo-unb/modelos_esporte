@@ -33,7 +33,7 @@ jogadores <- gather(jogadores %>%
 jogadores <- jogadores %>%
   mutate(season=as.numeric(gsub("fifa(..).*","\\1",temporada,perl=T))+2000) 
 
-detach(package:plyr)
+
 jogadores_time <- jogadores %>% 
   group_by(season,time_match3,variavel) %>%
   summarise(valor= mean(as.numeric(valor)))
@@ -50,7 +50,7 @@ for(i in 1:length(arquivos)){
   base_temp <- readRDS(arquivos[i])
   base <- rbind(base,base_temp)
 }
-## só não encontrou Wolverhampton Wanderers
+
 base <- base %>%
   select(tipo,nome_time,id_time,id_jogo,rodada,dia_rodada,hora_jogo,score,season)
 
@@ -71,7 +71,7 @@ base_resultados <- left_join(base2,base1,
 rm(base1,base_temp,base2)
 
 ## juntando bases
-times_fifa <- unique(jogadores_time %>%ungroup() %>% select(time_match3))
+times_fifa <- unique(jogadores_time %>% ungroup() %>% select(time_match3))
 tabela_times <- unique(base %>% select(id_time,nome_time))
 tabela_times$id_match <- 1:nrow(tabela_times)
 
@@ -98,10 +98,6 @@ times_fifa$id_match <- ifelse(times_fifa$time_match3=="Man City",
 tabela_times <- left_join(tabela_times,times_fifa ,
                           by = "id_match")
 
-## só não encontrou Wolverhampton Wanderers
-tabela_times <- tabela_times %>%
-  mutate(time_match3 = ifelse(is.na(time_match3),nome_time,time_match3))
-
 ##colocando o id_time no base de jogadores ----
 jogadores_time <- left_join(jogadores_time,
                             tabela_times %>%
@@ -123,7 +119,7 @@ jogadores_completo <- merge(unique(jogadores_time %>% ungroup() %>% select(seaso
               select(season,id_time,variavel,valor,variavel),
             by = c("season","id_time","variavel"))
 
-
+## completando a frente
 jogadores_completo <- data.table(jogadores_completo)
 jogadores_completo <- jogadores_completo[order(time_match3,variavel,season)]
 jogadores_completo[, lag.value:=ifelse(is.na(valor),shift(valor,type="lag"),valor),
@@ -133,7 +129,7 @@ for(i in 2009:2017){
   jogadores_completo[, lag.value:=ifelse(is.na(lag.value),shift(lag.value,type="lag"),lag.value),
         , by = .(time_match3,variavel) ]
 }
-## ordem inversa
+## completando a trás
 jogadores_completo <- jogadores_completo[order(rev(time_match3),rev(variavel),rev(season))]
 jogadores_completo[, lag.value2:=ifelse(is.na(lag.value),shift(lag.value,type="lag"),lag.value),
       , by = .(time_match3,variavel) ]
@@ -148,12 +144,8 @@ sum(is.na(jogadores_completo$valor))
 sum(is.na(jogadores_completo$lag.value))
 sum(is.na(jogadores_completo$lag.value2))
 
-## substituindo por zero caso não tenha
-jogadores_completo[,lag.value2:=ifelse(is.na(lag.value2),0,lag.value2)]
-sum(is.na(jogadores_completo$lag.value2))
 
-
-## adicionando informações do time casa na base de resultados
+## adicionando informações do time casa na base de resultados ----
 
 base_result_jogadores <- base_resultados %>% left_join(jogadores_completo,
                                                        by = c("season"="season","Casa"="id_time"))
@@ -163,6 +155,7 @@ base_result_jogadores<- base_result_jogadores %>%
   select(-lag.value,-valor,-lag.value2,-time_match3)
 
 
+## adicionando informações visitante
 base_result_jogadores <- base_result_jogadores %>% left_join(jogadores_completo,
                                                        by = c("season"="season","Fora"="id_time","variavel"="variavel"))
 
@@ -171,7 +164,7 @@ base_result_jogadores<- base_result_jogadores %>%
          time_fora = time_match3) %>%
   select(-lag.value,-valor,-lag.value2,-time_match3)
 
-## diferença
+## diferença entre skills
 base_result_jogadores<- base_result_jogadores %>%
   mutate(valor = valor_casa- valor_fora)
 
@@ -184,15 +177,10 @@ base_result_jogadores_modelo <- spread(base_result_jogadores %>%
 saveRDS(base_result_jogadores_modelo,"data/result/base_modelo_bayes01.rds")
 
 
-jogadores_completo <- spread(jogadores_completo %>%
-                               select(-valor,-lag.value),key = variavel,value = lag.value2)
-
-
 ## adicionando informações de jogadores
-base_result_jogadores <- base_resultados %>% left_join(jogadores_completo,
-                             by = c("season"="season","Casa"="id_time"))
 
-base2 <- base2 %>%
+
+base2 <- base_result_jogadores_modelo %>%
   mutate(N = ifelse(season >= temporada,0,1)) %>%
   group_by(Casa,Fora,resultado) %>%
   summarise(N = sum(N,na.rm=T))
@@ -203,12 +191,73 @@ base2 <- base2 %>%
 
 
 base2 <- spread(base2,resultado,N,fill=0)
-rm(base1)
+
 base2 <- data.table(base2)
 base2[,`:=`(VA_g=sum(VA,na.rm=T),
                      VB_g=sum(VB,na.rm=T),
                      Emp_g=sum(Emp,na.rm=T))
                ,by = "Casa"]
+
+
+### teste_particel
+
+# hiper_total <- NULL
+# timesfor <- unique((base_result_jogadores_modelo %>% filter(season == temporada))$Casa)
+# for(i in timesfor){
+# parst <- pars_total%>% filter(Casa == i)
+# parst <- parst %>% select(-Casa,-Evento)
+# tm <- base_result_jogadores_modelo %>%
+#   filter(season==temporada & Casa == i) %>% mutate(Int = 1)
+# Fora <- tm$Fora
+# tm <-tm %>%
+#   select(one_of(names(parst)))
+# 
+# if(nrow(parst)==0){
+#   hiper <- data.table(VA_m= rep(0,nrow(tm)) ,
+#                       Emp_m = rep(0,nrow(tm)),
+#                       VB_m = rep(0,nrow(tm)))
+# }else{
+# hiper <- round(as.matrix(tm)%*%t(parst),0)
+# for(j in 1:3){
+#   hiper[,j] <- ifelse(hiper[,j]<1,1,hiper[,j])
+# }
+# hiper <- data.table(hiper)
+# setnames(hiper,names(hiper),c("VA_m","Emp_m","VB_m"))
+# }
+# hiper$Casa <- i
+# hiper$Fora <- Fora
+# hiper_total <- rbind(hiper_total,hiper)
+# }
+
+hiper_total <- NULL
+  parst <- pars_total
+  parst <- parst %>% select(-Evento)
+  tm <- base_result_jogadores_modelo %>%
+    filter(season==temporada) %>% mutate(Int = 1)
+  Fora <- tm$Fora
+  Casa <- tm$Casa
+  tm <-tm %>%
+    select(one_of(names(parst)))
+
+    if(nrow(parst)==0){
+    hiper <- data.table(VA_m= rep(0,nrow(tm)) ,
+                        Emp_m = rep(0,nrow(tm)),
+                        VB_m = rep(0,nrow(tm)))
+  }else{
+    hiper <- round(as.matrix(tm)%*%t(parst),0)
+    for(j in 1:3){
+      hiper[,j] <- ifelse(hiper[,j]<1,1,hiper[,j])
+    }
+    hiper <- data.table(hiper)
+    setnames(hiper,names(hiper),c("VA_m","Emp_m","VB_m"))
+  }
+  hiper$Casa <- Casa
+  hiper$Fora <- Fora
+  hiper_total <- rbind(hiper_total,hiper)
+
+
+base2 <- left_join(base2,hiper_total,
+                   by = c("Casa","Fora"))
 
 dados <- base2
 result <- base2
@@ -216,26 +265,25 @@ dados2<- data.table(time = unique(base %>% filter(season == temporada) %>% selec
 setnames(dados2,names(dados2),"times")
 
 
-
-
-
-
 ### CRIANDO UM BANCO DE DADOS PARA HOSPEDAR AS POSICOES
 pos <- rbind.data.frame(as.character(dados2$time))
 pos_g <- rbind.data.frame(as.character(dados2$time))
+pos_m <- rbind.data.frame(as.character(dados2$time))
 for(h in 1:20){
   pos[,h]=as.numeric(pos[,h])
   pos_g[,h]=as.numeric(pos_g[,h])
+  pos_m[,h]=as.numeric(pos_m[,h])
 }
 
-k <- 1
-i <- 1
+
 ## SIMULANDO OS RESULTADOS DOS JOGOS DADO A PRIORI
 for(k in 1:100){
   resul=NULL
   prob=NULL
   resul_g=NULL
   prob_g=NULL
+  resul_m=NULL
+  prob_m=NULL
   for(i in 1:length(dados$Fora)){
     prob[[i]]<-rdirichlet(1,alpha=c(dados$VA[i]+1,dados$VB[i]+1,dados$Emp[i]+1))
     resul[[i]]<-rmultinom(1,1,prob=c(prob[[i]][1],prob[[i]][2],prob[[i]][3]))
@@ -243,11 +291,15 @@ for(k in 1:100){
     prob_g[[i]]<-rdirichlet(1,alpha=c(dados$VA_g[i]+1,dados$VB_g[i]+1,dados$Emp_g[i]+1))
     resul_g[[i]]<-rmultinom(1,1,prob=c(prob_g[[i]][1],prob_g[[i]][2],prob_g[[i]][3]))
     rownames(resul_g[[i]])<-c(as.character(dados$Casa[i]),as.character(dados$Fora[i]),"TIE")
+    prob_m[[i]]<-rdirichlet(1,alpha=c(dados$VA_m[i]+1,dados$VB_m[i]+1,dados$Emp_m[i]+1))
+    resul_m[[i]]<-rmultinom(1,1,prob=c(prob_m[[i]][1],prob_m[[i]][2],prob_m[[i]][3]))
+    rownames(resul_m[[i]])<-c(as.character(dados$Casa[i]),as.character(dados$Fora[i]),"TIE")
   }
   
   dados2<-data.frame(time=names(table(dados$Casa)),
                      pts=rep(0,times=20),
-                     pts_g=rep(0,times=20))
+                     pts_g=rep(0,times=20),
+                     pts_m=rep(0,times=20))
   ## MONTANDO A CONFIGURACAO DE CLASSIFICACAO
   for(i in 1:length(resul)){
     # SE TIME A VENCER    
@@ -312,24 +364,59 @@ for(k in 1:100){
         }
         else{dados2$pts_g[j]<-dados2$pts_g[j]}
       }
+    }
+    
+    ## modelo
+    
+    if(resul_m[[i]][1,]==1){
+      for(j in 1:length(dados2$time)){
+        if(names(resul_m[[i]][1,])==dados2$time[j]){
+          dados2$pts_m[j]<-dados2$pts_m[j]+3
+        }
+        else{dados2$pts_m[j]<-dados2$pts_m[j]}
+      }
+    }
+    # SE TIME B VENCER      
+    if(resul_m[[i]][2,]==1){
+      for(j in 1:length(dados2$time)){
+        if(names(resul_m[[i]][2,])==dados2$time[j]){
+          dados2$pts_m[j]<-dados2$pts_m[j]+3
+        }
+        else{dados2$pts_m[j]<-dados2$pts_m[j]}
+      }
+    }  
+    # SE OCORRER EMPATE
+    if(resul_m[[i]][3,]==1){
+      for(j in 1:length(dados2$time)){
+        if(names(resul_m[[i]][1,])==dados2$time[j] ){
+          dados2$pts_m[j]<-dados2$pts_m[j]+1
+        }
+        if(names(resul_m[[i]][2,])==dados2$time[j] ){
+          dados2$pts_m[j]<-dados2$pts_m[j]+1
+        }
+        else{dados2$pts[j]<-dados2$pts[j]}
+      }
     } 
+    
   }
   
   pos[k,]=rank(-dados2$pts, ties.method = "min")
   pos_g[k,]=rank(-dados2$pts_g, ties.method = "min")
+  pos_m[k,]=rank(-dados2$pts_m, ties.method = "min")
   print(k)
 }
 
 
 saveRDS(pos, file="data/result/forecast_bayes_naive.rds")
 saveRDS(pos_g, file="data/result/forecast_bayes_naive_geral.rds")
-
+saveRDS(pos_m, file="data/result/forecast_bayes_dirichlet.rds")
 
 ### ANALISE DESCRITIVA DOS RESULTADOS
 
 ### ABRINDO O BANCO DE DADOS
 pos <- readRDS("data/result/forecast_bayes_naive.rds")
 pos_g <- readRDS("data/result/forecast_bayes_naive_geral.rds")
+pos_m <- readRDS("data/result/forecast_bayes_dirichlet.rds")
 
 ### OBTENDO AS CHANCES DE META
 chances=data.frame(Time=names(pos),
@@ -338,7 +425,10 @@ chances=data.frame(Time=names(pos),
                    Rebaixamento=rep(0,times=20),
                    Titulo_g=rep(0,times=20),
                    Champions_g=rep(0,times=20),
-                   Rebaixamento_g=rep(0,times=20))
+                   Rebaixamento_g=rep(0,times=20),
+                   Titulo_m=rep(0,times=20),
+                   Champions_m=rep(0,times=20),
+                   Rebaixamento_m=rep(0,times=20))
 for(i in 1:20){
   tab=as.data.frame(prop.table(table(pos[,i])))
   tab$Var1=as.numeric(as.character(tab$Var1))
@@ -350,14 +440,15 @@ for(i in 1:20){
   chances[i,5]=sum(tab_g$Freq[tab_g$Var1==1],na.rm = T)
   chances[i,6]=sum(tab_g$Freq[tab_g$Var1<=6],na.rm = T)
   chances[i,7]=sum(tab_g$Freq[tab_g$Var1>=16],na.rm = T)
+  tab_m=as.data.frame(prop.table(table(pos_m[,i])))
+  tab_m$Var1=as.numeric(as.character(tab_m$Var1))
+  chances[i,8]=sum(tab_m$Freq[tab_m$Var1==1],na.rm = T)
+  chances[i,9]=sum(tab_m$Freq[tab_m$Var1<=6],na.rm = T)
+  chances[i,10]=sum(tab_m$Freq[tab_m$Var1>=16],na.rm = T)
 }
 
 chances <- chances %>% 
      mutate(id_time = gsub("X\\.(.*)\\.","\\1",Time,perl = T) )
-
-
-
-
 
 chances <- left_join(chances,tabela_times,
                      by = "id_time")
