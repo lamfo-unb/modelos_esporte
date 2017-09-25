@@ -173,8 +173,6 @@ base_result_jogadores_modelo <- spread(base_result_jogadores %>%
                                select(season,Casa,Fora,resultado,variavel,valor),key = variavel,value = valor)
 
 
-## Modelo ----
-saveRDS(base_result_jogadores_modelo,"data/result/base_modelo_bayes01.rds")
 
 
 ## adicionando informações de jogadores
@@ -199,35 +197,14 @@ base2[,`:=`(VA_g=sum(VA,na.rm=T),
                ,by = "Casa"]
 
 
-### teste_particel
 
-# hiper_total <- NULL
-# timesfor <- unique((base_result_jogadores_modelo %>% filter(season == temporada))$Casa)
-# for(i in timesfor){
-# parst <- pars_total%>% filter(Casa == i)
-# parst <- parst %>% select(-Casa,-Evento)
-# tm <- base_result_jogadores_modelo %>%
-#   filter(season==temporada & Casa == i) %>% mutate(Int = 1)
-# Fora <- tm$Fora
-# tm <-tm %>%
-#   select(one_of(names(parst)))
-# 
-# if(nrow(parst)==0){
-#   hiper <- data.table(VA_m= rep(0,nrow(tm)) ,
-#                       Emp_m = rep(0,nrow(tm)),
-#                       VB_m = rep(0,nrow(tm)))
-# }else{
-# hiper <- round(as.matrix(tm)%*%t(parst),0)
-# for(j in 1:3){
-#   hiper[,j] <- ifelse(hiper[,j]<1,1,hiper[,j])
-# }
-# hiper <- data.table(hiper)
-# setnames(hiper,names(hiper),c("VA_m","Emp_m","VB_m"))
-# }
-# hiper$Casa <- i
-# hiper$Fora <- Fora
-# hiper_total <- rbind(hiper_total,hiper)
-# }
+## adicionando informações do passado
+
+
+## Modelo ----
+saveRDS(base_result_jogadores_modelo,"data/result/base_modelo_bayes01.rds")
+
+
 
 hiper_total <- NULL
   parst <- pars_total

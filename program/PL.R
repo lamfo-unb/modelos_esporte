@@ -124,7 +124,7 @@ link1 <- "https://www.fifaindex.com/pt-br/players/1/?gender=0&league=13"
 base_seasons <- raspagem0(link1)
 
 ## seasons
-for(i in 1:8){
+for(i in 10){
   pseason <- gsub("https://www.fifaindex.com/pt-br/players/","",base_seasons$link_season[i])
   pseason <- ifelse(pseason=="","fifa17",pseason)
   for(j in 1:25){

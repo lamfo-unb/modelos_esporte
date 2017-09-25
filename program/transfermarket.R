@@ -25,12 +25,12 @@ library(RCurl)
 library(XML)
 library(dplyr)
 
-temporadas_vec <- 2010
+temporadas_vec <- 2008
 temporada <- temporadas_vec[1]
 jogos_vec <- 0
-i <- 1
+i <- 141
 sobrescreve <- T
-temporada <-2016
+temporada <-2008
 # download.file("https://www.transfermarkt.com/", destfile = "temp.html")
 # content <- read_html('temp.html')
 
@@ -126,11 +126,14 @@ transfermarket <- function(temporadas_vec=0,jogos_vec=0,sobrescreve=T){
       info_time_home_classe <- gsub(".*class.\"(.*)\".*","\\1",info_time_home)
       info_time_home_tempo  <- gsub(".*top..(.*)\\%.*","\\1",info_time_home)
       
+      if(length(info_time_home)==0){
+        base_jogo_temp_home_times <- NULL
+      }else{
       base_jogo_temp_home_times <- data.table(tipo="Casa",
                                               tipo_evento = info_time_home_classe,
                                               tempo_evento_perc = info_time_home_tempo,
                                               tempo_evento = as.numeric(info_time_home_tempo)*90/100)
-      
+      }
       ##>> visit
       
       info_time_visit <- 
@@ -138,11 +141,15 @@ transfermarket <- function(temporadas_vec=0,jogos_vec=0,sobrescreve=T){
       info_time_visit <- gsub(".*style(.*)</div>.*","\\1",info_time_visit)
       info_time_visit_classe <- gsub(".*class.\"(.*)\".*","\\1",info_time_visit)
       info_time_visit_tempo  <- gsub(".*top..(.*)\\%.*","\\1",info_time_visit)
-      
+      if(length(info_time_visit)==0){
+        base_jogo_temp_visit_times <- NULL
+      }else{
+
       base_jogo_temp_visit_times <- data.table(tipo="Fora",
                                                tipo_evento = info_time_visit_classe,
                                                tempo_evento_perc = info_time_visit_tempo,
                                                tempo_evento = as.numeric(info_time_visit_tempo)*90/100)
+      }
       
       base_jogo_temp_time <- rbind(base_jogo_temp_home_times,
                                    base_jogo_temp_visit_times)
@@ -618,10 +625,10 @@ transfermarket <- function(temporadas_vec=0,jogos_vec=0,sobrescreve=T){
 }#FUNÇÃO
 
 #### Loop
-## Funcao entre 2016 e 2011
-transfermarket(temporadas_vec = 2010,
-               jogos_vec = 78:380, 
-               sobrescreve = T)
+## Funcao entre 2016 e 2011 "249"
+transfermarket(temporadas_vec = 2008,
+               jogos_vec = 0, 
+               sobrescreve = F)
 
 
 temporada <- 2010
