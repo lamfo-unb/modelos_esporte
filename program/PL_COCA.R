@@ -29,7 +29,7 @@ raspagem0 <- function(link1){
   
   
   geral <- strapplyc(my_file, "<li><a href=\"/(pt-br/player.*?)\">FIFA.*", simplify = c)
-  resultado <- data.table(league="COCA",link_season=paste0("https://www.fifaindex.com/",geral),league_link="/?gender=0&league=4")
+  resultado <- data.table(league="COCA",link_season=paste0("https://www.fifaindex.com/",geral),league_link="/?gender=0&league=14")
 }
 
 ## Pegando link dos jogadores por página 
@@ -128,7 +128,7 @@ for(i in 10){
   pseason <- gsub("https://www.fifaindex.com/pt-br/players/","",base_seasons$link_season[i])
   pseason <- ifelse(pseason=="","fifa17",pseason)
   for(j in 1:25){
-    name_file <- paste0("s",gsub("/","",pseason),"_pg",str_pad(j, 3, pad = "0"),"_COCA.rds")
+    name_file <- paste0("s",gsub("/","",pseason),"_pg",str_pad(j, 3, pad = "0"),"_COCA2.rds")
     if(file.exists(file.path(pathout,name_file))){
       next
     }else{
