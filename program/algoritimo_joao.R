@@ -93,6 +93,7 @@ jogadores$time_match3 <- ifelse(jogadores$time_match3=="QPR","Queens Park Ranger
 jogadores$time_match3 <- ifelse(jogadores$time_match3=="Arsenal FC","Arsenal",jogadores$time_match3)
 jogadores$time_match3 <- ifelse(jogadores$time_match3=="Chelsea FC","Chelsea",jogadores$time_match3)
 jogadores$time_match3 <- ifelse(jogadores$time_match3=="Reading FC","Reading",jogadores$time_match3)
+jogadores$time_match3 <- ifelse(jogadores$time_match3=="Charlton Athletic","Charlton",jogadores$time_match3)
 
 
 jogadores$time_match3 <- ifelse(jogadores$time_match3=="Derby County","Derby",jogadores$time_match3)

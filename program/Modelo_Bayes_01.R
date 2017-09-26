@@ -96,7 +96,32 @@ base_class$`Home team` <- ifelse(base_class$`Home team`=="Arsenal FC","Arsenal",
 base_class$`Home team` <- ifelse(base_class$`Home team`=="Chelsea FC","Chelsea",base_class$`Home team`)
 base_class$`Home team` <- ifelse(base_class$`Home team`=="Reading FC","Reading",base_class$`Home team`)
 base_class$`Home team` <- ifelse(base_class$`Home team`=="Portsmouth FC","Portsmouth",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="Charlton Athletic","Charlton",base_class$`Home team`)
 
+
+
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="Blackburn Rvrs","Blackburn Rovers",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="Blackburn Rovers","Blackburn",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="Birm. City" | base_class$`Visiting team`=="Birmingham City","Birmingham",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="Manchester City","Man City",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="Manchester United" | base_class$`Visiting team`=="Manchester Utd." | base_class$`Visiting team`=="Manchester Utd","Man Utd",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="Newcastle United" | base_class$`Visiting team`=="Newcastle Utd","Newcastle",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="Tottenham Hotspur" | base_class$`Visiting team`=="Spurs","Tottenham",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="West Bromwich","West Brom",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="West Ham United","West Ham",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="Wolverhampton Wanderers" | base_class$`Visiting team`=="Wolverhampton","Wolverhampton Wanderers",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="Wigan Athletic","Wigan",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="Swansea City","Swansea",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="Norwich City","Norwich",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="Leicester City","Leicester",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="Cardiff City","Cardiff",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="Bolton Wanderers","Bolton",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="QPR","Queens Park Rangers",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="Arsenal FC","Arsenal",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="Chelsea FC","Chelsea",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="Reading FC","Reading",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="Portsmouth FC","Portsmouth",base_class$`Visiting team`)
+base_class$`Visiting team` <- ifelse(base_class$`Visiting team`=="Charlton Athletic","Charlton",base_class$`Visiting team`)
 
 
 
@@ -153,6 +178,8 @@ times_fifa$id_match <- ifelse(times_fifa$time_match3=="Man City",
 tabela_times <- left_join(tabela_times,times_fifa ,
                           by = "id_match")
 
+
+
 ##colocando o id_time no base de jogadores ----
 jogadores_time <- left_join(jogadores_time,
                             tabela_times %>%
@@ -165,17 +192,51 @@ jogadores <- left_join(jogadores,
                             by = "time_match3")
 
 
-base_class <- base_class %>%
-  left_join(tabela_times,by = c("Home team"="time_match3"))
+### colocando classificação
 
 base_class <- base_class %>%
-  select(season,dia_rodada,`Home team`,pos_home,pos_visit,id_time) 
+  left_join(tabela_times %>%
+              select(id_time,time_match3),by = c("Home team"="time_match3")) 
+
 setnames(base_class,"id_time","Casa")
 
-a <- merge(base_resultados,base_class,by = c("season","dia_rodada","Casa"))
-a1 <- base_resultados %>% filter(dia_rodada=="Aug 16, 2008" & Casa=="11")
-b1 <- base_class %>% filter(grepl("Aug 16, 2008", Casa=="11")
+base_class <- base_class %>%
+  left_join(tabela_times %>%
+              select(id_time,time_match3),by = c("Visiting team"="time_match3")) 
+
+setnames(base_class,"id_time","Fora")
+
+
+
+base_resultados <- base_resultados %>%
+  left_join(base_class %>%
+              select(season,dia_rodada,pos_home,Casa),by = c("season","dia_rodada","Casa"))
+
+
+base_resultados <-base_resultados %>%
+  left_join(base_class %>%
+              select(season,dia_rodada,pos_visit,Fora),by = c("season","dia_rodada","Fora"))
+
+base_resultados <- base_resultados %>%
+  arrange(season,Casa,id_jogo) %>%
+  mutate(pos_home_ant = lag(pos_home))
   
+
+base_resultados <- base_resultados %>%
+  arrange(season,Fora,id_jogo) %>%
+  mutate(pos_visit_ant = lag(pos_visit)) 
+
+
+base_resultados <- base_resultados %>%
+  mutate(pos_home_ant = ifelse(is.na(pos_home_ant),0,pos_home_ant) ,
+         pos_visit_ant = ifelse(is.na(pos_visit_ant),0,pos_visit_ant))
+
+
+base_resultados <- base_resultados %>%
+  mutate(pos = as.numeric(pos_home_ant)-as.numeric(pos_visit_ant)) %>%
+  select(season,id_jogo,Casa,Fora,resultado,pos)
+
+
 
 ## corrigir buracos na base (Expandgrid) ----
 
@@ -242,7 +303,14 @@ base_result_jogadores<- base_result_jogadores %>%
 
 
 base_result_jogadores_modelo <- spread(base_result_jogadores %>%
-                               select(season,Casa,Fora,resultado,variavel,valor),key = variavel,value = valor)
+                               select(season,Casa,Fora,resultado,pos,variavel,valor),key = variavel,value = valor)
+
+
+
+## Modelo ----
+saveRDS(base_result_jogadores_modelo,"data/result/base_modelo_bayes01.rds")
+
+
 
 
 
@@ -271,10 +339,6 @@ base2[,`:=`(VA_g=sum(VA,na.rm=T),
 
 
 ## adicionando informações do passado
-
-
-## Modelo ----
-saveRDS(base_result_jogadores_modelo,"data/result/base_modelo_bayes01.rds")
 
 
 
