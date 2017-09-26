@@ -31,6 +31,17 @@ dadosfifac <- dadosfifa[variavel=="Dividida",]
 dadosfifa[,variavel:=ifelse(variavel=="Dividida","Div. em pé",variavel)]
 dadosfifac[,variavel:="Carrinho"]
 dadosfifa <- rbind(dadosfifa,dadosfifac)
+dadosfifa <- data.table(dadosfifa)
+
+dadosfifa <- dadosfifa %>% 
+  mutate(valor = ifelse(valor == '<span class="star"><i class="fa fa-star fa-lg"></i><i class="fa fa-star fa-lg"></i><i class="fa fa-star fa-lg"></i><i class="fa fa-star fa-lg"></i><i class="fa fa-star fa-lg"></i>', "5",
+                         ifelse(valor == '<span class="star"><i class="fa fa-star fa-lg"></i><i class="fa fa-star fa-lg"></i><i class="fa fa-star fa-lg"></i><i class="fa fa-star fa-lg"></i><i class="fa fa-star-o fa-lg"></i>',"4",
+                                ifelse(valor == '<span class="star"><i class="fa fa-star fa-lg"></i><i class="fa fa-star fa-lg"></i><i class="fa fa-star fa-lg"></i><i class="fa fa-star-o fa-lg"></i><i class="fa fa-star-o fa-lg"></i>',3,
+                                       ifelse(valor == '<span class="star"><i class="fa fa-star fa-lg"></i><i class="fa fa-star fa-lg"></i><i class="fa fa-star-o fa-lg"></i><i class="fa fa-star-o fa-lg"></i><i class="fa fa-star-o fa-lg"></i>',2,
+                                              ifelse(valor == '<span class="star"><i class="fa fa-star fa-lg"></i><i class="fa fa-star-o fa-lg"></i><i class="fa fa-star-o fa-lg"></i><i class="fa fa-star-o fa-lg"></i><i class="fa fa-star-o fa-lg"></i>',1,
+                                                     valor))))))
+
+dadosfifa <- data.table(dadosfifa)
 #removendo variaveis não pareadas
 tabela1 <- table(dadosfifa$variavel,dadosfifa$temporada)
 tabela1 <- rownames(tabela1[apply(tabela1,1,prod)==0,])
@@ -51,7 +62,7 @@ library(stringi)
 
 lista_selecoes <- stri_trans_general(c(tolower(lista_selecoes$TEAM),tolower(lista_selecoes_pt$TEAM))
                         ,"Latin-ASCII")
-lista_selecoes <- c(lista_selecoes,"irlanda")
+lista_selecoes <- c(lista_selecoes,"irlanda","rep. Of korea","united states")
 jogadores[,time:= ifelse(stri_trans_general(tolower(time1),"Latin-ASCII") %in% lista_selecoes,
                          ifelse(stri_trans_general(tolower(time2),"Latin-ASCII") %in% lista_selecoes,
                                 NA,time2),time1)]
@@ -79,8 +90,12 @@ jogadores$time_match3 <- ifelse(jogadores$time_match3=="Leicester City","Leicest
 jogadores$time_match3 <- ifelse(jogadores$time_match3=="Cardiff City","Cardiff",jogadores$time_match3)
 jogadores$time_match3 <- ifelse(jogadores$time_match3=="Bolton Wanderers","Bolton",jogadores$time_match3)
 jogadores$time_match3 <- ifelse(jogadores$time_match3=="QPR","Queens Park Rangers",jogadores$time_match3)
+jogadores$time_match3 <- ifelse(jogadores$time_match3=="Arsenal FC","Arsenal",jogadores$time_match3)
+jogadores$time_match3 <- ifelse(jogadores$time_match3=="Chelsea FC","Chelsea",jogadores$time_match3)
+jogadores$time_match3 <- ifelse(jogadores$time_match3=="Reading FC","Reading",jogadores$time_match3)
 
 
+jogadores$time_match3 <- ifelse(jogadores$time_match3=="Derby County","Derby",jogadores$time_match3)
 
 
 
@@ -88,5 +103,5 @@ jogadores$time_match3 <- ifelse(jogadores$time_match3=="QPR","Queens Park Ranger
 jogadores1<- jogadores[with(jogadores, order(temporada,time_match3)), ]
 saveRDS(jogadores1,"data/static/dados_jogadores_ordenado.rds")
 
-length(table(jogadores1$time_match3))
+apply(table(jogadores1$time_match3,jogadores1$temporada)>0,2,sum)
 
