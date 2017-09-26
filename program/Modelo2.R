@@ -85,7 +85,7 @@ i <- 1
 j <- 1
 s <- 2008:2012 
 s_out <- 2013:2014
-
+s_t <- 2015:2016
 
 
 ## Variáveis auxiliares
@@ -212,3 +212,16 @@ for(k in ks){
   }
   print(paste0("---Fim alpha=",alpha_regula))
 }
+
+
+
+
+#### pegando resultados
+
+arquivos_modelo <- list.files("data/result","T_.*_full.rds",full.names = T)
+base_modelos_treino <- rbindlist(lapply(arquivos_modelo,readRDS))
+
+resultados_modelos <- base_modelos_treino %>%
+  group_by(k,alpha) %>%
+  summarise(acurracia_out = mean(acurracia_out))
+
