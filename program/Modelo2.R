@@ -169,16 +169,14 @@ for(k in ks){
         
         ## erro out ----
         
-        xrout  <- cbind(1,base %>% filter(season %in% s_out) %>% select(varsmodel))
-        # xrout <- data.matrix(cbind(xrout,exp(-sigma*(xrout[,(1:length(varadd))+1]^2))))
-         xrout <- data.matrix(xrout)
-      
+        xrout  <- cbind(1,base %>% filter(season %in% s_out) %>% select(varsmodelo))
+        xrout <- data.matrix(xrout)
         yrout <-  data.matrix(cbind(as.numeric(base %>% filter(season%in% s_out) %>%
-                                                 select(resultado) == "VA"),
+                                                 select(resultado) >0),
                                     as.numeric(base %>% filter(season%in% s_out) %>%
-                                                 select(resultado) == "Emp"),
+                                                 select(resultado) == 0),
                                     as.numeric(base %>% filter(season%in% s_out) %>%
-                                                 select(resultado) == "VB")))
+                                                 select(resultado) < 0)))
         
         
         parms_temp <- matrix(theta_temp,nrow=ncol(yr),byrow = F)
@@ -194,8 +192,8 @@ for(k in ks){
         
         base_temp_f <- cbind(data.table(k = k,
                                         alpha = alpha_regula,
-                                        varadd = paste0(varadd,collapse = ";"),
-                                        variaveis = paste0(varsmodel,collapse = ";"),
+                                        varadd = paste0(varsmodelo,collapse = ";"),
+                                        variaveis = paste0(varsmodelo,collapse = ";"),
                                         logvero = verossimilhanca,
                                         logveroref =logref, 
                                         acurracia = acurracia,
@@ -206,7 +204,7 @@ for(k in ks){
                                         acurracia_out = acurracia_out),
                              acurracias,
                              acurracias_out)
-        file_name <- paste0("T_K",k*10,"_A",alpha_regula*10,".rds")
+        file_name <- paste0("T_K",k*10,"_A",alpha_regula*10,"_full.rds")
         saveRDS(base_temp_f,file_name)
         resultado_foward <- rbind(resultado_foward,
                               base_temp_f)
