@@ -23,7 +23,7 @@ jogadores <- jogadores %>%
 jogadores[,Altura:=gsub("\\scm","",Altura,perl=T)]
 jogadores[,Peso:=gsub("\\scm","",Altura,perl=T)]
 jogadores[,`Perna boa`:=ifelse(`Perna boa`=="Dir.",1,0)]
-jogadores[,`Perna ruim`:=ifelse(`Perna ruim`=="Dir.",1,0)]
+jogadores[,`Perna ruim`:=as.numeric(`Perna ruim`)]
 
 
 jogadores <- gather(jogadores %>%
@@ -35,8 +35,8 @@ jogadores <- jogadores %>%
 
 
 jogadores_time <- jogadores %>% 
-  group_by(season,time_match3,variavel) %>%
-  summarise(valor= mean(as.numeric(valor)))
+  dplyr::group_by(season,time_match3,variavel) %>%
+  dplyr::summarise(valor= mean(as.numeric(valor)))
 
 
 
@@ -51,8 +51,59 @@ for(i in 1:length(arquivos)){
   base <- rbind(base,base_temp)
 }
 
+
+
+## pegando posição ----
+
+
+fileinput <- "data/class"
+arquivos <- list.files(path = fileinput,pattern = paste0('S'),
+                       full.names = T)
+
+
+base_class <- data.table()
+for(i in 1:length(arquivos)){
+  base_temp <- readRDS(arquivos[i])
+  base_class <- rbind(base_class,base_temp)
+}
+
+
+### corrigindo nomes dos times
+
+base_class <- base_class %>%
+  select(match,season,Date,Time,pos_home,pos_visit,`Home team`,`Visiting team`) %>%
+  mutate(dia_rodada = gsub("...\\s\\t*(.*)","\\1",Date))
+
+
+base_class$`Home team` <- ifelse(base_class$`Home team`=="Blackburn Rvrs","Blackburn Rovers",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="Blackburn Rovers","Blackburn",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="Birm. City" | base_class$`Home team`=="Birmingham City","Birmingham",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="Manchester City","Man City",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="Manchester United" | base_class$`Home team`=="Manchester Utd." | base_class$`Home team`=="Manchester Utd","Man Utd",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="Newcastle United" | base_class$`Home team`=="Newcastle Utd","Newcastle",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="Tottenham Hotspur" | base_class$`Home team`=="Spurs","Tottenham",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="West Bromwich","West Brom",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="West Ham United","West Ham",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="Wolverhampton Wanderers" | base_class$`Home team`=="Wolverhampton","Wolverhampton Wanderers",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="Wigan Athletic","Wigan",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="Swansea City","Swansea",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="Norwich City","Norwich",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="Leicester City","Leicester",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="Cardiff City","Cardiff",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="Bolton Wanderers","Bolton",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="QPR","Queens Park Rangers",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="Arsenal FC","Arsenal",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="Chelsea FC","Chelsea",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="Reading FC","Reading",base_class$`Home team`)
+base_class$`Home team` <- ifelse(base_class$`Home team`=="Portsmouth FC","Portsmouth",base_class$`Home team`)
+
+
+
+
+
 base <- base %>%
   select(tipo,nome_time,id_time,id_jogo,rodada,dia_rodada,hora_jogo,score,season)
+
 
 base1 <- spread(base %>% 
                   select(tipo,season,score,id_jogo),tipo,score)
@@ -64,16 +115,20 @@ base1 <- base1 %>%
   select(season,id_jogo,resultado)
 
 base2 <- spread(base %>% 
-                  select(tipo,season,id_time,id_jogo),tipo,id_time)
+                  select(tipo,season,id_time,id_jogo,dia_rodada),tipo,id_time)
 
 base_resultados <- left_join(base2,base1,
                    by = c("season","id_jogo"))
 rm(base1,base_temp,base2)
 
 ## juntando bases
+
+
 times_fifa <- unique(jogadores_time %>% ungroup() %>% select(time_match3))
 tabela_times <- unique(base %>% select(id_time,nome_time))
 tabela_times$id_match <- 1:nrow(tabela_times)
+
+
 
 
 # fazendo batimento
@@ -108,6 +163,19 @@ jogadores <- left_join(jogadores,
                             tabela_times %>%
                               select("time_match3","id_time"),
                             by = "time_match3")
+
+
+base_class <- base_class %>%
+  left_join(tabela_times,by = c("Home team"="time_match3"))
+
+base_class <- base_class %>%
+  select(season,dia_rodada,`Home team`,pos_home,pos_visit,id_time) 
+setnames(base_class,"id_time","Casa")
+
+a <- merge(base_resultados,base_class,by = c("season","dia_rodada","Casa"))
+a1 <- base_resultados %>% filter(dia_rodada=="Aug 16, 2008" & Casa=="11")
+b1 <- base_class %>% filter(grepl("Aug 16, 2008", Casa=="11")
+  
 
 ## corrigir buracos na base (Expandgrid) ----
 
@@ -149,10 +217,14 @@ sum(is.na(jogadores_completo$lag.value2))
 
 base_result_jogadores <- base_resultados %>% left_join(jogadores_completo,
                                                        by = c("season"="season","Casa"="id_time"))
+
+
 base_result_jogadores<- base_result_jogadores %>%
   mutate(valor_casa = lag.value2,
          time_casa = time_match3) %>%
   select(-lag.value,-valor,-lag.value2,-time_match3)
+
+base_resultados <- data.table(base_resultados)
 
 
 ## adicionando informações visitante

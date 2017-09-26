@@ -1,13 +1,12 @@
 rm(list = ls())
+# install.packages("maxLik")
 library(dplyr)
 library(data.table)
 library(stringr)
 library(maxLik)
-base <- readRDS("data/result/base_modelo_bayes01.rds")
+base <- readRDS("data/base_modelo_bayes01.rds")
 base <- data.table(base)
 
-means <- function(x) return(mean(x,na.rm=T))
-apply(base,2,means)
 ## Funções ----
 
 logDirichregregt <- function(parm){
@@ -16,11 +15,11 @@ logDirichregregt <- function(parm){
 
   # parm[indzero] <- 0 
 
-  nrealx <- (ncol(xr)-1)/2
-  indzero <- ncol(yr) +c((0:(nrealx-1))*ncol(yr) + 2, ##zerando difereça empate
-                         nrealx*ncol(yr)+ (0:(nrealx-1))*ncol(yr) + 1, ##zerando similaridade casa
-                         nrealx*ncol(yr)+ (0:(nrealx-1))*ncol(yr) + ncol(yr)) ##zerando similaridade fora
-  
+  # nrealx <- (ncol(xr)-1)/2
+  # indzero <- ncol(yr) +c((0:(nrealx-1))*ncol(yr) + 2, ##zerando difereça empate
+  #                        nrealx*ncol(yr)+ (0:(nrealx-1))*ncol(yr) + 1, ##zerando similaridade casa
+  #                        nrealx*ncol(yr)+ (0:(nrealx-1))*ncol(yr) + ncol(yr)) ##zerando similaridade fora
+  # 
   
   parmreg <- matrix(parm,nrow=ncol(yr),byrow = F)
   
@@ -33,8 +32,7 @@ logDirichregregt <- function(parm){
   veroi <- sum(log(gamma(Ai)) + v1)
   ## regularização ridge&lasso
   veroi <- veroi - k*(alpha_regula*sum((parm^2)) +
-                        (1-alpha_regula)*sum(abs(parm)))  - 
-   sum(parm[indzero]^2*(10^4))
+                        (1-alpha_regula)*sum(abs(parm)))
   return(veroi)
 }
 
@@ -54,6 +52,11 @@ gradients <- function(parm){
 ## hessian 
 
 hessian <- function(parm){
+  
+  parms_temp <- matrix(parm,nrow=ncol(yr),byrow = F)
+  ai <- exp(xr %*% t(parms_temp))
+  
+  
   H <- matrix(0,ncol=length(parm),nrow=length(parm))
   parmreg <- matrix(parm,nrow=ncol(yr),byrow = F)
   for(i in 1:ncol(parmreg)){                # variando categoria 
@@ -84,7 +87,6 @@ digamma1 <- function(x,h=.001){
 ### rodando modelo
 
 
-# base <- data.table(base)
 # base[,ultimo_result :=c(NA, resultado[-.N]),by = c("season","Casa")]
 # base[,ultimo_result :=ifelse(is.na(ultimo_result)|ultimo_result=="Emp",0,
 #                              ifelse(ultimo_result=="VA",1,-1))]
@@ -103,34 +105,38 @@ varsmodelo <- setdiff(names(base),c("season","Casa","Fora","resultado","Perna ru
 scale_this <- function(x){
   (x - mean(x, na.rm=TRUE)) / sd(x, na.rm=TRUE)
 }
-base <- base[,(varsmodelo) := lapply(.SD, scale_this), .SDcols = varsmodelo] 
+# base <- base[,(varsmodelo) := lapply(.SD, scale_this), .SDcols = varsmodelo] 
 
 
 i <- 1
 j <- 1
-s <- 2012
+s <- 2010:2012 ## mudar para 2008:2012
 s_out <- 2013:2014
 
 
-## ordem de seleção
+### Encontrando sigma de cada variável (teste)
 
+
+
+
+## ordem de seleção
 logref <- -Inf
 acurraciaref <- 0
 is_geral <- NULL
 varsmodelorest <- varsmodelo
 
-# base_temp_j <- NULL
+base_temp_j <- NULL
 k <- .5
 alpha_regula <- .5
 sigma <- 1
-
+ i <- 1
 for(i in 1:length(varsmodelorest)){
   is_temp <- c(is_geral,i)
   varadd <- varsmodelorest[i]
   varsmodel <- varsmodelo[is_temp]
   varsmodely <- c("VA","Emp","VB")
   xr  <- cbind(1,base %>% filter(season %in% s) %>% select(varsmodel))
-  xr <- data.matrix(cbind(xr,exp(-sigma*(xr[,(1:length(varadd))+1]^2))))
+  # xr <- data.matrix(cbind(xr,exp(-sigma*(xr[,(1:length(varadd))+1]^2))))
   xr <- data.matrix(xr)
   yr <-  data.matrix(cbind(as.numeric(base %>% filter(season%in% s) %>%
                                         select(resultado) == "VA"),
@@ -140,24 +146,23 @@ for(i in 1:length(varsmodelorest)){
                                         select(resultado) == "VB")))
   
   
-  nrealx <- (ncol(xr)-1)/2
-  indzero <- ncol(yr) +c((0:(nrealx-1))*ncol(yr) + 2, ##zerando difereça empate
-                         nrealx*ncol(yr)+ (0:(nrealx-1))*ncol(yr) + 1, ##zerando similaridade casa
-                         nrealx*ncol(yr)+ (0:(nrealx-1))*ncol(yr) + ncol(yr)) ##zerando similaridade fora
-  
-  
-  vec1 <- rep(0,ncol(xr)*ncol(yr))
-  vec1[indzero] <- 1
-  A <- diag(vec1)
-  B <- matrix(0,nrow = ncol(xr)*ncol(yr),ncol = 1)
-  A <- A[indzero,]
-  B <- B[indzero,]
-  
+  # nrealx <- (ncol(xr)-1)/2
+  # indzero <- ncol(yr) +c((0:(nrealx-1))*ncol(yr) + 2, ##zerando difereça empate
+  #                        nrealx*ncol(yr)+ (0:(nrealx-1))*ncol(yr) + 1, ##zerando similaridade casa
+  #                        nrealx*ncol(yr)+ (0:(nrealx-1))*ncol(yr) + ncol(yr)) ##zerando similaridade fora
+  # 
+  # 
+  # vec1 <- rep(0,ncol(xr)*ncol(yr))
+  # vec1[indzero] <- 1
+  # A <- diag(vec1)
+  # B <- matrix(0,nrow = ncol(xr)*ncol(yr),ncol = 1)
+  # A <- A[indzero,]
+  # B <- B[indzero,]
+
   inicial_pars <- rep(.01,ncol(xr)*ncol(yr))
-  inicial_pars[indzero] <- 0
+  # inicial_pars[indzero] <- 0
   
-  res_temp <- maxLik(logDirichregregt,start = inicial_pars ,
-                     # constraints  = list( eqA = A, eqB = B ),
+  res_temp <- maxLik(logDirichregregt,start = inicial_pars,
                      method = "SANN")
   
   theta_temp <-res_temp$estimate
@@ -201,12 +206,14 @@ for(i in 1:length(varsmodelorest)){
 }
 
 # base_temp_j_espcial <- base_temp_j
-ks <- seq(0,1,by = .2)
-alpha_regulas <- seq(0,1,by = .2)
-sigmas <- seq(0,1,by = .2)+.1
+ks <- seq(0,2,by = .1)
+alpha_regulas <- seq(0,1,by = .1)
 
 resultado_foward <- NULL
-for(sigma in sigmas){
+k <- 0.1
+alpha_regula <- 0
+
+# for(sigma in sigmas){
   for(k in ks){
     if(k==0){
       alpha_regulasf <- 0
@@ -219,15 +226,12 @@ for(sigma in sigmas){
       
       logref <- -Inf
       acurraciaref <- 0
-      is_geral <- NULL
       varsmodelorest <- varsmodelo
       
       
       base_temp_j <- base_temp_j %>%
         arrange(desc(acurracia))
-      # j <- 1
-      for(j in 1){
-        j <- 1:10
+        j <- 1:27
         ### rodando modelo com variável adicionada
         varadd <- base_temp_j$varadd[j]
         indadd <- base_temp_j$ind[j]
@@ -236,7 +240,7 @@ for(sigma in sigmas){
         varsmodel <- varsmodelo[is_temp]
         varsmodely <- c("VA","Emp","VB")
         xr  <- cbind(1,base %>% filter(season %in% s) %>% select(varsmodel))
-        xr <- data.matrix(cbind(xr,exp(-sigma*(xr[,(1:length(varadd))+1]^2))))
+        # xr <- data.matrix(cbind(xr,exp(-sigma*(xr[,(1:length(varadd))+1]^2))))
         xr <- data.matrix(xr)
         yr <-  data.matrix(cbind(as.numeric(base %>% filter(season%in% s) %>%
                                               select(resultado) == "VA"),
@@ -245,29 +249,30 @@ for(sigma in sigmas){
                                  as.numeric(base %>% filter(season%in% s) %>%
                                               select(resultado) == "VB")))
         
-        nrealx <- (ncol(xr)-1)/2
-        indzero <- ncol(yr) +c((0:(nrealx-1))*ncol(yr) + 2, ##zerando difereça empate
-                               nrealx*ncol(yr)+ (0:(nrealx-1))*ncol(yr) + 1, ##zerando similaridade casa
-                               nrealx*ncol(yr)+ (0:(nrealx-1))*ncol(yr) + ncol(yr)) ##zerando similaridade fora
-        
-        
-        vec1 <- rep(0,ncol(xr)*ncol(yr))
-        vec1[indzero] <- 1
-        A <- diag(vec1)
-        B <- matrix(0,nrow = ncol(xr)*ncol(yr),ncol = 1)
-        A <- A[indzero,]
-        B <- B[indzero,]
-        
-        inicial_pars <- rep(.01,ncol(xr)*ncol(yr))
-        inicial_pars[indzero] <- 0
+        # nrealx <- (ncol(xr)-1)/2
+        # indzero <- ncol(yr) +c((0:(nrealx-1))*ncol(yr) + 2, ##zerando difereça empate
+        #                        nrealx*ncol(yr)+ (0:(nrealx-1))*ncol(yr) + 1, ##zerando similaridade casa
+        #                        nrealx*ncol(yr)+ (0:(nrealx-1))*ncol(yr) + ncol(yr)) ##zerando similaridade fora
+        # 
+        # 
+        # vec1 <- rep(0,ncol(xr)*ncol(yr))
+        # vec1[indzero] <- 1
+        # A <- diag(vec1)
+        # B <- matrix(0,nrow = ncol(xr)*ncol(yr),ncol = 1)
+        # A <- A[indzero,]
+        # B <- B[indzero,]
+
+        inicial_pars <- rep(0.01,ncol(xr)*ncol(yr))
+
+        # inicial_pars[indzero] <- 0
         
         res_temp <- maxLik(logDirichregregt,start = inicial_pars ,
-                           constraints  = list( eqA = A, eqB = B ),
-                           method = "SANN")
+                           # constraints  = list( eqA = A, eqB = B ),
+                           method = "BFGS",hess = hessian)
 
         theta_temp <-res_temp$estimate
         etheta_temp <-diag(-solve(res_temp$hessian))^(.5)
-        varsmodel_temp <- c("Int",varsmodel,paste0(varsmodel,"_exp"))
+        varsmodel_temp <- c("Int",varsmodel)
         nometheta_temp_generico <- rep(paste0("b",str_pad(1:ncol(xr)-1,"000")),
                                        each=ncol(yr))
         nometheta_temp_Y <- rep(varsmodely,ncol(xr))
@@ -294,8 +299,8 @@ for(sigma in sigmas){
           ## erro out ----
           
           xrout  <- cbind(1,base %>% filter(season %in% s_out) %>% select(varsmodel))
-          xrout <- data.matrix(cbind(xrout,exp(-sigma*(xrout[,(1:length(varadd))+1]^2))))
-        
+          # xrout <- data.matrix(cbind(xrout,exp(-sigma*(xrout[,(1:length(varadd))+1]^2))))
+           xrout <- data.matrix(xrout)
         
           yrout <-  data.matrix(cbind(as.numeric(base %>% filter(season%in% s_out) %>%
                                                    select(resultado) == "VA"),
@@ -316,11 +321,9 @@ for(sigma in sigmas){
                    paste0(varsmodely,"_acuracia_out"))
           cross_out <- data.frame(cross_out)
           
-          base_temp_f <- cbind(data.table(rodada = i,
-                                          sigma = sigma,
-                                          k = k,
+          base_temp_f <- cbind(data.table(k = k,
                                           alpha = alpha_regula,
-                                          varadd = varadd,
+                                          varadd = paste0(varadd,collapse = ";"),
                                           variaveis = paste0(varsmodel,collapse = ";"),
                                           logvero = verossimilhanca,
                                           logveroref =logref, 
@@ -332,21 +335,13 @@ for(sigma in sigmas){
                                           acurracia_out = acurracia_out),
                                acurracias,
                                acurracias_out)
-          
-          if(logref<verossimilhanca|acurracia>acurraciaref){
+          file_name <- paste0("T_K",k*10,"_A",alpha_regula*10,".rds")
+          saveRDS(base_temp_f,file_name)
           resultado_foward <- rbind(resultado_foward,
                                 base_temp_f)
-          is_geral <- is_temp
-          logref<-verossimilhanca
-          acurraciaref <- acurracia
-          print(paste0("-----Fim rodada ",j," adicionada"))
-        }else{
-          print(paste0("-----Fim rodada ",j," fora"))
-        }
-      }
       print(paste0("----Fim alpha=",alpha_regula," em k=",k))
     }
     print(paste0("---Fim alpha=",alpha_regula))
   }
-  print(paste0("---Fim sigma=",s))
-}
+#   print(paste0("---Fim sigma=",s))
+# }
