@@ -29,9 +29,9 @@ raspagem0 <- function(link1){
   
   
   geral <- strapplyc(my_file, "<li><a href=\"/(pt-br/player.*?)\">FIFA.*", simplify = c)
-  resultado <- data.table(league="COCA",link_season=paste0("https://www.fifaindex.com/",geral),league_link="/?gender=0&league=14")
+  resultado <- data.table(league="COCA",link_season=paste0("https://www.fifaindex.com/",geral),league_link="/?gender=0&league=14&team=1808")
 }
-https://www.fifaindex.com/pt-br/players/fifa16_73/?league=14
+
 ## Pegando link dos jogadores por página 
 raspagem1 <- function(link2,pg){
   
@@ -120,7 +120,7 @@ k <- 1 # player in page
 l <- 1 # informacões player
 
 
-link1 <- "https://www.fifaindex.com/pt-br/players/1/?gender=0&league=14"
+link1 <- "https://www.fifaindex.com/pt-br/players/1/?gender=0&league=14&team=1808"
 base_seasons <- raspagem0(link1)
 
 ## seasons
@@ -128,7 +128,7 @@ for(i in 2:3){
   pseason <- gsub("https://www.fifaindex.com/pt-br/players/","",base_seasons$link_season[i])
   pseason <- ifelse(pseason=="","fifa18",pseason)
   for(j in 1:25){
-    name_file <- paste0("s",gsub("/","",pseason),"_pg",str_pad(j, 3, pad = "0"),"_COCA2.rds")
+    name_file <- paste0("s",gsub("/","",pseason),"_pg",str_pad(j, 3, pad = "0"),"_BRIG.rds")
     if(file.exists(file.path(pathout,name_file))){
       next
     }else{
