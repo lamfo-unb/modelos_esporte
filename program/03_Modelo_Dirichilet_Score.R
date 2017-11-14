@@ -87,30 +87,21 @@ s_t <- 2016
 ## Variáveis auxiliares
 varsmodelo <- setdiff(names(base),c("season","Casa","Fora","score_casa",
                                   "score_fora"))
-varsmodelo <- c("Aceleração","Perna boa","Posicion. GL","Perna ruim","Duração Do contrato")
+varsmodelo <- c("Aceleração","Perna boa","Posicion. GL","Perna ruim","Duração Do Contrato")
 
 logref <- -Inf
 acurraciaref <- 0
 is_geral <- NULL
 base_temp_j <- NULL
 
-## Parâmetros
-k <- .5;alpha_regula <- .5;i <- 1
+## Parâmetros estimate via grid search
+ks <- seq(0,3,by = .5);k <- 0.5
+alpha_regulas <- seq(0,1,by = .1);alpha_regula <- 0.5
+sigmas <- seq(0.1,1,by= .1);sigma <- 1
+gamas  <- seq(1,3,by= .5); gama <- 1
 
-
-# grid search
-ks <- seq(0,1,by = .1)
-alpha_regulas <- seq(0,1,by = .1)
-
+a <- expand.grid(ks,alpha_regulas,sigmas,gamas)
 resultado_foward <- NULL
-k <- 0.5
-alpha_regula <- 0.5
-sigma <- 1
-sigmas <- c(.1,.5,1)
-# gama  <- c(1.5,2,2.5,3)
-gamas  <- 1:3
-gama <- 1
-
 base$resultado <- base$score_casa-base$score_fora
 
 for(gama in gamas){
@@ -183,7 +174,7 @@ for(gama in gamas){
             
             parms_temp <- matrix(theta_temp,nrow=ncol(yr),byrow = F)
             ahat_out <- xrout %*% t(parms_temp)
-            ahat_out[,2] <- (cbind(ahat_out[,1],gama*exp(-sigma*(ahat_out[,-1])^2)) %*% t(parms_temp))[,2]
+            ahat_out[,2] <- (cbind(xrout[,1],gama*exp(-sigma*(xrout[,-1])^2)) %*% t(parms_temp))[,2]
             ahat_out <- exp(ahat_out)
             yrhat_out <- factor(apply(ahat_out,1,which.max),levels = 1:ncol(yrout))
             yrt_out <- factor(apply(yrout,1,which.max),levels = 1:ncol(yrout))
@@ -220,4 +211,3 @@ for(gama in gamas){
   }
   print(paste0("---Fim gamma=",gama))
 }
-
