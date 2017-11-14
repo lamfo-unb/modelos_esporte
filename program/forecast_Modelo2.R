@@ -55,11 +55,11 @@ resultados_modelos_pars <-  resultados_modelos %>%
 
 
 parm_matrix <- spread(resultados_modelos_pars, par_y, theta_est)
+signmax <- function(x){
+  return(sum(x[which.max(abs(x))]>0))
+  
+}
 
-
-summary(parm_matrix[,2])
-summary(parm_matrix[,3])
-summary(parm_matrix[,4])
 
 which.max.1 <- function(x){
   return(order(x,decreasing = T)[1])
@@ -92,15 +92,22 @@ vec_min1 <- (parm_matrix[parm_matrix$par_x!="Int",1])[apply(parm_matrix[parm_mat
 vec_min2 <- (parm_matrix[parm_matrix$par_x!="Int",1])[apply(parm_matrix[parm_matrix$par_x!="Int",-1],2,which.min.2)]
 vec_min3 <- (parm_matrix[parm_matrix$par_x!="Int",1])[apply(parm_matrix[parm_matrix$par_x!="Int",-1],2,which.min.3)]
 
-estatis_vars <- rbind(vec_max1,vec_min1)
+min_vars <- rbind(vec_min1,vec_min2,vec_min3)
 
-rbind(max_vars,min_vars)
 
-vec_min <- (parm_matrix[parm_matrix$par_x!="Int",1])[apply(parm_matrix[parm_matrix$par_x!="Int",-1],2,which.min.3)]
 
-table(vec_max,vec_min)
 
-parm_matrix_data <- cbind(parm_matrix,vec_max,vec_min)
+valor_min <- apply(parm_matrix[parm_matrix$par_x!="Int",-1],2,min)
+valor_max <- apply(parm_matrix[parm_matrix$par_x!="Int",-1],2,max)
+
+
+
+estatis_vars <- rbind(paste0(vec_max1," (",round(valor_max,5),")"),
+                      paste0(vec_min1," (",round(valor_min,5),")"))
+colnames(estatis_vars) <- c("Emp","VA","VB")
+
+
+print(xtable(estatis_vars),include.rownames = F)
 
 ## baixando tabela com jogos de 2017
 
@@ -119,48 +126,51 @@ library(RCurl)
 library(XML)
 library(dplyr)
 
-html1 <- read_html(link, encoding = "UTF-8")
-
-tables <- html_table(html1, fill = TRUE)
-all_match <- data.table()
-i <- 38
-for(i in 1:38){
-  ### JOGO 1
-  playoff <- data.table(tables[[i+3]][c(1,2,3,5,7)])
-  playoff <- playoff[!grepl(paste0("PM|AM|",temporada,"|",temporada+1),`Home team`),]
-  vecs <- c("Date","Time")
-  ## replicando datas e horários
-  playoff <- playoff[,c(paste0(vecs,"_")) := lapply(.SD,function(x) cumsum(x!="")),.SDcols = vecs]
-  for(j in vecs){
-    stage <- unique(playoff[eval(parse(text=paste0(j,"!=''"))),
-                            c(j,paste0(j,"_")),
-                            with=FALSE])
-    playoff[,(j):=NULL]
-    playoff <- stage[playoff,on=(paste0(j,"_"))]
-    playoff[,(paste0(j,"_")):=NULL]
-    rm(stage)
-  }
-  
-  
-  setnames(playoff,c("Home","Result"),
-           c("Result","Visiting team"))
-  
-  playoff[,pos_home:= gsub(".*\\((.*)\\..*","\\1",`Home team`)]
-  playoff[,pos_visit:= gsub(".*\\((.*)\\..*","\\1",`Visiting team`)]
-  playoff[,`Home team`:= gsub(".*\\(.*\\)\\s\\s(.*)","\\1",`Home team`, perl=T)]
-  playoff[,`Visiting team`:= gsub("(.*)\\s\\s\\(.*","\\1",`Visiting team`, perl=T)]
-  playoff[,score_home:= gsub("(.*)\\:.*","\\1",Result)]
-  playoff[,score_visit:= gsub(".*\\:(.*)","\\1",Result)]
-  playoff[,match:=i]
-  playoff[,season:=temporada]
-  
-  all_match <- rbind(all_match,playoff)
-}
+# html1 <- read_html(link, encoding = "UTF-8")
+# 
+# tables <- html_table(html1, fill = TRUE)
+# all_match <- data.table()
+# i <- 38
+# for(i in 1:38){
+#   ### JOGO 1
+#   playoff <- data.table(tables[[i+3]][c(1,2,3,5,7)])
+#   playoff <- playoff[!grepl(paste0("PM|AM|",temporada,"|",temporada+1),`Home team`),]
+#   vecs <- c("Date","Time")
+#   ## replicando datas e horários
+#   playoff <- playoff[,c(paste0(vecs,"_")) := lapply(.SD,function(x) cumsum(x!="")),.SDcols = vecs]
+#   for(j in vecs){
+#     stage <- unique(playoff[eval(parse(text=paste0(j,"!=''"))),
+#                             c(j,paste0(j,"_")),
+#                             with=FALSE])
+#     playoff[,(j):=NULL]
+#     playoff <- stage[playoff,on=(paste0(j,"_"))]
+#     playoff[,(paste0(j,"_")):=NULL]
+#     rm(stage)
+#   }
+#   
+#   
+#   setnames(playoff,c("Home","Result"),
+#            c("Result","Visiting team"))
+#   
+#   playoff[,pos_home:= gsub(".*\\((.*)\\..*","\\1",`Home team`)]
+#   playoff[,pos_visit:= gsub(".*\\((.*)\\..*","\\1",`Visiting team`)]
+#   playoff[,`Home team`:= gsub(".*\\(.*\\)\\s\\s(.*)","\\1",`Home team`, perl=T)]
+#   playoff[,`Visiting team`:= gsub("(.*)\\s\\s\\(.*","\\1",`Visiting team`, perl=T)]
+#   playoff[,score_home:= gsub("(.*)\\:.*","\\1",Result)]
+#   playoff[,score_visit:= gsub(".*\\:(.*)","\\1",Result)]
+#   playoff[,match:=i]
+#   playoff[,season:=temporada]
+#   
+#   all_match <- rbind(all_match,playoff)
+# }
 name_file <- paste0("S",temporada,".rds")
 pathout <- "data/games"
-saveRDS(all_match,
-        file.path(pathout,
-                  name_file))
+# saveRDS(all_match,
+#         file.path(pathout,
+#                   name_file))
+
+all_match <- readRDS(file.path(pathout,
+                               name_file))
 
 
 ## Simulando primeiro confronto
@@ -222,6 +232,9 @@ all_match$`Visiting team` <- ifelse(all_match$`Visiting team`=="Chelsea FC","Che
 all_match$`Visiting team` <- ifelse(all_match$`Visiting team`=="Reading FC","Reading",all_match$`Visiting team`)
 all_match$`Visiting team` <- ifelse(all_match$`Visiting team`=="Portsmouth FC","Portsmouth",all_match$`Visiting team`)
 all_match$`Visiting team` <- ifelse(all_match$`Visiting team`=="Charlton Athletic","Charlton",all_match$`Visiting team`)
+
+
+
 
 
 base_simula <- data.table()

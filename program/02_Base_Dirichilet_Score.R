@@ -1,6 +1,7 @@
 library(data.table)
 library(dplyr)
 library(tidyverse)
+
 library(readxl)
 library(gtools)
 library(stringr)
@@ -33,13 +34,134 @@ jogadores <- gather(jogadores %>%
 jogadores <- jogadores %>%
   mutate(season=as.numeric(gsub("fifa(..).*","\\1",temporada,perl=T))+2000) 
 
-
+# ## Buscando informações dos titulares
+# 
+# 
+# fileinput <- "data/games"
+# arquivos <- list.files(path = fileinput,pattern = paste0('jogadores_...._J'),
+#                        full.names = T)
+# 
+# base_elenco_jogo <- data.table()
+# for(i in 1:length(arquivos)){
+#   base_temp <- readRDS(arquivos[i])
+#   base_elenco_jogo <- rbind(base_elenco_jogo,base_temp %>% select(id,nome_time,classe,id_jogo,season))
+# }
+# 
+# 
+# base_elenco_jogo_media <- base_elenco_jogo %>%
+#   dplyr::group_by(id,nome_time,season) %>%
+#   dplyr::summarise(peso = length(classe)/38)
+# base_elenco_jogo_media <- data.table(base_elenco_jogo_media)
+# base_elenco_jogo_media[,sumpeso:=sum(peso),
+#                        by = c("nome_time","season")] 
+# base_elenco_jogo_media[,peso:=peso/sumpeso] 
+# base_elenco_jogo_media[,sumpeso:=NULL]
+# 
+# rm(base_elenco_jogo)
+# gc()
+# 
+# jogadores <- jogadores %>% 
+#   left_join(base_elenco_jogo_media,
+#             by = c("time_match3"="nome_time",
+#                    "season"="season",
+#                    "id_jogador"="id"))
+# 
+# 
+# names(jogadores)
+## média por time
 jogadores_time <- jogadores %>% 
   dplyr::group_by(season,time_match3,variavel) %>%
   dplyr::summarise(valor= mean(as.numeric(valor)))
 
 saveRDS(jogadores_time,"data/static/dados_media_time.rds")
 
+
+
+
+### Descritiva ----
+
+table(jogadores_time$variavel)
+times_analise <- c("Arsenal",
+"Chelsea",
+"Liverpool",
+"Man Utd",
+"Man City")
+
+variaveis_analise <- c("Aceleração",
+                       "Perna boa",
+                       "Passe curto",
+                       "Finalização")
+
+
+jogadores_time_analise <- jogadores_time %>%
+  filter(variavel %in% variaveis_analise &
+           time_match3 %in% times_analise)
+
+
+
+pdf(file = "report/aceleracao_descri.pdf")
+ggplot(data=jogadores_time_analise %>% filter(variavel == "Aceleração" & season!=2017),
+       aes(x=season, y=valor, group = time_match3 , 
+           colour=time_match3)) +
+  geom_line()+
+  geom_point( size=4, shape=21, fill="white")  + 
+  scale_colour_manual(name = "Team",
+                      values=c("green", "blue","red","yellow","black")) + 
+  scale_x_discrete(name ="Season", 
+                    limits=c(2008:2016)) +
+  scale_y_continuous(name = "Aceleração") +
+  scale_fill_manual(name="Experimental\nCondition") + 
+  scale_shape_discrete(name  ="Team")
+dev.off()
+
+
+
+pdf(file = "report/perna_boa_descri.pdf")
+ggplot(data=jogadores_time_analise %>% filter(variavel == "Perna boa" & season!=2017),
+       aes(x=season, y=valor, group = time_match3 , 
+           colour=time_match3)) +
+  geom_line()+
+  geom_point( size=4, shape=21, fill="white")  + 
+  scale_colour_manual(name = "Team",
+                      values=c("green", "blue","red","yellow","black")) + 
+  scale_x_discrete(name ="Season", 
+                   limits=c(2008:2016)) +
+  scale_y_continuous(name = "Perna boa") +
+  scale_shape_discrete(name  ="Team")
+dev.off()
+
+
+
+pdf(file = "report/passe_curto_descri.pdf")
+ggplot(data=jogadores_time_analise %>% filter(variavel == "Passe curto" & season!=2017),
+       aes(x=season, y=valor, group = time_match3 , 
+           colour=time_match3)) +
+  geom_line()+
+  geom_point( size=4, shape=21, fill="white")  + 
+  scale_colour_manual(name = "Team",
+                      values=c("green", "blue","red","yellow","black")) + 
+  scale_x_discrete(name ="Season", 
+                   limits=c(2008:2016)) +
+  scale_y_continuous(name = "Passe curto") +
+  scale_shape_discrete(name  ="Team")
+dev.off()
+
+
+
+pdf(file = "report/finalizacao_descri.pdf")
+ggplot(data=jogadores_time_analise %>% filter(variavel == "Finalização" & season!=2017),
+       aes(x=season, y=valor, group = time_match3 , 
+           colour=time_match3)) +
+  geom_line()+
+  geom_point( size=4, shape=21, fill="white")  + 
+  scale_colour_manual(name = "Team",
+                      values=c("green", "blue","red","yellow","black")) + 
+  scale_x_discrete(name ="Season", 
+                   limits=c(2008:2016)) +
+  scale_y_continuous(name = "Finalização") +
+  scale_shape_discrete(name  ="Team")
+dev.off()
+## resultado jogos ----
 
 fileinput <- "data/games"
 arquivos <- list.files(path = fileinput,pattern = paste0('resultado_'),
@@ -142,7 +264,7 @@ base2 <- spread(base %>%
 
 base_resultados <- left_join(base2,base1,
                    by = c("season","id_jogo"))
-rm(base1,base_temp,base2)
+rm(base1,base2)
 
 ## juntando bases
 
@@ -315,3 +437,33 @@ base_result_jogadores_forecast <- base_result_jogadores %>%
 
 ## Forecast ----
 saveRDS(base_result_jogadores_forecast,"data/result/base_modelo_bayes01-forecast.rds")
+
+
+## descritiva resultado ----
+names(base_result_jogadores_modelo)
+
+
+base_result_jogadores_modelo <- base_result_jogadores_modelo %>% 
+  mutate(resultado = ifelse(score_casa>score_fora,"VH",
+                            ifelse(score_casa==score_fora,"TIE","VV")))
+aa_analise <- gather(base_result_jogadores_modelo,variable,valor,-season,-Casa,
+                     -Fora,-score_casa,-score_fora,-resultado)
+
+
+
+ggplot(data = aa_analise %>% filter(variable=="Aceleração"),
+       aes(x=as.factor(season), y=valor)) + geom_boxplot(aes(fill=resultado))
+
+
+pdf(file = "report/vars_resultado.pdf")
+ggplot(data = aa_analise %>% filter(variable %in% variaveis_analise[-2] ),
+       aes(x=variable, y=valor)) + geom_boxplot(aes(fill=resultado)) + 
+  scale_y_continuous(name = expression(X[R])) + 
+  scale_shape_discrete(name  ="Result")  +
+  scale_x_discrete(name ="Skill") + labs(fill="Result")
+dev.off()
+
+
+
+
+
