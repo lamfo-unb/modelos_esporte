@@ -24,7 +24,9 @@
 \bibliographystyle{bbs}
 \usepackage{float}
 \graphicspath{{images//}}
-
+\PassOptionsToPackage{table,x11names}{xcolor}%  only needed if you get an option clash
+\usepackage{xcolor}
+\usepackage{booktabs}
 \usepackage{endnotes}
 \renewcommand*{\notesname}{Notas}
 \let\footnote\endnote
@@ -195,6 +197,67 @@ O início de renovação do Chelse foi campeã pode ajudar a explicar o sucesso 
 
 Pretendemos explicar e predizer o resultado dos jogos da Premier League, baseado nas habilidades auferidas pelo site FIFA dos jogadores de cada time.
 
+
+A relação positiva é observada quando o aumentoda  variável regressora $X_r$, que representa o nível de superioridade do time mandante, contribui para a vitória do time mandante. Nesse raciocínio, é esperado nos jogos em que houve vitória do time mandante, a média dessa variável é maior do que os valores dos jogos empate, que por sua vez é maior do que os que ocorreram derrota. $\bar{X}_r^{VH}\geq \bar{X}_r^{Tie} \geq \bar{X}_r^{VV}$
+
+ De maneira análoga, a relação negativa é observada quando o diminuição de $X_r$ contribui para a derrota do time mandante. Nesse caso, é esperado que nos jogos em que houve vitória do time mandante, a média dessa variável é menor do que os valores dos jogos empate, que por sua vez é menor do que os que ocorreram derrota. $\bar{X}_r^{VH} \leq \bar{X}_r^{Tie} \leq \bar{X}_r^{VV}$
+
+Além desse resultado geral, é esperado que ao longo de \textbf{cada temporadas analisadas} esse comportamento se repita. O número de vezes em que esse resultado é observado pode sugerir o nível dessa relação.
+
+
+A tabela \ref{tab:selectvar} apresenta essas análises paras cada variável e dá indícios para o processo de seleção das variáveis relevantes para o modelo. É possível identificar, que as variáveis ``chute de longe" e ``controle de bola" um comportamento adequado com a relação positiva. Também é possível notar que as variáveis ``idade" e ``classificação na tabela" têm relação negativa com a vitória do mandante.
+
+% latex table generated in R 3.3.2 by xtable 1.8-2 package
+% Thu Nov 16 02:41:35 2017
+\begin{table}[ht]
+\begin{small}
+\begin{tabular}{l||rrr||rrr|r|||rrr||r}
+  \hline
+     \hline
+\rowcolor{SeaGreen3!30!} & \multicolumn{3}{c||}{Média} &   \multicolumn{4}{c|||}{Indicador positivo} & \multicolumn{4}{c}{Indicador negativo} \\
+\hline 
+  \hline
+\rowcolor{SeaGreen3!30!} Skill &  $\bar{X}_r^{VH}$ &  $\bar{X}_r^{TIE}$ &  $\bar{X}_r^{VV}$ & NVH & NVV & NTIE & \textbf{NP }& NVH & NVV & NTIE & \textbf{NN }\\ 
+ \hline
+\rowcolor{gray!30!} Aceleração & 1.173 & -0.095 & -1.748 & 88.9 & 88.9 & 88.9 & 88.9 & 11.1 & 0.0 & 0.0 & 11.1 \\ 
+\rowcolor{gray!10!}  Altura & 0.036 & -0.017 & -0.052 & 33.3 & 44.4 & 22.2 & 33.3 & 11.1 & 33.3 & 0.0 & 11.1 \\ 
+\rowcolor{gray!30!}   Cabeceio & 0.458 & -0.202 & -0.557 & 66.7 & 66.7 & 55.6 & 66.7 & 0.0 & 22.2 & 0.0 & 0.0 \\ 
+\rowcolor{gray!10!}   Carrinho & 0.549 & -0.015 & -0.852 & 77.8 & 77.8 & 66.7 & 77.8 & 0.0 & 11.1 & 0.0 & 0.0 \\ 
+ \rowcolor{gray!30!}  Ch. de longe & 1.266 & -0.236 & -1.781 & 100.0 & 88.9 & 88.9 & 100.0 & 0.0 & 0.0 & 0.0 & 0.0 \\ 
+\rowcolor{gray!10!}   Cobr. falta & 1.240 & -0.095 & -1.878 & 88.9 & 88.9 & 77.8 & 88.9 & 0.0 & 0.0 & 0.0 & 0.0 \\ 
+ \rowcolor{gray!30!}  Combativ. & 0.479 & -0.307 & -0.513 & 77.8 & 66.7 & 55.6 & 77.8 & 11.1 & 11.1 & 11.1 & 11.1 \\ 
+\rowcolor{gray!10!}   Contr. bola & 1.644 & -0.402 & -2.234 & 100.0 & 88.9 & 88.9 & 100.0 & 0.0 & 0.0 & 0.0 & 0.0 \\ 
+\rowcolor{gray!30!}   Cruzamento & 1.651 & -0.475 & -2.181 & 100.0 & 88.9 & 88.9 & 100.0 & 0.0 & 0.0 & 0.0 & 0.0 \\ 
+\rowcolor{gray!10!}   Div. em pé & 0.630 & -0.040 & -0.958 & 88.9 & 88.9 & 77.8 & 88.9 & 0.0 & 0.0 & 0.0 & 0.0 \\ 
+\rowcolor{gray!30!}   Dribles & 1.587 & -0.220 & -2.306 & 100.0 & 88.9 & 88.9 & 100.0 & 0.0 & 0.0 & 0.0 & 0.0 \\ 
+\rowcolor{gray!10!}   Dur. contrato & 0.419 & -0.151 & -0.535 & 100.0 & 88.9 & 88.9 & 100.0 & 0.0 & 0.0 & 0.0 & 0.0 \\ 
+\rowcolor{gray!30!}   Elast. GL & 0.205 & -0.032 & -0.302 & 66.7 & 55.6 & 33.3 & 66.7 & 11.1 & 11.1 & 11.1 & 11.1 \\ 
+\rowcolor{gray!10!}   Finalização & 0.720 & -0.047 & -1.091 & 77.8 & 77.8 & 77.8 & 77.8 & 22.2 & 11.1 & 11.1 & 22.2 \\ 
+\rowcolor{gray!30!}   Fôlego & 0.405 & -0.087 & -0.567 & 55.6 & 66.7 & 55.6 & 55.6 & 33.3 & 22.2 & 22.2 & 33.3 \\ 
+\rowcolor{gray!10!}   Força & 0.247 & 0.049 & -0.445 & 33.3 & 88.9 & 33.3 & 33.3 & 11.1 & 11.1 & 11.1 & 11.1 \\ 
+\rowcolor{gray!30!}   Força chute & 1.255 & -0.447 & -1.577 & 88.9 & 88.9 & 88.9 & 88.9 & 0.0 & 11.1 & 0.0 & 0.0 \\ 
+\rowcolor{gray!10!}   Idade & -0.258 & 0.039 & 0.364 & 0.0 & 0.0 & 0.0 & 0.0 & 100.0 & 100.0 & 100.0 & 100.0 \\ 
+\rowcolor{gray!30!}   Lançamento & 1.761 & -0.165 & -2.630 & 100.0 & 100.0 & 100.0 & 100.0 & 0.0 & 0.0 & 0.0 & 0.0 \\ 
+\rowcolor{gray!10!}   Manejo & -0.254 & 0.187 & 0.239 & 44.4 & 44.4 & 44.4 & 44.4 & 55.6 & 55.6 & 55.6 & 55.6 \\ 
+\rowcolor{gray!30!}   Marcação & 0.618 & -0.251 & -0.757 & 88.9 & 88.9 & 77.8 & 88.9 & 0.0 & 0.0 & 0.0 & 0.0 \\ 
+\rowcolor{gray!10!}   Passe curto & 1.756 & -0.308 & -2.494 & 100.0 & 88.9 & 88.9 & 100.0 & 0.0 & 0.0 & 0.0 & 0.0 \\ 
+ \rowcolor{gray!30!}  Perna boa & 0.019 & 0.010 & -0.044 & 33.3 & 33.3 & 22.2 & 33.3 & 55.6 & 22.2 & 22.2 & 55.6 \\ 
+\rowcolor{gray!10!}   Perna ruim & 0.223 & 0.039 & -0.390 & 66.7 & 100.0 & 66.7 & 66.7 & 0.0 & 0.0 & 0.0 & 0.0 \\ 
+ \rowcolor{gray!30!}  Peso & 0.036 & -0.017 & -0.052 & 33.3 & 44.4 & 22.2 & 33.3 & 11.1 & 33.3 & 0.0 & 11.1 \\ 
+\rowcolor{gray!10!}   Pique & 1.092 & -0.082 & -1.641 & 100.0 & 100.0 & 100.0 & 100.0 & 0.0 & 0.0 & 0.0 & 0.0 \\ 
+\rowcolor{gray!30!}   Posição & -2.263 & 1.113 & 3.310 & 0.0 & 0.0 & 0.0 & 0.0 & 100.0 & 100.0 & 100.0 & 100.0 \\ 
+ \rowcolor{gray!10!}  Posicion. GL & -0.264 & 0.165 & 0.267 & 22.2 & 33.3 & 22.2 & 22.2 & 66.7 & 55.6 & 55.6 & 66.7 \\ 
+ \rowcolor{gray!30!}  Reação & 1.647 & -0.450 & -2.218 & 100.0 & 100.0 & 100.0 & 100.0 & 0.0 & 0.0 & 0.0 & 0.0 \\ 
+\rowcolor{gray!10!}   Reflexos & -0.288 & 0.246 & 0.239 & 33.3 & 33.3 & 33.3 & 33.3 & 66.7 & 55.6 & 55.6 & 66.7 \\ 
+   \hline
+      \hline
+\end{tabular}
+\end{small}	
+\caption[\scriptsize{Variable selection.}]{\scriptsize{ Tabela indicativa do tipo de relação entre a habilidade dos times e o resultado do jogo. Na seção positiva, a coluna VH apresenta a proporção de temporadas em que o valor médio da habilidade para os casos em que o time mandante venceu foi superior às médias dos casos de empate e derrota, indicando uma relação \textbf{positiva} entre a variável $X_r$ (superioridade do time mandante) e vitória do mandante. Na seção negativa, essa mesma coluna apresenta a proporção de temporadas em que o valor médio da habilidade foi \textbf{inferior} às médias de empate e derrota. De maneira análoga, nesse seção essa coluna indica uma relação \textbf{negativa} entre a variável $X_r$. Na seção positiva, a coluna Tie apresenta a proporção de temporadas em que o valor médio da habilidade foi superior às médias de empate e derrota, indicando uma relação \textbf{positiva} entre a variável $X_r$. A coluna TIE apresenta a proporção de temporadas em que o valor médio da habilidade foi superior às médias de empate e derrota.  }}
+    \label{tab:selectvar}%
+\end{table}
+
+
 \section{Método}
 \label{sec:metodo}
 
@@ -234,7 +297,7 @@ Seasons & Global & Home & Tie & Visitor \\
   2016 & 56.32 & 85.56 & 0.00 & 49.54 \\ 
    \hline
 \end{tabular}
-    \caption[\scriptsize{Medidas do modelo.}]{\scriptsize{Medidas do modelo.}}
+    \caption[\scriptsize{Medidas do modelo.}]{\scriptsize{Medidas do modelo. A coluna Global é a acurácia geral para o modelo. A coluna Home, Tie e Visitor apresentam os valores da acurácia para os casos de vitória, empate e derrota do time mandante, respectivamente.}}
     \label{tab:medidasmod}
 \end{table}
 
@@ -302,7 +365,7 @@ Seasons & Data & \textbf{Global} & Home & Tie & Visitor \\
   2016 & Test & 51.05 & 66.84 & 4.76 & 59.63 \\ 
    \hline
 \end{tabular}
-    \caption[\scriptsize{Medidas do modelo com similaridade para o empate.}]{\scriptsize{Medidas do modelo que inclue o ajuste para similaridade do empate.}}
+    \caption[\scriptsize{Medidas do modelo com similaridade para o empate.}]{\scriptsize{Medidas do modelo que inclue o ajuste para similaridade do empate. A coluna Global é a acurácia geral para o modelo. A coluna Home, Tie e Visitor apresentam os valores da acurácia para os casos de vitória, empate e derrota do time mandante, respectivamente. }}
     \label{tab:medidasmodsi}
 \end{table}	
 
@@ -372,11 +435,11 @@ Apesar de pequena, o tratamento para a regressão do coeficiente do emapate cont
  \scriptsize{(u) marcação} & \scriptsize{(v) passe curto } & \scriptsize{(w) perna boa} & \scriptsize{(x) perna ruim} & \scriptsize{(y) peso}\\[3pt]
  
     \includegraphics[width=25mm]{pique_result}  & \includegraphics[width=25mm]{posicion_gl_result} &   \includegraphics[width=25mm]{reacao_result}&
-  \includegraphics[width=25mm]{reflexos_result}    &    \\
- \scriptsize{(z) pique} & \scriptsize{(aa) posição do goleiro} & \scriptsize{(ab) reação} & \scriptsize{(ac) reflexo} & \\[3pt]
+  \includegraphics[width=25mm]{reflexos_result}    & \includegraphics[width=25mm]{pos_result}    \\
+ \scriptsize{(z) pique} & \scriptsize{(aa) posição do goleiro} & \scriptsize{(ab) reação} & \scriptsize{(ac) reflexo} & \scriptsize{(ad) posição} \\[3pt]
 
 \end{tabular}
-    \caption[\scriptsize{Medidas resumo.}]{\scriptsize{Medidas resumo alongo dos anos para cada variável disponível.}}
+    \caption[\scriptsize{Medidas resumo.}]{\scriptsize{Medidas resumo alongo dos anos para cada variável disponível. O marcador $X$ é inserido para os gráficos das variáveis não utilizadas para o modelo, por apresentar inconsistências nas relações positivas e negativas.}}
 \end{figure}
 
 
