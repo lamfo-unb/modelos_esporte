@@ -1,7 +1,6 @@
 library(data.table)
 library(dplyr)
 library(tidyverse)
-
 library(readxl)
 library(gtools)
 library(stringr)
@@ -9,7 +8,6 @@ rm(list = ls())
 gc()
 
 
-temporada <- 2016
 ### IMPORTANDO INFORMAÇÕES DOS JOGADORES ----
 fileinput <- "data/static"
 jogadores <- readRDS("data/static/dados_jogadores_ordenado.rds")  
@@ -23,8 +21,8 @@ jogadores <- jogadores %>%
 
 jogadores[,Altura:=gsub("\\scm","",Altura,perl=T)]
 jogadores[,Peso:=gsub("\\scm","",Altura,perl=T)]
-jogadores[,`Perna boa`:=ifelse(`Perna boa`=="Dir.",1,0)]
-jogadores[,`Perna ruim`:=as.numeric(`Perna ruim`)]
+jogadores[,`Perna boa`:=ifelse(`Perna boa`=="Dir.",1,0)*10]
+jogadores[,`Perna ruim`:=as.numeric(`Perna ruim`)*10]
 
 
 jogadores <- gather(jogadores %>%
@@ -77,90 +75,41 @@ saveRDS(jogadores_time,"data/static/dados_media_time.rds")
 
 
 
+library(stringi)
+stri_trans_general(i, "Latin-ASCII")
+
 
 ### Descritiva ----
-
-table(jogadores_time$variavel)
-times_analise <- c("Arsenal",
-"Chelsea",
-"Liverpool",
-"Man Utd",
-"Man City")
-
-variaveis_analise <- c("Aceleração",
-                       "Perna boa",
-                       "Passe curto",
-                       "Finalização")
+times_analise <- c("Arsenal","Chelsea","Liverpool","Man Utd","Man City")
+variaveis_analise <- unique(jogadores_time$variavel)
 
 
 jogadores_time_analise <- jogadores_time %>%
   filter(variavel %in% variaveis_analise &
            time_match3 %in% times_analise)
 
-
-
-pdf(file = "report/aceleracao_descri.pdf")
-ggplot(data=jogadores_time_analise %>% filter(variavel == "Aceleração" & season!=2017),
-       aes(x=season, y=valor, group = time_match3 , 
-           colour=time_match3)) +
-  geom_line()+
-  geom_point( size=4, shape=21, fill="white")  + 
-  scale_colour_manual(name = "Team",
-                      values=c("green", "blue","red","yellow","black")) + 
-  scale_x_discrete(name ="Season", 
-                    limits=c(2008:2016)) +
-  scale_y_continuous(name = "Aceleração") +
-  scale_fill_manual(name="Experimental\nCondition") + 
-  scale_shape_discrete(name  ="Team")
-dev.off()
-
-
-
-pdf(file = "report/perna_boa_descri.pdf")
-ggplot(data=jogadores_time_analise %>% filter(variavel == "Perna boa" & season!=2017),
-       aes(x=season, y=valor, group = time_match3 , 
-           colour=time_match3)) +
-  geom_line()+
-  geom_point( size=4, shape=21, fill="white")  + 
-  scale_colour_manual(name = "Team",
-                      values=c("green", "blue","red","yellow","black")) + 
-  scale_x_discrete(name ="Season", 
-                   limits=c(2008:2016)) +
-  scale_y_continuous(name = "Perna boa") +
-  scale_shape_discrete(name  ="Team")
-dev.off()
+i <- variaveis_analise[1]
+for(i in variaveis_analise){
+  var_name <- gsub(" ","_",tolower(stri_trans_general(i, "Latin-ASCII") ))
+  nome_arquivo <- paste0("report/images/",var_name,"_descri.pdf")
+  pdf(file = nome_arquivo)
+  g <- ggplot(data=jogadores_time_analise %>% filter(variavel == i & season!=2017),
+         aes(x=season, y=valor, group = time_match3 , 
+             colour=time_match3)) +
+    geom_line(size = 2 )+
+    geom_point( size=2, shape=22, fill="white")  + #http://sape.inf.usi.ch/quick-reference/ggplot2/shape
+    scale_colour_manual(name = "Team",
+                        values=c("darkred", "blue","red","lightblue","gold")) + 
+    scale_x_discrete(name ="Season", 
+                     limits=c(2008:2016)) +
+    scale_y_continuous(name = i) +
+    scale_shape_discrete(name  ="Team")
+  print(g)#https://stackoverflow.com/questions/21321975/loop-does-not-finish-saving-pdf
+  dev.off()
+}
 
 
 
-pdf(file = "report/passe_curto_descri.pdf")
-ggplot(data=jogadores_time_analise %>% filter(variavel == "Passe curto" & season!=2017),
-       aes(x=season, y=valor, group = time_match3 , 
-           colour=time_match3)) +
-  geom_line()+
-  geom_point( size=4, shape=21, fill="white")  + 
-  scale_colour_manual(name = "Team",
-                      values=c("green", "blue","red","yellow","black")) + 
-  scale_x_discrete(name ="Season", 
-                   limits=c(2008:2016)) +
-  scale_y_continuous(name = "Passe curto") +
-  scale_shape_discrete(name  ="Team")
-dev.off()
-
-
-
-pdf(file = "report/finalizacao_descri.pdf")
-ggplot(data=jogadores_time_analise %>% filter(variavel == "Finalização" & season!=2017),
-       aes(x=season, y=valor, group = time_match3 , 
-           colour=time_match3)) +
-  geom_line()+
-  geom_point( size=4, shape=21, fill="white")  + 
-  scale_colour_manual(name = "Team",
-                      values=c("green", "blue","red","yellow","black")) + 
-  scale_x_discrete(name ="Season", 
-                   limits=c(2008:2016)) +
-  scale_y_continuous(name = "Finalização") +
-  scale_shape_discrete(name  ="Team")
-dev.off()
 ## resultado jogos ----
 
 fileinput <- "data/games"
@@ -435,24 +384,79 @@ base_result_jogadores_forecast <- base_result_jogadores %>%
   select(season,Casa,time_casa,variavel,valor_casa) %>%
   unique()
 
-## Forecast ----
-saveRDS(base_result_jogadores_forecast,"data/result/base_modelo_bayes01-forecast.rds")
+# ## Forecast ----
+# saveRDS(base_result_jogadores_forecast,"data/result/base_modelo_bayes01-forecast.rds")
 
 
 ## descritiva resultado ----
-names(base_result_jogadores_modelo)
 
 
 base_result_jogadores_modelo <- base_result_jogadores_modelo %>% 
   mutate(resultado = ifelse(score_casa>score_fora,"VH",
                             ifelse(score_casa==score_fora,"TIE","VV")))
+
 aa_analise <- gather(base_result_jogadores_modelo,variable,valor,-season,-Casa,
-                     -Fora,-score_casa,-score_fora,-resultado)
+                     -Fora,-score_casa,-score_fora,-resultado) 
 
+var_name <- gsub(" ","",tolower(stri_trans_general(variaveis_analise, "Latin-ASCII") ))
+var_name <- gsub("\\.","_",var_name )
+nome_arquivo <- paste0(var_name,"_result.pdf")
+nome_arquivo
+i <- variaveis_analise
+vars_selecionadas <- c("Aceleração","Carrinho","Ch. de longe",
+                       "Cobr. falta","Contr. bola","Cruzamento",
+                       "Div. em pé","Dribles","Duração Do Contrato",
+                       "Finalização","Força chute","Idade",
+                       "Lançamento","Marcação","Passe curto",
+                       "Perna ruim","Pique","Posicion. GL",
+                       "Reação")
+vars_deletadas <- setdiff(variaveis_analise,vars_selecionadas)
+for(i in variaveis_analise){
+  var_name <- gsub(" ","",tolower(stri_trans_general(i, "Latin-ASCII") ))
+  var_name <- gsub("\\.","_",var_name )
+  nome_arquivo <- paste0("report/images/",var_name,"_result.pdf")
+  pdf(file = nome_arquivo)
+  g <-ggplot(data =aa_analise  %>% filter(variable == i & season!=2017),
+         aes(x=as.factor(season), y=valor)) +
+    # geom_boxplot(aes(fill=resultado,x=as.factor(season), y=valor)) +
+    # scale_colour_manual(values = c("green", "blue","red")) + 
+    stat_summary(fun.y=mean,  geom="line",
+                 aes( group = resultado ,colour = resultado),size=2) + 
+    scale_x_discrete(name ="Season") +
+    scale_fill_manual(name = "Result",
+                      values=c("green", "blue","red"))  +
+    scale_colour_discrete("Result")  + 
+    scale_y_continuous(name = i) 
+  
+  # diagonal 1
+  ablines <- data.frame(rbind(c(1,maxv),
+                              c(9,minv)))
+  names(ablines) <- c("ano","valor")
+  coefs <- coef(lm(valor ~ ano, data = ablines))
+  
+  if(i %in% vars_deletadas){
+    
+    baselimite <- aa_analise  %>% filter(variable == i & season!=2017) %>%
+      group_by(resultado,season) %>% summarise(valor = mean(valor))
+    
+    minv <- min(baselimite$valor )
+    maxv <- max(baselimite$valor)
+    
+    
+    g <- g + geom_abline(intercept = coefs[1], slope = coefs[2],size = 3,alpha = .25)
+    
+    # diagonal 2
+    ablines <- data.frame(rbind(c(1,minv),
+                                c(9,maxv)))
+    names(ablines) <- c("ano","valor")
+    coefs <- coef(lm(valor ~ ano, data = ablines))
+    g <- g + geom_abline(intercept = coefs[1], slope = coefs[2],size = 3,alpha = .25)
+  
+  }
+  print(g)#https://stackoverflow.com/questions/21321975/loop-does-not-finish-saving-pdf
+  dev.off()
+}
 
-
-ggplot(data = aa_analise %>% filter(variable=="Aceleração"),
-       aes(x=as.factor(season), y=valor)) + geom_boxplot(aes(fill=resultado))
 
 
 pdf(file = "report/vars_resultado.pdf")
