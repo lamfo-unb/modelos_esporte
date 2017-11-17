@@ -87,8 +87,6 @@ s_t <- 2016
 ## Variáveis auxiliares
 varsmodelo <- setdiff(names(base),c("season","Casa","Fora","score_casa",
                                     "score_fora","resultado"))
-varsmodelo <- c("Aceleração")
-
 logref <- -Inf
 acurraciaref <- 0
 is_geral <- NULL

@@ -7,9 +7,6 @@ base <- readRDS("data/result/base_modelo_dirichilet_score.rds")
 base <- data.table(base)
 base$resultado <- base$score_casa-base$score_fora
 
-
-vars_selecionadas <- readRDS("data/result/variaveis_modelo_select_dissimilaridade.rds")$vars_selecionadas
-
 ## Funções ----
 
 logDirichregregt <- function(parm){
