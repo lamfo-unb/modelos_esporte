@@ -258,6 +258,7 @@ A tabela \ref{tab:selectvar} apresenta essas análises paras cada variável e d�
 \end{table}
 
 
+
 \section{Método}
 \label{sec:metodo}
 
@@ -280,6 +281,13 @@ Os parâmetros de $\phi$ e $\lambda$ foram avalidados por meio do \textit{grid-s
     \caption[\scriptsize{Tunning parameters.}]{\scriptsize{ \textbf{(a)} Surface of parameters $\lambda$ and $k$ related with equation \ref{eq:vero}.\textbf{(b)}Contour of parameters $\lambda$ and $k$ related with equation \ref{eq:vero}.}}
     \label{fig:tunning}%
 \end{figure}
+
+
+\subsection{Modelo 1}
+\label{sec:mod1}
+
+O modelo 1 utiliza todas as variáveis disponíveis e utiliza medida de dissimilaridade para empate, vitória ou derrota do time visitante.
+
 
 
 O resultado para o modelo proposto não consegue identificar os resultados empate.
@@ -340,6 +348,13 @@ Man Utd & 16.50 & 49.02 & 14.96 & 1.77 \\
 \end{table}
 
 
+\newpage
+
+\subsection{Modelo 2}
+\label{sec:mod2}
+
+O modelo 2 adiciona medida de similaridade para modelar o empate.
+
 
 Isso ocorre devido o valor de $X_r$ representar uma medida de \textbf{dissimilaridade}, isto é, quanto maior o valor $X_r$ mais diferente são as habilidades do time mandante e visitante. Caso as habilidades dos dois times sejam iguais o valor  $X_r$ zera, inviabilizando a regressão do parâmetro $\alpha_{Tie}$. 
 
@@ -347,6 +362,7 @@ Dessa forma, propomos uma medida de \textbf{similaridade} para regressão do par
 
 \begin{equation}
 X_r^{Tie} = \gamma \exp{\left\{-\sigma X_r ^2\right\}}
+\label{eq:transform}
 \end{equation}
 
 Nessa estratégia, os parâmetros $\lambda$, $\phi$, $\sigma$ e $\gamma$ são determinados utilizando a procedimento \textit{tuning}. O modelo para $\alpha_{Tie}$ captará o nível de similaridade dos times.
@@ -405,13 +421,73 @@ Team & PLC & CCL& CEL & RET \\
     \label{tab:forecastsi}
 \end{table}
 
-Apesar de pequena, o tratamento para a regressão do coeficiente do emapate contribui para melhorar o poder de previsibilidade do modelo.
+Apesar de pequena, o tratamento para a regressão do coeficiente do empate contribui para melhorar o poder de previsibilidade do modelo. 
 
 
-\section{Resultados}
-\label{sec:reslt}
+A tabela \ref{tab:selectvartrans} apresenta as medidas descritivas utilizando a transformação \ref{eq:transform} com parâmetro $\gamma=1$ e $\sigma=1$.
+
+% latex table generated in R 3.3.2 by xtable 1.8-2 package
+% Thu Nov 16 13:58:52 2017
+\begin{table}[ht]
+\begin{small}
+\begin{tabular}{l||rrr||cc|||c}
+  \hline
+     \hline
+\rowcolor{SeaGreen3!30!} & \multicolumn{3}{c||}{Média} &   \multicolumn{2}{c||||}{Indicador positivo} & \multicolumn{1}{c}{Indicador negativo} \\
+\hline 
+  \hline
+\rowcolor{SeaGreen3!30!} Skill &  $\bar{X}_r^{VH}$ &  $\bar{X}_r^{TIE}$ &  $\bar{X}_r^{VV}$ & \textbf{MNP } & \textbf{NP }& \textbf{NN }\\ 
+ \hline
+\rowcolor{gray!30!} Aceleração & 0.253 & 0.991 & 0.047 & 1.304 & 88.9 & 11.1 \\ 
+\rowcolor{gray!10!} Altura & 0.999 & 1.000 & 0.997 & -0.030 & 22.2 & 77.8 \\ 
+\rowcolor{gray!30!} Cabeceio & 0.811 & 0.960 & 0.733 & 0.245 & 55.6 & 44.4 \\ 
+\rowcolor{gray!10!} Carrinho & 0.740 & 1.000 & 0.484 & 0.650 & 66.7 & 33.3 \\ 
+\rowcolor{gray!30!} Ch. de longe & 0.201 & 0.946 & 0.042 & 1.000 & 88.9 & 11.1 \\ 
+\rowcolor{gray!10!} Cobr. falta & 0.215 & 0.991 & 0.029 & 1.135 & 77.8 & 22.2 \\ 
+\rowcolor{gray!30!} Combativ. & 0.795 & 0.910 & 0.769 & 0.162 & 55.6 & 44.4 \\ 
+\rowcolor{gray!10!} Contr. bola & 0.067 & 0.851 & 0.007 & 1.204 & 88.9 & 11.1 \\ 
+\rowcolor{gray!30!} Cruzamento & 0.066 & 0.798 & 0.009 & 1.042 & 88.9 & 11.1 \\ 
+\rowcolor{gray!10!} Div. em pé & 0.673 & 0.998 & 0.399 & 0.755 & 77.8 & 22.2 \\ 
+\rowcolor{gray!30!} Dribles & 0.081 & 0.953 & 0.005 & 1.511 & 88.9 & 11.1 \\ 
+\rowcolor{gray!10!} Duração Do Contrato & 0.839 & 0.978 & 0.751 & 0.346 & 88.9 & 11.1 \\ 
+\rowcolor{gray!30!} Elast. GL & 0.959 & 0.999 & 0.913 & 0.121 & 44.4 & 55.6 \\ 
+\rowcolor{gray!10!} Finalização & 0.596 & 0.998 & 0.304 & 0.958 & 88.9 & 11.1 \\ 
+\rowcolor{gray!30!} Fôlego & 0.849 & 0.993 & 0.725 & 0.560 & 77.8 & 22.2 \\ 
+\rowcolor{gray!10!} Força & 0.941 & 0.998 & 0.820 & 0.157 & 44.4 & 55.6 \\ 
+\rowcolor{gray!30!} Força chute & 0.207 & 0.819 & 0.083 & 0.930 & 88.9 & 11.1 \\ 
+\rowcolor{gray!10!} Idade & 0.936 & 0.999 & 0.876 & 0.225 & 100.0 & 0.0 \\ 
+\rowcolor{gray!30!} Lançamento & 0.045 & 0.973 & 0.001 & 1.459 & 100.0 & 0.0 \\ 
+\rowcolor{gray!10!} Manejo & 0.937 & 0.966 & 0.944 & 0.397 & 100.0 & 0.0 \\ 
+\rowcolor{gray!30!} Marcação & 0.683 & 0.939 & 0.564 & 0.453 & 77.8 & 22.2 \\ 
+\rowcolor{gray!10!} Passe curto & 0.046 & 0.910 & 0.002 & 1.296 & 88.9 & 11.1 \\ 
+\rowcolor{gray!30!} Perna boa & 1.000 & 1.000 & 0.998 & 0.000 & 55.6 & 44.4 \\ 
+\rowcolor{gray!10!} Perna ruim & 0.951 & 0.998 & 0.859 & 0.155 & 55.6 & 44.4 \\ 
+\rowcolor{gray!30!} Peso & 0.999 & 1.000 & 0.997 & -0.030 & 22.2 & 77.8 \\ 
+\rowcolor{gray!10!} Pique & 0.303 & 0.993 & 0.068 & 1.296 & 100.0 & 0.0 \\ 
+\rowcolor{gray!30!} pos & 0.006 & 0.289 & 0.000 & 0.580 & 88.9 & 11.1 \\ 
+\rowcolor{gray!10!} Posicion. GL & 0.933 & 0.973 & 0.931 & 0.408 & 77.8 & 22.2 \\ 
+\rowcolor{gray!30!} Reação & 0.066 & 0.817 & 0.007 & 1.218 & 100.0 & 0.0 \\ 
+\rowcolor{gray!10!} Reflexos & 0.920 & 0.941 & 0.945 & 0.453 & 88.9 & 11.1 \\ 
+   \hline
+\end{tabular}
+\end{small}
+\caption[\scriptsize{Variable selection with transformation.}]{\scriptsize{ Tabela indicativa do tipo de relação entre a habilidade dos times e o resultado do jogo com ênfase no resultado de empate. A interpretação é similar àquela realizada na tabela \ref{tab:selectvar}. A transformação \ref{eq:transform} permite que o efeito de similaridade das habilidades esperado para os resultados de empate seja captado. Essa transformação é exclusiva para a regressão do parâmetro $\alpha_{Tie}$. $ MNP = 2  \bar{X}_r^{TIE} - \bar{X}_r^{VH} - \bar{X}_r^{VV}$ é o valor médio para a superioridade da similaridade do empate, variando entre $-2$ e $2$. Valos próximos de $2$ indicam que a variável possui nível de \textbf{similaridade máxima} das habilidades dos times nos empates e \textbf{similaridade mínima} para os casos de vitória ou derrota do mandante. A coluna NP indica a proporção de temporadas em que o o valor do regressor transformado foi superior nos resultados de empate quando comparada com vitória e derrota do time mandante. O coluna NN representa indica a proporção de temporadas em que o valor do regressor transformado foi inferior nos resultados de empate quando comparada ou com vitória ou com derrota do time mandante. A primeira medida indica a  consistência do método para modelar o empate e a segunda inconsistência.}}
+    \label{tab:selectvartrans}
+\end{table}
+
+A tabela \ref{tab:selectvartrans} dá indícios de que as variáveis ``A"
+
 
 \newpage
+\subsection{Modelo 3}
+\label{sec:mod3}
+
+O modelo 3 restringe as variáveis baseado nas análise preliminares do modelo 1 e 2.
+
+O primeiro critério seleciona as variáveis para modelar a vitória e a derrota do time mandante. A partir da tabela \ref{tab:selectvar} foram selecionados aqueles que possuem a variável NP e NN com valor superior ou igual a $80\%$, isso é, variáveis que possuem relação positiva ou negativa em mais de $80\%$ das temporadas.
+
+A figura \ref{fig:medresumo} destaca as variáveis selecionadas.
+
 
 \begin{figure}
 \begin{tabular}{ccccc}
@@ -434,18 +510,167 @@ Apesar de pequena, o tratamento para a regressão do coeficiente do emapate cont
   \includegraphics[width=25mm]{pernaruim_result}   & \includegraphics[width=25mm]{peso_result}   \\
  \scriptsize{(u) marcação} & \scriptsize{(v) passe curto } & \scriptsize{(w) perna boa} & \scriptsize{(x) perna ruim} & \scriptsize{(y) peso}\\[3pt]
  
-    \includegraphics[width=25mm]{pique_result}  & \includegraphics[width=25mm]{posicion_gl_result} &   \includegraphics[width=25mm]{reacao_result}&
-  \includegraphics[width=25mm]{reflexos_result}    & \includegraphics[width=25mm]{pos_result}    \\
- \scriptsize{(z) pique} & \scriptsize{(aa) posição do goleiro} & \scriptsize{(ab) reação} & \scriptsize{(ac) reflexo} & \scriptsize{(ad) posição} \\[3pt]
+    \includegraphics[width=25mm]{pique_result}  & \includegraphics[width=25mm]{pos_result} & \includegraphics[width=25mm]{posicion_gl_result} &     \includegraphics[width=25mm]{reacao_result}&
+  \includegraphics[width=25mm]{reflexos_result}     \\
+ \scriptsize{(z) pique} & \scriptsize{(aa) posição}& \scriptsize{(ab) posição do goleiro} & \scriptsize{(ac) reação} & \scriptsize{(ad) reflexo}  \\[3pt]
 
 \end{tabular}
-    \caption[\scriptsize{Medidas resumo.}]{\scriptsize{Medidas resumo alongo dos anos para cada variável disponível. O marcador $X$ é inserido para os gráficos das variáveis não utilizadas para o modelo, por apresentar inconsistências nas relações positivas e negativas.}}
+    \caption[\scriptsize{Medidas resumo.}]{\scriptsize{Medidas resumo ao longo das temporadas para cada variável disponível. O marcador $X$ é inserido para os gráficos das variáveis não utilizadas para o modelo, por apresentar inconsistências nas relações positivas e negativas.}}
+        \label{fig:medresumo}
+\end{figure}
+
+
+Com esse critério são selecionadas as variáveis Aceleração, Ch. de longe, Cobr. falta, Contr. bola, Cruzamento, Div. em pé, Dribles, Duração Do Contrato, Força chute, Idade, Lançamento, Marcação, Passe curto, Pique, Posição e Reação.
+
+O segundo critério seleciona as variáveis para modelar o empate do time mandante. A partir da tabela \ref{tab:selectvartrans} foram selecionados aqueles que possuem a variável MNP com valor superior ou igual a $1$, isso é, variáveis as quais a transformação \ref{eq:transform} resulta em uma alta similaridade nas habilidades dos times que empataram e baixa similaridade dos resultados que não ocorreram empate.
+
+
+
+A figura \ref{fig:medresumo} destaca as variáveis selecionadas. Visualmente, esse filtro é realizado nos gráficos que possuem trajetórias em verde, empate, próxima de $1$ (alta similaridade) e sempre superiores às trajetorias de vitória e derrota do mandante, estando esses próximos de $0$ (baixa similaridade).
+
+\begin{figure}
+\begin{tabular}{ccccc}
+  \includegraphics[width=25mm]{aceleracao_result_trans} & \includegraphics[width=25mm]{altura_result_trans} & \includegraphics[width=25mm]{cabeceio_result_trans} &   \includegraphics[width=25mm]{carrinho_result_trans} &
+  \includegraphics[width=25mm]{ch_delonge_result_trans} \\
+\scriptsize{(a) Aceleração } & \scriptsize{(b) altura  } & \scriptsize{(c) cabeceio } & \scriptsize{(d) carrinho } & \scriptsize{(e) chute de longe }\\[3pt]
+\includegraphics[width=25mm]{cobr_falta_result_trans} & \includegraphics[width=25mm]{combativ__result_trans} &   \includegraphics[width=25mm]{contr_bola_result_trans} &
+  \includegraphics[width=25mm]{cruzamento_result_trans} & \includegraphics[width=25mm]{div_empe_result_trans} \\
+ \scriptsize{(f) cobrança de falta } & \scriptsize{(g) combatividade } & \scriptsize{(h) controle de bola} & \scriptsize{(i) cruzamento} & \scriptsize{(j) dividida}\\[3pt]
+ 
+ \includegraphics[width=25mm]{dribles_result_trans} & \includegraphics[width=25mm]{duracaodocontrato_result_trans} &   \includegraphics[width=25mm]{elast_gl_result_trans} &
+  \includegraphics[width=25mm]{finalizacao_result_trans} & \includegraphics[width=25mm]{folego_result_trans}  \\
+ \scriptsize{(k) drible} & \scriptsize{(l) duração do contrato } & \scriptsize{(m) elasticidade do goleiro} & \scriptsize{(n) finalização} & \scriptsize{(o) fôlego}\\[3pt]
+ 
+  \includegraphics[width=25mm]{forca_result_trans} & \includegraphics[width=25mm]{forcachute_result_trans}  &   \includegraphics[width=25mm]{idade_result_trans} &
+  \includegraphics[width=25mm]{lancamento_result_trans}  & \includegraphics[width=25mm]{manejo_result_trans}  \\
+ \scriptsize{(p) força} & \scriptsize{(q) força chute } & \scriptsize{(r) idade} & \scriptsize{(s) lançamento} & \scriptsize{(t) manejo}\\[3pt]
+ 
+   \includegraphics[width=25mm]{marcacao_result_trans} & \includegraphics[width=25mm]{passecurto_result_trans}   &   \includegraphics[width=25mm]{pernaboa_result_trans}&
+  \includegraphics[width=25mm]{pernaruim_result_trans}   & \includegraphics[width=25mm]{peso_result_trans}   \\
+ \scriptsize{(u) marcação} & \scriptsize{(v) passe curto } & \scriptsize{(w) perna boa} & \scriptsize{(x) perna ruim} & \scriptsize{(y) peso}\\[3pt]
+ 
+    \includegraphics[width=25mm]{pique_result_trans}  & \includegraphics[width=25mm]{pos_result_trans} & \includegraphics[width=25mm]{posicion_gl_result_trans} &     \includegraphics[width=25mm]{reacao_result_trans}&
+  \includegraphics[width=25mm]{reflexos_result_trans}     \\
+ \scriptsize{(z) pique} & \scriptsize{(aa) posição}& \scriptsize{(ab) posição do goleiro} & \scriptsize{(ac) reação} & \scriptsize{(ad) reflexo}  \\[3pt]
+
+\end{tabular}
+    \caption[\scriptsize{Medidas resumo transformado.}]{\scriptsize{Medidas resumo transformada ao longo das temporadas para cada variável disponível. O marcador $X$ é inserido para os gráficos das variáveis não utilizadas para o modelo, por apresentar inconsistências nas relações positivas e negativas.}}
+    \label{fig:medresumotrans}
+\end{figure}
+
+
+
+
+
+
+
+\begin{figure}
+\begin{tabular}{ccccc}
+  \includegraphics[width=25mm]{aceleracao_result_trans_media} & \includegraphics[width=25mm]{altura_result_trans_media} & \includegraphics[width=25mm]{cabeceio_result_trans_media} &   \includegraphics[width=25mm]{carrinho_result_trans_media} &
+  \includegraphics[width=25mm]{ch_delonge_result_trans_media} \\
+\scriptsize{(a) Aceleração } & \scriptsize{(b) altura  } & \scriptsize{(c) cabeceio } & \scriptsize{(d) carrinho } & \scriptsize{(e) chute de longe }\\[3pt]
+\includegraphics[width=25mm]{cobr_falta_result_trans_media} & \includegraphics[width=25mm]{combativ__result_trans_media} &   \includegraphics[width=25mm]{contr_bola_result_trans_media} &
+  \includegraphics[width=25mm]{cruzamento_result_trans_media} & \includegraphics[width=25mm]{div_empe_result_trans_media} \\
+ \scriptsize{(f) cobrança de falta } & \scriptsize{(g) combatividade } & \scriptsize{(h) controle de bola} & \scriptsize{(i) cruzamento} & \scriptsize{(j) dividida}\\[3pt]
+ 
+ \includegraphics[width=25mm]{dribles_result_trans_media} & \includegraphics[width=25mm]{duracaodocontrato_result_trans_media} &   \includegraphics[width=25mm]{elast_gl_result_trans_media} &
+  \includegraphics[width=25mm]{finalizacao_result_trans_media} & \includegraphics[width=25mm]{folego_result_trans_media}  \\
+ \scriptsize{(k) drible} & \scriptsize{(l) duração do contrato } & \scriptsize{(m) elasticidade do goleiro} & \scriptsize{(n) finalização} & \scriptsize{(o) fôlego}\\[3pt]
+ 
+  \includegraphics[width=25mm]{forca_result_trans_media} & \includegraphics[width=25mm]{forcachute_result_trans_media}  &   \includegraphics[width=25mm]{idade_result_trans_media} &
+  \includegraphics[width=25mm]{lancamento_result_trans_media}  & \includegraphics[width=25mm]{manejo_result_trans_media}  \\
+ \scriptsize{(p) força} & \scriptsize{(q) força chute } & \scriptsize{(r) idade} & \scriptsize{(s) lançamento} & \scriptsize{(t) manejo}\\[3pt]
+ 
+   \includegraphics[width=25mm]{marcacao_result_trans_media} & \includegraphics[width=25mm]{passecurto_result_trans_media}   &   \includegraphics[width=25mm]{pernaboa_result_trans_media}&
+  \includegraphics[width=25mm]{pernaruim_result_trans_media}   & \includegraphics[width=25mm]{peso_result_trans_media}   \\
+ \scriptsize{(u) marcação} & \scriptsize{(v) passe curto } & \scriptsize{(w) perna boa} & \scriptsize{(x) perna ruim} & \scriptsize{(y) peso}\\[3pt]
+ 
+    \includegraphics[width=25mm]{pique_result_trans_media}  & \includegraphics[width=25mm]{pos_result_trans_media} & \includegraphics[width=25mm]{posicion_gl_result_trans_media} &     \includegraphics[width=25mm]{reacao_result_trans_media}&
+  \includegraphics[width=25mm]{reflexos_result_trans_media}     \\
+ \scriptsize{(z) pique} & \scriptsize{(aa) posição}& \scriptsize{(ab) posição do goleiro} & \scriptsize{(ac) reação} & \scriptsize{(ad) reflexo}  \\[3pt]
+
+\end{tabular}
+    \caption[\scriptsize{Medidas resumo transformado na média.}]{\scriptsize{Medidas resumo média transformada ao longo das temporadas para cada variável disponível. O marcador $X$ é inserido para os gráficos das variáveis não utilizadas para o modelo, por apresentar inconsistências nas relações positivas e negativas.}}
+    \label{fig:medresumotransmedia}
+\end{figure}
+
+
+
+\section{Resultados}
+\label{sec:reslt}
+
+
+Comparação
+
+
+\begin{figure}
+\begin{tabular}{ccc}
+  \includegraphics[width=55mm]{aceleracao_result} & \includegraphics[width=55mm]{aceleracao_result_trans} & \includegraphics[width=55mm]{aceleracao_result_trans_media}\\
+\scriptsize{(a) Aceleração } & \scriptsize{(b) Aceleração transformado  } & \scriptsize{(c) Aceleração transformado na média} \\[3pt]
+
+\end{tabular}
+    \caption[\scriptsize{Medidas resumo transformado.}]{\scriptsize{Medidas resumo transformada ao longo das temporadas para cada variável disponível. O marcador $X$ é inserido para os gráficos das variáveis não utilizadas para o modelo, por apresentar inconsistências nas relações positivas e negativas.}}
+    \label{fig:medresumcomparacao}
 \end{figure}
 
 
 
 
  
+Com esse critério são selecionadas as variáveis Aceleração, Cobr. falta, Contr. bola, Cruzamento, Dribles, Lançamento, Passe curto, Pique e  Reação. 
+
+Todas as variáveis selecionadas para o modelo do empate estão no modelo de vitória ou derrota do time mandante.
+
+
+% latex table generated in R 3.3.2 by xtable 1.8-2 package
+% Thu Nov 16 23:42:48 2017
+\begin{table}[ht]
+\centering
+\begin{tabular}{llrrrr}
+  \hline
+Seasons & Data & Global & Home & Tie & Visitor \\ 
+  \hline
+2008-2014 & Trainning & 53.11 & 83.05 & 1.80 & 50.43 \\ 
+  2015 & Tuning & 47.11 & 83.44 & 3.74 & 37.93 \\ 
+  2016 & Test & 58.16 & 84.49 & 3.57 & 55.05 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+
+
+% latex table generated in R 3.3.2 by xtable 1.8-2 package
+% Thu Nov 16 23:53:43 2017
+\begin{table}[ht]
+\centering
+\begin{tabular}{lrrrr}
+  \hline
+time & campeao & champions & europa & rebaixa \\ 
+  \hline
+Man City & 18.00 & 55.00 & 10.00 & 6.00 \\ 
+  Man Utd & 17.00 & 51.00 & 15.00 & 0.00 \\ 
+  Arsenal & 15.00 & 35.00 & 15.00 & 3.00 \\ 
+  Tottenham & 14.00 & 43.00 & 18.00 & 0.00 \\ 
+  Liverpool & 7.00 & 31.00 & 9.00 & 3.00 \\ 
+  Newcastle & 6.00 & 21.00 & 19.00 & 13.00 \\ 
+  Chelsea & 6.00 & 32.00 & 12.00 & 6.00 \\ 
+  Southampton & 5.00 & 27.00 & 11.00 & 8.00 \\ 
+  Everton & 4.00 & 17.00 & 10.00 & 7.00 \\ 
+  Crystal Palace & 2.00 & 15.00 & 10.00 & 13.00 \\ 
+  Bournemouth & 2.00 & 10.00 & 5.00 & 24.00 \\ 
+  West Brom & 1.00 & 5.00 & 4.00 & 34.00 \\ 
+  Swansea & 1.00 & 8.00 & 10.00 & 18.00 \\ 
+  Stoke City & 1.00 & 12.00 & 12.00 & 12.00 \\ 
+  Leicester & 1.00 & 9.00 & 9.00 & 8.00 \\ 
+  West Ham & 0.00 & 14.00 & 14.00 & 18.00 \\ 
+  Watford & 0.00 & 4.00 & 6.00 & 27.00 \\ 
+  Huddersfield & 0.00 & 1.00 & 4.00 & 36.00 \\ 
+  Burnley & 0.00 & 5.00 & 3.00 & 33.00 \\ 
+  Brighton & 0.00 & 5.00 & 4.00 & 31.00 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
 \section{Considerações finais}
 \label{sec:conclu}
 \noindent
