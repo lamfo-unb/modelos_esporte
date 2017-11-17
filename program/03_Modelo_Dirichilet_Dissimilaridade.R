@@ -79,7 +79,7 @@ scale_this <- function(x){
 
 i <- 1
 j <- 1
-s <- 2014
+s <- 2008:2014
 s_out <- 2015
 s_t <- 2016
 
@@ -145,6 +145,9 @@ for(k in ks){
       ahat <- exp(ahat)
       yrhat <- factor(apply(ahat,1,which.max),levels = 1:ncol(yr))
       yrt <- factor(apply(yr,1,which.max),levels = 1:ncol(yr))
+      
+
+        
       cross <- table(yrt,yrhat)
       acurracia <- sum(diag(cross)) / sum(cross)
       acurracias <- data.table(t(diag(cross/apply(cross,1,sum))))

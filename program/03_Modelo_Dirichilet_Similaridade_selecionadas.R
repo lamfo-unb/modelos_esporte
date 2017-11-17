@@ -6,14 +6,16 @@ library(maxLik)
 base <- readRDS("data/result/base_modelo_dirichilet_score.rds")
 base <- data.table(base)
 base$resultado <- base$score_casa-base$score_fora
-summary(base)
+
+
+vars_selecionadas <- readRDS("data/result/variaveis_modelo_select_dissimilaridade.rds")$vars_selecionadas
+
 ## Funções ----
 
 logDirichregregt <- function(parm){
   yr <- (yr*(nrow(yr) - 1) + 1/ncol(yr))/(nrow(yr))
   parmreg <- matrix(parm,nrow=ncol(yr),byrow = F)
-  ai <- xr %*% t(parmreg)
-  ai[,2] <- (cbind(xr[,1],gama*exp(-sigma*(xr[,-1])^2)) %*% t(parmreg))[,2]
+  ai <- (cbind(xr[,1],gama*exp(-sigma*(xr[,-1])^2))) %*% t(parmreg)
   ai <- exp(ai)
   Ai <- apply(ai,1,sum)
   v0 <- ((ai-1)*log(yr)-log(gamma(ai)))
@@ -24,6 +26,7 @@ logDirichregregt <- function(parm){
                         (1-alpha_regula)*sum(abs(parm)))
   return(veroi)
 }
+
 
 ## função gradiente 
 
@@ -86,7 +89,8 @@ s_t <- 2016
 
 ## Variáveis auxiliares
 varsmodelo <- setdiff(names(base),c("season","Casa","Fora","score_casa",
-                                  "score_fora","resultado"))
+                      "score_fora","resultado"))
+# varsmodelo <- as.character(vars_selecionadas)
 # varsmodelo <- c("Aceleração")
 
 logref <- -Inf
@@ -97,8 +101,8 @@ base_temp_j <- NULL
 ## Parâmetros estimate via grid search
 ks <- seq(0,3,by = .5);k <- 0.5
 alpha_regulas <- seq(0,1,by = .1);alpha_regula <- 0.5
-sigmas <- seq(0.1,1,by= .1);sigma <- 1
-gamas  <- seq(1,3,by= .5); gama <- 1
+sigmas <- seq(0.1,1,by= .1);sigma <- 10
+gamas  <- seq(1,3,by= .5); gama <- 10
 
 a <- expand.grid(ks,alpha_regulas,sigmas,gamas)
 resultado_foward <- NULL
@@ -141,11 +145,9 @@ for(gama in gamas){
           nometheta_temp <- paste(nometheta_temp_Y,
                                   nometheta_temp_X,sep="_")
           
-          
           parms_temp <- matrix(theta_temp,nrow=ncol(yr),byrow = F)
           colnames(parms_temp) <- varsmodel_temp
-          ahat <- xr %*% t(parms_temp)
-          ahat[,2] <- (cbind(xr[,1],gama*exp(-sigma*(xr[,-1])^2)) %*% t(parms_temp))[,2]
+          ahat <- (cbind(xr[,1],gama*exp(-sigma*(xr[,-1])^2))) %*% t(parms_temp)
           ahat <- exp(ahat)
           yrhat <- factor(apply(ahat,1,which.max),levels = 1:ncol(yr))
           yrt <- factor(apply(yr,1,which.max),levels = 1:ncol(yr))
@@ -173,7 +175,7 @@ for(gama in gamas){
             
             parms_temp <- matrix(theta_temp,nrow=ncol(yr),byrow = F)
             ahat_out <- xrout %*% t(parms_temp)
-            ahat_out[,2] <- (cbind(xrout[,1],gama*exp(-sigma*(xrout[,-1])^2)) %*% t(parms_temp))[,2]
+            ahat_out <- (cbind(xrout[,1],gama*exp(-sigma*(xrout[,-1])^2)) %*% t(parms_temp))
             ahat_out <- exp(ahat_out)
             yrhat_out <- factor(apply(ahat_out,1,which.max),levels = 1:ncol(yrout))
             yrt_out <- factor(apply(yrout,1,which.max),levels = 1:ncol(yrout))
@@ -200,7 +202,7 @@ for(gama in gamas){
                                             acurracia_out = acurracia_out),
                                  acurracias,
                                  acurracias_out)
-            file_name <- paste0("data/result/tuning/T_K",k*10,"_A",alpha_regula*10,"_S",sigma*10,"_G",gama*10,"_similaridade.rds")
+            file_name <- paste0("data/result/tuning/T_K",k*10,"_A",alpha_regula*10,"_S",sigma*10,"_G",gama*10,"_selecionadas.rds")
             saveRDS(base_temp_f,file_name)
             resultado_foward <- rbind(resultado_foward,
                                   base_temp_f)
@@ -214,6 +216,5 @@ for(gama in gamas){
 }
 
 
-# # ### modelo escolhido ----
-# saveRDS(base_temp_f,"data/result/modelo_est_similaridade.rds")
-# saveRDS(parms_temp,"data/result/modelo_est_parms.rds")
+# ### modelo escolhido ----
+# saveRDS(base_temp_f,"data/result/modelo_est_selecionadas.rds")

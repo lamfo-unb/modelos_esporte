@@ -7,6 +7,9 @@ library(stringr)
 rm(list = ls())
 gc()
 
+## dados para transformação
+sigma <- 1
+gama <- 1
 
 ### IMPORTANDO INFORMAÇÕES DOS JOGADORES ----
 fileinput <- "data/static"
@@ -75,8 +78,7 @@ saveRDS(jogadores_time,"data/static/dados_media_time.rds")
 
 
 
-library(stringi)
-stri_trans_general(i, "Latin-ASCII")
+
 
 
 ### Descritiva ----
@@ -89,6 +91,8 @@ jogadores_time_analise <- jogadores_time %>%
            time_match3 %in% times_analise)
 
 i <- variaveis_analise[1]
+library(stringi)
+stri_trans_general(i, "Latin-ASCII")
 for(i in variaveis_analise){
   var_name <- gsub(" ","_",tolower(stri_trans_general(i, "Latin-ASCII") ))
   nome_arquivo <- paste0("report/images/",var_name,"_descri.pdf")
@@ -107,6 +111,7 @@ for(i in variaveis_analise){
   print(g)#https://stackoverflow.com/questions/21321975/loop-does-not-finish-saving-pdf
   dev.off()
 }
+
 
 
 
@@ -388,36 +393,84 @@ base_result_jogadores_forecast <- base_result_jogadores %>%
 # saveRDS(base_result_jogadores_forecast,"data/result/base_modelo_bayes01-forecast.rds")
 
 
-## descritiva resultado ----
-
-
 base_result_jogadores_modelo <- base_result_jogadores_modelo %>% 
   mutate(resultado = ifelse(score_casa>score_fora,"VH",
                             ifelse(score_casa==score_fora,"TIE","VV")))
 
 aa_analise <- gather(base_result_jogadores_modelo,variable,valor,-season,-Casa,
                      -Fora,-score_casa,-score_fora,-resultado) 
+variaveis_analise <- unique(aa_analise$variable)
+
+
+base_select_variaveis <- aa_analise  %>% filter(season!=2017) %>%
+  group_by(variable,resultado) %>% summarise(valor = mean(valor))
+
+base_select_variaveis <- spread(base_select_variaveis,resultado,valor) %>%
+  select(variable,VH,TIE,VV)
+
+
+
+base_select_variaveis2 <- aa_analise  %>% filter(season!=2017) %>%
+  group_by(variable,resultado,season) %>% summarise(valor = mean(valor)) %>%
+  spread(resultado,valor) %>%
+  group_by(variable) %>%
+  summarise(NVHP = mean(VH>TIE & VH>VV ),
+            NVVP = mean(VV<TIE & VV<VH),
+            NTIEP = mean(VH>TIE & TIE>VV),
+            NP    = mean(NVHP,NVVP,NTIEP),
+            NVHN = mean(VH<TIE & VH<VV ),
+            NVVN = mean(VV>TIE & VV>VH),
+            NTIEN = mean(VH<TIE & TIE<VV),
+            NN    = mean(NVHN,NVVN,NTIEN))
+
+base_select_variaveis <- base_select_variaveis %>%
+  left_join(base_select_variaveis2,by = "variable")
+
+
+## selecionando variáveis com todos os resultados que fazem sentido
+level_select <- 0.8
+vars_selecionadas <- (base_select_variaveis %>%
+                        filter(NP>=level_select | NN>=level_select))$variable
+
+
+base_select_variaveis[,-(1:4)] <- base_select_variaveis[,-(1:4)]*100
+base_select_variaveis$variable <- paste0(rep(c("\rowcolor{gray!30!}","\rowcolor{gray!10!}"),15)," ",
+                                         base_select_variaveis$variable)
+library(xtable)
+print(xtable(base_select_variaveis,
+             digits = c(0,0,3,3,3,1,1,1,1,1,1,1,1)),include.rownames = F)
+
 
 var_name <- gsub(" ","",tolower(stri_trans_general(variaveis_analise, "Latin-ASCII") ))
 var_name <- gsub("\\.","_",var_name )
 nome_arquivo <- paste0(var_name,"_result.pdf")
-nome_arquivo
-i <- variaveis_analise
-vars_selecionadas <- c("Aceleração","Carrinho","Ch. de longe",
-                       "Cobr. falta","Contr. bola","Cruzamento",
-                       "Div. em pé","Dribles","Duração Do Contrato",
-                       "Finalização","Força chute","Idade",
-                       "Lançamento","Marcação","Passe curto",
-                       "Perna ruim","Pique","Posicion. GL",
-                       "Reação")
+
+# setdiff( c("Aceleração","Carrinho","Ch. de longe",
+#                        "Cobr. falta","Contr. bola","Cruzamento",
+#                        "Div. em pé","Dribles","Duração Do Contrato",
+#                        "Finalização","Força chute","Idade",
+#                        "Lançamento","Marcação","Passe curto",
+#                        "Perna ruim","Pique","Posicion. GL",
+#                        "Reação"),vars_selecionadas$variable)
+# 
+# setdiff(vars_selecionadas$variable,
+#         c("Aceleração","Carrinho","Ch. de longe",
+#           "Cobr. falta","Contr. bola","Cruzamento",
+#           "Div. em pé","Dribles","Duração Do Contrato",
+#           "Finalização","Força chute","Idade",
+#           "Lançamento","Marcação","Passe curto",
+#           "Perna ruim","Pique","Posicion. GL",
+#           "Reação"))
+
 vars_deletadas <- setdiff(variaveis_analise,vars_selecionadas)
+
 for(i in variaveis_analise){
   var_name <- gsub(" ","",tolower(stri_trans_general(i, "Latin-ASCII") ))
   var_name <- gsub("\\.","_",var_name )
   nome_arquivo <- paste0("report/images/",var_name,"_result.pdf")
   pdf(file = nome_arquivo)
   g <-ggplot(data =aa_analise  %>% filter(variable == i & season!=2017),
-         aes(x=as.factor(season), y=valor)) +
+             aes(x=as.factor(season), y=valor)) +
     # geom_boxplot(aes(fill=resultado,x=as.factor(season), y=valor)) +
     # scale_colour_manual(values = c("green", "blue","red")) + 
     stat_summary(fun.y=mean,  geom="line",
@@ -428,46 +481,221 @@ for(i in variaveis_analise){
     scale_colour_discrete("Result")  + 
     scale_y_continuous(name = i) 
   
-  # diagonal 1
-  ablines <- data.frame(rbind(c(1,maxv),
-                              c(9,minv)))
-  names(ablines) <- c("ano","valor")
-  coefs <- coef(lm(valor ~ ano, data = ablines))
+  
   
   if(i %in% vars_deletadas){
     
     baselimite <- aa_analise  %>% filter(variable == i & season!=2017) %>%
       group_by(resultado,season) %>% summarise(valor = mean(valor))
     
-    minv <- min(baselimite$valor )
+    
+    minv <- min(baselimite$valor)
     maxv <- max(baselimite$valor)
     
+    # diagonal 1
+    ablines <- data.frame(rbind(c(1,maxv),
+                                c(9,minv)))
+    names(ablines) <- c("ano","valor")
+    coefs <- coef(lm(valor ~ ano, data = ablines))
     
-    g <- g + geom_abline(intercept = coefs[1], slope = coefs[2],size = 3,alpha = .25)
+    g <- g + geom_abline(intercept = coefs[1], slope = coefs[2],size = 5,alpha = .25)
     
     # diagonal 2
     ablines <- data.frame(rbind(c(1,minv),
                                 c(9,maxv)))
     names(ablines) <- c("ano","valor")
     coefs <- coef(lm(valor ~ ano, data = ablines))
-    g <- g + geom_abline(intercept = coefs[1], slope = coefs[2],size = 3,alpha = .25)
-  
+    g <- g + geom_abline(intercept = coefs[1], slope = coefs[2],size = 5,alpha = .25)
+    
   }
   print(g)#https://stackoverflow.com/questions/21321975/loop-does-not-finish-saving-pdf
   dev.off()
 }
 
 
-
-pdf(file = "report/vars_resultado.pdf")
-ggplot(data = aa_analise %>% filter(variable %in% variaveis_analise[-2] ),
-       aes(x=variable, y=valor)) + geom_boxplot(aes(fill=resultado)) + 
-  scale_y_continuous(name = expression(X[R])) + 
-  scale_shape_discrete(name  ="Result")  +
-  scale_x_discrete(name ="Skill") + labs(fill="Result")
-dev.off()
+## Com transformação media ----
+base_select_variaveis <- aa_analise  %>% filter(season!=2017) %>%
+  group_by(variable,resultado) %>%
+  summarise(valor  = mean(valor)) %>%
+  mutate(valor = gama*exp(-sigma*(valor^2))) 
 
 
+base_select_variaveis <- spread(base_select_variaveis,resultado,valor) %>%
+  select(variable,VH,TIE,VV)
+
+base_select_variaveis2 <- aa_analise  %>% filter(season!=2017) %>%
+  group_by(variable,resultado,season)%>%  
+  summarise(valor = mean(valor))  %>% 
+  mutate(valor =gama*exp(-sigma*(valor^2))) %>%
+  spread(resultado,valor) %>%
+  group_by(variable) %>%
+  summarise(MNP = mean(2*TIE - VH-VV)/2,
+            NP = mean(VH<TIE & TIE>VV),
+            NN = mean(VH>TIE | TIE<VV))
+
+base_select_variaveis <- base_select_variaveis %>%
+  left_join(base_select_variaveis2,by = "variable")
 
 
+
+level_select <- .5
+vars_selecionadas_trans <- (base_select_variaveis %>%
+                              filter(MNP>=level_select ))$variable;vars_selecionadas_trans
+
+
+base_select_variaveis[,-(1:5)] <- base_select_variaveis[,-(1:5)]*100
+library(xtable)
+base_select_variaveis$variable <- paste0(rep(c("\rowcolor{gray!30!}","\rowcolor{gray!10!}"),15)," ",
+                                         base_select_variaveis$variable)
+
+print(xtable(base_select_variaveis,
+             digits = c(0,0,3,3,3,3,1,1)),include.rownames = F)
+
+
+
+vars_deletadas_trans <- setdiff(variaveis_analise,vars_selecionadas_trans)
+## transformação 
+i <- variaveis_analise[1]
+for(i in variaveis_analise){
+  var_name <- gsub(" ","",tolower(stri_trans_general(i, "Latin-ASCII") ))
+  var_name <- gsub("\\.","_",var_name )
+  nome_arquivo <- paste0("report/images/",var_name,"_result_trans_media.pdf")
+  pdf(file = nome_arquivo)
+  g <-ggplot(data =aa_analise  %>% filter(variable == i & season!=2017),
+             aes(x=as.factor(season), y=valor)) +
+    # geom_boxplot(aes(fill=resultado,x=as.factor(season), y=valor)) +
+    # scale_colour_manual(values = c("green", "blue","red")) + 
+    stat_summary(fun.y=function(x){gama*exp(-sigma*(mean(x)^2))},  geom="line",
+                 aes( group = resultado ,colour = resultado),size=2) + 
+    scale_x_discrete(name ="Season") +
+    scale_fill_manual(name = "Result",
+                      values=c("green", "blue","red"))  +
+    scale_colour_discrete("Result")  + 
+    scale_y_continuous(name = i) 
+  
+  if(i %in% vars_deletadas_trans){
+    
+    baselimite <- aa_analise  %>% filter(variable == i & season!=2017)%>%
+      dplyr::group_by(resultado,as.factor(season)) %>% summarise(valor = mean(valor)) %>%
+      dplyr::mutate(valor = gama*exp(-sigma*(valor^2)))
+    
+    minv <- min(baselimite$valor)
+    maxv <- max(baselimite$valor)
+    
+    # diagonal 1
+    ablines <- data.frame(rbind(c(1,maxv),
+                                c(9,minv)))
+    names(ablines) <- c("ano","valor")
+    coefs <- coef(lm(valor ~ ano, data = ablines))
+    
+    g <- g + geom_abline(intercept = coefs[1], slope = coefs[2],size = 5,alpha = .25)
+    
+    # diagonal 2
+    ablines <- data.frame(rbind(c(1,minv),
+                                c(9,maxv)))
+    names(ablines) <- c("ano","valor")
+    coefs <- coef(lm(valor ~ ano, data = ablines))
+    g <- g + geom_abline(intercept = coefs[1], slope = coefs[2],size = 5,alpha = .25)
+    
+  }
+  print(g)#https://stackoverflow.com/questions/21321975/loop-does-not-finish-saving-pdf
+  dev.off()
+}
+
+
+saveRDS(data.frame(vars_selecionadas = unique(vars_selecionadas)),"data/result/variaveis_modelo_select_dissimilaridade.rds")
+saveRDS(data.frame(vars_selecionadas = unique(vars_selecionadas_trans)),"data/result/variaveis_modelo_select_similaridade.rds")
+
+
+## Com transformação ----
+
+sigma <- 10
+gama <- 10
+base_select_variaveis <- aa_analise  %>% filter(season!=2017) %>%
+  group_by(variable,resultado) %>% mutate(valor = gama*exp(-sigma*(valor^2)))%>%
+summarise(valor  = mean(valor)) 
+
+       
+base_select_variaveis <- spread(base_select_variaveis,resultado,valor) %>%
+  select(variable,VH,TIE,VV)
+
+base_select_variaveis2 <- aa_analise  %>% filter(season!=2017) %>%
+  group_by(variable,resultado,season)%>%  mutate(valor =gama*exp(-sigma*(valor^2))) %>%
+  summarise(valor = mean(valor))  %>% 
+  spread(resultado,valor) %>%
+  group_by(variable) %>%
+  summarise(MNP = mean(2*TIE - VH-VV)/2,
+            NP = mean(VH<TIE & TIE>VV),
+            NN = mean(VH>TIE | TIE<VV))
+
+base_select_variaveis <- base_select_variaveis %>%
+  left_join(base_select_variaveis2,by = "variable")
+
+
+
+level_select <- .15
+vars_selecionadas_trans <- (base_select_variaveis %>%
+                        filter(MNP>=level_select ))$variable;vars_selecionadas_trans
+
+
+base_select_variaveis[,-(1:5)] <- base_select_variaveis[,-(1:5)]*100
+library(xtable)
+base_select_variaveis$variable <- paste0(rep(c("\rowcolor{gray!30!}","\rowcolor{gray!10!}"),15)," ",
+                                         base_select_variaveis$variable)
+
+print(xtable(base_select_variaveis,
+             digits = c(0,0,3,3,3,3,1,1)),include.rownames = F)
+
+
+
+vars_deletadas_trans <- setdiff(variaveis_analise,vars_selecionadas_trans)
+## transformação 
+i <- variaveis_analise[1]
+for(i in variaveis_analise){
+  var_name <- gsub(" ","",tolower(stri_trans_general(i, "Latin-ASCII") ))
+  var_name <- gsub("\\.","_",var_name )
+  nome_arquivo <- paste0("report/images/",var_name,"_result_trans.pdf")
+  pdf(file = nome_arquivo)
+    g <-ggplot(data =aa_analise  %>% filter(variable == i & season!=2017),
+               aes(x=as.factor(season), y=gama*exp(-sigma*(valor^2)))) +
+      # geom_boxplot(aes(fill=resultado,x=as.factor(season), y=valor)) +
+      # scale_colour_manual(values = c("green", "blue","red")) + 
+      stat_summary(fun.y=mean,  geom="line",
+                   aes( group = resultado ,colour = resultado),size=2) + 
+      scale_x_discrete(name ="Season") +
+      scale_fill_manual(name = "Result",
+                        values=c("green", "blue","red"))  +
+      scale_colour_discrete("Result")  + 
+      scale_y_continuous(name = i) 
+    
+    if(i %in% vars_deletadas_trans){
+      
+      baselimite <- aa_analise  %>% filter(variable == i & season!=2017)%>%
+        dplyr::group_by(resultado,as.factor(season)) %>%
+        dplyr::mutate(valor = gama*exp(-sigma*(valor^2))) %>% 
+     summarise(valor = mean(valor))
+        
+
+      minv <- min(baselimite$valor)
+      maxv <- max(baselimite$valor)
+      
+      # diagonal 1
+      ablines <- data.frame(rbind(c(1,maxv),
+                                  c(9,minv)))
+      names(ablines) <- c("ano","valor")
+      coefs <- coef(lm(valor ~ ano, data = ablines))
+      
+      g <- g + geom_abline(intercept = coefs[1], slope = coefs[2],size = 5,alpha = .25)
+      
+      # diagonal 2
+      ablines <- data.frame(rbind(c(1,minv),
+                                  c(9,maxv)))
+      names(ablines) <- c("ano","valor")
+      coefs <- coef(lm(valor ~ ano, data = ablines))
+      g <- g + geom_abline(intercept = coefs[1], slope = coefs[2],size = 5,alpha = .25)
+      
+    }
+    print(g)#https://stackoverflow.com/questions/21321975/loop-does-not-finish-saving-pdf
+    dev.off()
+}
 
