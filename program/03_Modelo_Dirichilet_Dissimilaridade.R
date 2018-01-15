@@ -87,15 +87,13 @@ s_t <- 2016
 ## Variáveis auxiliares
 varsmodelo <- setdiff(names(base),c("season","Casa","Fora","score_casa",
                                     "score_fora","resultado"))
-varsmodelo <- c("Aceleração")
-
 logref <- -Inf
 acurraciaref <- 0
 is_geral <- NULL
 base_temp_j <- NULL
 
 ## Parâmetros estimate via grid search
-ks <- seq(0,3,by = .5);k <- 0.5
+ks <- seq(0,5,by = .5);k <- 0.5
 alpha_regulas <- seq(0,1,by = .1);alpha_regula <- 0.5
 
 a <- expand.grid(ks,alpha_regulas)
