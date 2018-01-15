@@ -96,7 +96,7 @@ is_geral <- NULL
 base_temp_j <- NULL
 
 ## Parâmetros estimate via grid search
-ks <- seq(0,3,by = .5);k <- 0.5
+ks <- seq(0,5,by = .5);k <- 0.5
 alpha_regulas <- seq(0,1,by = .1);alpha_regula <- 0.5
 sigmas <- seq(0.1,1,by= .1);sigma <- 10
 gamas  <- seq(1,3,by= .5); gama <- 10
