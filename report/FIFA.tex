@@ -1,91 +1,97 @@
-\documentclass[doc,apacite,oneside,a4paper,12pt]{apa6}
-\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
-\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
-\usepackage{nomencl} 			% Lista de simbolos
-\usepackage{color}				% Controle das cores
-\usepackage{graphicx}			% Inclusão de gráficos
-\usepackage{microtype} 			% para melhorias de justificação
+\documentclass[review]{elsarticle}
+
+\usepackage{lineno,hyperref}
+\usepackage{amssymb}
 \usepackage{amsmath}
-\usepackage{amsthm}
-\usepackage{amsfonts}
-\usepackage{setspace}
-\usepackage[portuguese]{babel}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{multirow}
+\usepackage{comment}
+\usepackage{color}
 \usepackage{geometry}
-\usepackage{ragged2e}
-\usepackage{lscape}
-\usepackage{array,multirow,graphicx}
+\usepackage{pdflscape}
+\usepackage[table]{xcolor}
 \usepackage{graphicx}
-\usepackage{mwe}
-\usepackage{epstopdf}
+%\usepackage{subcaption}
 \usepackage{subfig}
-\usepackage{caption}
-\usepackage{graphicx}
-\usepackage{sidecap}
-\bibliographystyle{bbs}
-\usepackage{float}
 \graphicspath{{images//}}
-\PassOptionsToPackage{table,x11names}{xcolor}%  only needed if you get an option clash
-\usepackage{xcolor}
-\usepackage{booktabs}
-\usepackage{endnotes}
-\renewcommand*{\notesname}{Notas}
-\let\footnote\endnote
-
-
-\usepackage{fancyhdr}
-% Turn on the style
-\pagestyle{fancy}
-\fancyhead{}
-\fancyfoot{}
-\fancyfoot[R]{\thepage}
-
-%Times new roman
-%\usepackage{fontspec}
-%\setmainfont{Times New Roman}
-\usepackage{times}
+%\usepackage{floatrow}
+\usepackage[toc,page]{appendix}
+\usepackage{lscape}
+\usepackage[table]{xcolor}
 \usepackage[portuguese]{babel}
 \usepackage[utf8]{inputenc}
 
-%Margens
-\geometry{left=3cm,right=2cm,top=3cm,bottom=2cm}
+\PassOptionsToPackage{table,x11names}{xcolor}%  only needed if you get an option clash
 
-%Citações
-%\cite, \citeA, \citeNP
-%s \citet and \citep, use double square brackets, for example,
-%\citep[see][for more details]{ex1}.
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
-\title{Premier League via Dirichilet Regression }
-\shorttitle{Premier League via Dirichilet Regression}
-
-\author{Nascimento, Igor Ferreira do}
-\affiliation{Departamento de Administração - UnB; Laboratório de Aprendizado de Máquina em Finanças}
-
-%%% Resumo do trabalho contendo até 250 palavras, no mesmo idioma do trabalho.
-\abstract{O artigo apresenta uma metodologia para estimar a probabilidades dos resultados dos jogos da Premier League utilizando covariáveis dos jogadores.}
+\newcolumntype{Q}[1]{>{\columncolor{Gray}\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{W}[1]{>{\columncolor{Gray}\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{E}[1]{>{\columncolor{Gray}\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 
-% Palavras-chave: até cinco palavras-chave.
-\keywords{Regularization,Dirichilet Regression,Premier League,Forecast}
+\usepackage{etoolbox}
+\patchcmd{\emailauthor}{(#2)}{}{}{}
+\patchcmd{\urlauthor}{(#2)}{}{}{}
+
+\modulolinenumbers[5]
+
+\definecolor{green}{rgb}{0.0, 0.6, 0.0}
+\definecolor{orange}{rgb}{1.0, 0.5, 0.0}
+\definecolor{violet}{rgb}{0.5, 0.0, 0.7}
 
 
-%\rightheader{APA style}
-%\leftheader{Author One}
+\definecolor{SeaGreen3}{cmyk}{0,0.87,0.68,0.32}
+
+\journal{Information Processing and Management}
+
+\bibliographystyle{model2-names}\biboptions{authoryear}
 
 \begin{document}
-\singlespacing 
-\justify
 
-\maketitle    
-                        
+\begin{frontmatter}
+
+\title{Premier League via Dirichilet Regression }
+
+\cortext[cor1]{Corresponding author}
+\author[label1,label2]{Igor Ferreira do Nascimento}
+\address[label1]{University of Bras{\'{i}}lia, Campus Darcy Ribeiro, Bras{\'{i}}lia, Distrito Federal, 70910--900, Brazil.}
+\address[label2]{Piau{\'{i}} Institute of Technology, R. {\'{A}}lvaro Mendes, 94, Teresina, Piau{\'{i}}, 64000--040, Brazil.}
+\ead{igor.nascimento@ifpi.edu.br}
+\author[label1]{Pedro Henrique Melo Albuquerque\corref{cor1}}
+\ead{pedroa@unb.br}
+\author[label1]{Yaohao Peng}
+\ead{peng.yaohao@gmail.com}
+
+\ead[url]{www.lamfo.unb.br}
+
+\begin{abstract}
+
+
+
+\end{abstract}
+
+\begin{keyword}
+Premier League; Dirichilet Regression
+\end{keyword}
+
+\end{frontmatter}
+
+\linenumbers
+
+\newpage
+
 \section{Introdução}
 \label{sec:int}
 \noindent
 
 O fascínio por eventos incertos instiga o ser humano desde os remotos tempos dos antepassados. Os historiadores XXXX mostram que desde a época o ser humano demonstrava interesse por saber ao menos algo sobre o que é incerto. Ao longo dos anos, a teoria dos jogos proporcionou o desenvolvimento de modelos probabilísticos para determinar o nível de determinados ocorrências.
 
+O objetivo do trabalho é apresentar modelos probabilísticos para representar os resultados da Premier League por meio de covariáveis relacionado às habilidades dos jodagores do time. Além disso, é apresentado uma estimação para o resultado final da tabela de classificação.
 
-
-O objetivo do trabalho é apresentar modelos probabilísticos para representar os resultados da Premier League por meio de covariáveis relacionado ao capital humano do time e os recursos financeiros relacionados ao time. Além disso, é apresentado uma estimação para o resultado final da tabela de classificação.
 
 \section{Sports Forecast}
 \label{sec:foresport}
@@ -93,19 +99,18 @@ O objetivo do trabalho é apresentar modelos probabilísticos para representar o
 
 
 
-Sport is a human activity normally related to the playful environment but we can not dissemble the betting. The work like \cite{Kain2014} analyse the dissonance between the outcome of sports and the sports betting market explained by fact the set betting lines is straight related with the profit goal instead the outcome probability. On the other hand, the  paper \cite{Strumbelj2010} analysed  some European soccer leagues and show that exist evidence that bookmakers learn over time about soccer prediction results. Anyway, this is interesting to either bettors or bookmakers researchers in this area.
+Sport is a human activity normally related to the playful environment but we can not forget the betting. The work like \cite{Kain2014} analyse the dissonance between the outcome of sports and the sports betting market explained by fact the set betting lines is straight related with the profit goal instead the outcome probability. On the other hand, the  paper \cite{Strumbelj2010} analysed  some European soccer leagues and show that exist evidence that bookmakers learn over time about soccer prediction results. Anyway, this is interesting to either bettors or bookmakers researchers in this area.
+
+
+As redes de apostas como, XXX, YYY, GGG são encontrados ao redor do mundo e fazem girar cifras ainda maiores de recursos no ato de acreditar em um determinado resultado. Esportes como o baiseball e o futebol americano possuem grande suporte dos cientistas de dados para apresentar pequenas melhorias nos resultados individuais dos atletas, mas em conjunto representa grande impacto para o time como todo. De encontro com tais anseios está o desenvolvimento de tecnologias de captação, armazenamento, tratamento e analise de dados relacionados às atividades esportivas.
+
+O futebol é, se não o mais, um dos esportes com as movimentações financeiras de destaque na atualidade. Atualmente, existem elenco de jogadores em times que passam a casa dos 10 dígitos, sobre tudo na Europa Ocidental. Os times Espanhóis e Britânicos lideram os valores financeiros do elenco. No entanto, essa aparente hegemonia é, cada vez mais, desafiada com o surgimento de novos mercados da bola, tais como o mercado norte americano e asiático.
 
 
 
-Dito isso, pode-se destacar que os resultados esportivos possuem uma intenso interesse da sociedade como um toda, seja ela do ponto de vista financeiro ou a mera busca por entreternimento.
+Dito isso, pode-se destacar que os resultados esportivos são de interesse da sociedade, seja ela do ponto de vista financeiro ou a mera busca por entreternimento.
 
 
-
-As redes de apostas como, XXX, YYY, GGG SÃO encontrados ao redor do mundo e fazem girar cifras ainda maiores de recursos no ato de acreditar em um determinado resultado. Esportes como o baiseball e o futebol americano possuem grande suporte dos cientistas de dados para apresentar pequenas melhoras nos resultados individuais dos atletas que aparentam ser inespressíveis, ao menos aos olhos dos descuidados, porém representam um grande impacto no coletivo e consequentemente, em toda a cadeia produtiva associada ao esporte. De encontro com tais anseios está o vertiginoso desenvolvimento de tecnologias de captação, armazenamento, tratamento e analise de dados relacionados às atividades esportivas.
-
-O futebol é, se não o mais, um dos esportes com as movimentações de destaque na atualidade. Atualmente, existem elenco de jogadores em times que passam a casa dos 10 dígitos, sobre tudo na Europa Ocidental. Os times Espanhóis e Britânicos lideram os valores financeiros relacionados ao capital humano disponível. No entanto, essa aparente hegemonia é, cada vez mais, desafiada com o surgimento de novos mercados da bola. O mercado Norte Americano tem investido mais de XXXXX milhões de dólares em um projeto de incentivo à prática do futebol, desafiador em uma nação com outros esportes com importância sacramentada como é o caso do Futebol Americado e Basquete.
-
-O evento mais recente e com maior destaque no mundo do esporte foi o valor total da transferência de Neymar do Barcelona para o Paris Saint German, um total de mais 400 milhões de euros. Seria ingenuidade não encarar tal transação como um investimento. É esperado que as externalidades dessa movimentação tenha reflexos comparadas com os maiores investimentos nos mercados de financeiros do mundo. Por exemplo, a venda de camisas aumentou $123123123321\%$ no faturamento do clube apenas com vendas de camisas.
 
 
 \section{Regressão Dirichilet}
@@ -256,7 +261,6 @@ A tabela \ref{tab:selectvar} apresenta essas análises paras cada variável e d�
 \caption[\scriptsize{Variable selection.}]{\scriptsize{ Tabela indicativa do tipo de relação entre a habilidade dos times e o resultado do jogo. Na seção positiva, a coluna VH apresenta a proporção de temporadas em que o valor médio da habilidade para os casos em que o time mandante venceu foi superior às médias dos casos de empate e derrota, indicando uma relação \textbf{positiva} entre a variável $X_r$ (superioridade do time mandante) e vitória do mandante. Na seção negativa, essa mesma coluna apresenta a proporção de temporadas em que o valor médio da habilidade foi \textbf{inferior} às médias de empate e derrota. De maneira análoga, nesse seção essa coluna indica uma relação \textbf{negativa} entre a variável $X_r$. Na seção positiva, a coluna Tie apresenta a proporção de temporadas em que o valor médio da habilidade foi superior às médias de empate e derrota, indicando uma relação \textbf{positiva} entre a variável $X_r$. A coluna TIE apresenta a proporção de temporadas em que o valor médio da habilidade foi superior às médias de empate e derrota.  }}
     \label{tab:selectvar}%
 \end{table}
-
 
 
 \section{Método}
@@ -540,7 +544,7 @@ A figura \ref{fig:medresumo} destaca as variáveis selecionadas. Visualmente, es
  \includegraphics[width=25mm]{dribles_result_trans} & \includegraphics[width=25mm]{duracaodocontrato_result_trans} &   \includegraphics[width=25mm]{elast_gl_result_trans} &
   \includegraphics[width=25mm]{finalizacao_result_trans} & \includegraphics[width=25mm]{folego_result_trans}  \\
  \scriptsize{(k) drible} & \scriptsize{(l) duração do contrato } & \scriptsize{(m) elasticidade do goleiro} & \scriptsize{(n) finalização} & \scriptsize{(o) fôlego}\\[3pt]
- 
+ %pos_result_trans problemagrafico
   \includegraphics[width=25mm]{forca_result_trans} & \includegraphics[width=25mm]{forcachute_result_trans}  &   \includegraphics[width=25mm]{idade_result_trans} &
   \includegraphics[width=25mm]{lancamento_result_trans}  & \includegraphics[width=25mm]{manejo_result_trans}  \\
  \scriptsize{(p) força} & \scriptsize{(q) força chute } & \scriptsize{(r) idade} & \scriptsize{(s) lançamento} & \scriptsize{(t) manejo}\\[3pt]
@@ -549,7 +553,7 @@ A figura \ref{fig:medresumo} destaca as variáveis selecionadas. Visualmente, es
   \includegraphics[width=25mm]{pernaruim_result_trans}   & \includegraphics[width=25mm]{peso_result_trans}   \\
  \scriptsize{(u) marcação} & \scriptsize{(v) passe curto } & \scriptsize{(w) perna boa} & \scriptsize{(x) perna ruim} & \scriptsize{(y) peso}\\[3pt]
  
-    \includegraphics[width=25mm]{pique_result_trans}  & \includegraphics[width=25mm]{pos_result_trans} & \includegraphics[width=25mm]{posicion_gl_result_trans} &     \includegraphics[width=25mm]{reacao_result_trans}&
+    \includegraphics[width=25mm]{pique_result_trans}  & \includegraphics[width=25mm]{pos_result_trans_media} & \includegraphics[width=25mm]{posicion_gl_result_trans} &     \includegraphics[width=25mm]{reacao_result_trans}&
   \includegraphics[width=25mm]{reflexos_result_trans}     \\
  \scriptsize{(z) pique} & \scriptsize{(aa) posição}& \scriptsize{(ab) posição do goleiro} & \scriptsize{(ac) reação} & \scriptsize{(ad) reflexo}  \\[3pt]
 
@@ -671,11 +675,14 @@ Man City & 18.00 & 55.00 & 10.00 & 6.00 \\
 \end{tabular}
 \end{table}
 
+
+
 \section{Considerações finais}
 \label{sec:conclu}
 \noindent
 
-\bibliographystyle{apacite}
+
+\section*{References}
 \bibliography{bibli}
 
 

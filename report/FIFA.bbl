@@ -1,113 +1,44 @@
-\begin{thebibliography}{}
-
-\bibitem [\protect \citeauthoryear {%
-Hijazi%
-\ \BBA {} Jernigan%
-}{%
-Hijazi%
-\ \BBA {} Jernigan%
-}{%
-{\protect \APACyear {2009}}%
-}]{%
-Hijazi2009}
-\APACinsertmetastar {%
-Hijazi2009}%
-\begin{APACrefauthors}%
-Hijazi, R\BPBI H.%
-\BCBT {}\ \BBA {} Jernigan, R\BPBI W.%
-\end{APACrefauthors}%
-\unskip\
-\newblock
-\APACrefYearMonthDay{2009}{}{}.
-\newblock
-{\BBOQ}\APACrefatitle {{Modeling Compositional Data Using Dirichlet Regression
-  Models}} {{Modeling Compositional Data Using Dirichlet Regression
-  Models}}.{\BBCQ}
-\newblock
-\APACjournalVolNumPages{Journal of Applied Probability and Statistics}{}{}{}.
-\PrintBackRefs{\CurrentBib}
-
-\bibitem [\protect \citeauthoryear {%
-Kain%
-\ \BBA {} Logan%
-}{%
-Kain%
-\ \BBA {} Logan%
-}{%
-{\protect \APACyear {2014}}%
-}]{%
-Kain2014}
-\APACinsertmetastar {%
-Kain2014}%
-\begin{APACrefauthors}%
-Kain, K\BPBI J.%
-\BCBT {}\ \BBA {} Logan, T\BPBI D.%
-\end{APACrefauthors}%
-\unskip\
-\newblock
-\APACrefYearMonthDay{2014}{}{}.
-\newblock
-{\BBOQ}\APACrefatitle {{Are Sports Betting Markets Prediction Markets?}} {{Are
-  Sports Betting Markets Prediction Markets?}}{\BBCQ}
-\newblock
-\APACjournalVolNumPages{Journal of Sports Economics}{}{}{}.
-\newblock
-\begin{APACrefDOI} \doi{10.1177/1527002512437744} \end{APACrefDOI}
-\PrintBackRefs{\CurrentBib}
-
-\bibitem [\protect \citeauthoryear {%
-Null%
-}{%
-Null%
-}{%
-{\protect \APACyear {2009}}%
-}]{%
-Null2009}
-\APACinsertmetastar {%
-Null2009}%
-\begin{APACrefauthors}%
-Null, B.%
-\end{APACrefauthors}%
-\unskip\
-\newblock
-\APACrefYearMonthDay{2009}{}{}.
-\newblock
-{\BBOQ}\APACrefatitle {{Modeling Baseball Player Ability with a Nested
-  Dirichlet Distribution}} {{Modeling Baseball Player Ability with a Nested
-  Dirichlet Distribution}}.{\BBCQ}
-\newblock
-\APACjournalVolNumPages{Journal of Quantitative Analysis in Sports}{}{}{}.
-\newblock
-\begin{APACrefDOI} \doi{10.2202/1559-0410.1175} \end{APACrefDOI}
-\PrintBackRefs{\CurrentBib}
-
-\bibitem [\protect \citeauthoryear {%
-{\v{S}}trumbelj%
-\ \BBA {} {\v{S}}ikonja%
-}{%
-{\v{S}}trumbelj%
-\ \BBA {} {\v{S}}ikonja%
-}{%
-{\protect \APACyear {2010}}%
-}]{%
-Strumbelj2010}
-\APACinsertmetastar {%
-Strumbelj2010}%
-\begin{APACrefauthors}%
-{\v{S}}trumbelj, E.%
-\BCBT {}\ \BBA {} {\v{S}}ikonja, M\BPBI R.%
-\end{APACrefauthors}%
-\unskip\
-\newblock
-\APACrefYearMonthDay{2010}{}{}.
-\newblock
-{\BBOQ}\APACrefatitle {{Online bookmakers' odds as forecasts: The case of
-  European soccer leagues}} {{Online bookmakers' odds as forecasts: The case of
-  European soccer leagues}}.{\BBCQ}
-\newblock
-\APACjournalVolNumPages{International Journal of Forecasting}{}{}{}.
-\newblock
-\begin{APACrefDOI} \doi{10.1016/j.ijforecast.2009.10.005} \end{APACrefDOI}
-\PrintBackRefs{\CurrentBib}
+\begin{thebibliography}{4}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\href}[2]{#2}
+\providecommand{\path}[1]{#1}
+\providecommand{\DOIprefix}{doi:}
+\providecommand{\ArXivprefix}{arXiv:}
+\providecommand{\URLprefix}{URL: }
+\providecommand{\Pubmedprefix}{pmid:}
+\providecommand{\doi}[1]{\href{http://dx.doi.org/#1}{\path{#1}}}
+\providecommand{\Pubmed}[1]{\href{pmid:#1}{\path{#1}}}
+\providecommand{\bibinfo}[2]{#2}
+\ifx\xfnm\relax \def\xfnm[#1]{\unskip,\space#1}\fi
+%Type = Article
+\bibitem[{Hijazi and Jernigan(2009)}]{Hijazi2009}
+\bibinfo{author}{Hijazi, R.H.}, \bibinfo{author}{Jernigan, R.W.},
+  \bibinfo{year}{2009}.
+\newblock \bibinfo{title}{{Modeling Compositional Data Using Dirichlet
+  Regression Models}}.
+\newblock \bibinfo{journal}{Journal of Applied Probability and Statistics} .
+%Type = Article
+\bibitem[{Kain and Logan(2014)}]{Kain2014}
+\bibinfo{author}{Kain, K.J.}, \bibinfo{author}{Logan, T.D.},
+  \bibinfo{year}{2014}.
+\newblock \bibinfo{title}{{Are Sports Betting Markets Prediction Markets?}}
+\newblock \bibinfo{journal}{Journal of Sports Economics}
+  \DOIprefix\doi{10.1177/1527002512437744}.
+%Type = Article
+\bibitem[{Null(2009)}]{Null2009}
+\bibinfo{author}{Null, B.}, \bibinfo{year}{2009}.
+\newblock \bibinfo{title}{{Modeling Baseball Player Ability with a Nested
+  Dirichlet Distribution}}.
+\newblock \bibinfo{journal}{Journal of Quantitative Analysis in Sports}
+  \DOIprefix\doi{10.2202/1559-0410.1175}.
+%Type = Article
+\bibitem[{{\v{S}}trumbelj and {\v{S}}ikonja(2010)}]{Strumbelj2010}
+\bibinfo{author}{{\v{S}}trumbelj, E.}, \bibinfo{author}{{\v{S}}ikonja, M.R.},
+  \bibinfo{year}{2010}.
+\newblock \bibinfo{title}{{Online bookmakers' odds as forecasts: The case of
+  European soccer leagues}}.
+\newblock \bibinfo{journal}{International Journal of Forecasting}
+  \DOIprefix\doi{10.1016/j.ijforecast.2009.10.005}.
 
 \end{thebibliography}

@@ -128,6 +128,9 @@ for(i in 1:length(arquivos)){
 }
 
 
+saas <- grep("2009",arquivos,value=T)
+table(gsub("data/games/S_resultado_.*_J(.*).rds","\\1",saas))
+
 
 ## pegando posição ----
 

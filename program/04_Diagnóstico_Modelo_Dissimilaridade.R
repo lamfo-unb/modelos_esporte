@@ -5,14 +5,13 @@ library(data.table)
 library(tidyr)
 library(plotly)
 library(xtable)
-arquivos_modelo <- list.files("data/result/tuning/","T_.*_dissimilaridade.rds",full.names = T)
+arquivos_modelo <- list.files("data/result/tuning_f/","T_.*_dissimilaridade.rds",full.names = T)
 base_modelos_treino <- rbindlist(lapply(arquivos_modelo,readRDS))
 
 resultados_modelos <- base_modelos_treino %>%
   group_by(k,alpha) %>%
   summarise(acurracia_out = mean(acurracia_out))
 resultados_modelos <- data.table(resultados_modelos)
-resultados_modelos <- resultados_modelos[acurracia_out==max(acurracia_out),]
 
 
 kd <- resultados_modelos %>% spread(value = acurracia_out,key =alpha)
@@ -28,7 +27,6 @@ kd <- list(x = xnames,
 p <- plot_ly(x = kd$x, y = kd$y, z = kd$z) %>% add_surface()
 
 
-
 pdf(file = "report/images/contour_dissimilaridade.pdf")
 image(kd$x, kd$y, kd$z,
       xlab = expression(lambda),
@@ -39,6 +37,8 @@ dev.off()
 
 
 # SAMPLE
+resultados_modelos <- resultados_modelos[acurracia_out==max(acurracia_out),]
+
 set.seed(2609)
 ind_mod <- sample(nrow(resultados_modelos),1)
 resultados_modelos <- resultados_modelos[ind_mod,]
@@ -56,7 +56,7 @@ resultados_modelos_pars <-  resultados_modelos %>%
 parm_matrix <- spread(resultados_modelos_pars, par_y, theta_est)
 
 
-s <- 2014
+s <- 2014:2008
 s_out <- 2015
 s_t <- 2016
 
