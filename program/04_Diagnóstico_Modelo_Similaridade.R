@@ -5,7 +5,7 @@ library(data.table)
 library(tidyr)
 library(plotly)
 library(xtable)
-arquivos_modelo <- list.files("data/result/tuning/","T_.*_similaridade.rds",full.names = T)
+arquivos_modelo <- list.files("data/result/tuning_f/","T_.*_similaridade.rds",full.names = T)
 base_modelos_treino <- rbindlist(lapply(arquivos_modelo,readRDS))
 
 resultados_modelos <- base_modelos_treino %>%
@@ -43,7 +43,7 @@ resultados_modelos_pars <-  resultados_modelos %>%
   select(par_x,par_y,theta_est)
 
 parm_matrix <- spread(resultados_modelos_pars, par_y, theta_est)
-s <- 2012:2014
+s <- 2008:2014
 s_out <- 2015
 s_t <- 2016
 

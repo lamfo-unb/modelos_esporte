@@ -35,40 +35,7 @@ jogadores <- gather(jogadores %>%
 jogadores <- jogadores %>%
   mutate(season=as.numeric(gsub("fifa(..).*","\\1",temporada,perl=T))+2000) 
 
-# ## Buscando informações dos titulares
-# 
-# 
-# fileinput <- "data/games"
-# arquivos <- list.files(path = fileinput,pattern = paste0('jogadores_...._J'),
-#                        full.names = T)
-# 
-# base_elenco_jogo <- data.table()
-# for(i in 1:length(arquivos)){
-#   base_temp <- readRDS(arquivos[i])
-#   base_elenco_jogo <- rbind(base_elenco_jogo,base_temp %>% select(id,nome_time,classe,id_jogo,season))
-# }
-# 
-# 
-# base_elenco_jogo_media <- base_elenco_jogo %>%
-#   dplyr::group_by(id,nome_time,season) %>%
-#   dplyr::summarise(peso = length(classe)/38)
-# base_elenco_jogo_media <- data.table(base_elenco_jogo_media)
-# base_elenco_jogo_media[,sumpeso:=sum(peso),
-#                        by = c("nome_time","season")] 
-# base_elenco_jogo_media[,peso:=peso/sumpeso] 
-# base_elenco_jogo_media[,sumpeso:=NULL]
-# 
-# rm(base_elenco_jogo)
-# gc()
-# 
-# jogadores <- jogadores %>% 
-#   left_join(base_elenco_jogo_media,
-#             by = c("time_match3"="nome_time",
-#                    "season"="season",
-#                    "id_jogador"="id"))
-# 
-# 
-# names(jogadores)
+
 ## média por time
 jogadores_time <- jogadores %>% 
   dplyr::group_by(season,time_match3,variavel) %>%
@@ -127,9 +94,9 @@ for(i in 1:length(arquivos)){
   base <- rbind(base,base_temp)
 }
 
-
-saas <- grep("2009",arquivos,value=T)
-table(gsub("data/games/S_resultado_.*_J(.*).rds","\\1",saas))
+# 
+# saas <- grep("2009",arquivos,value=T)
+# table(gsub("data/games/S_resultado_.*_J(.*).rds","\\1",saas))
 
 
 ## pegando posição ----
@@ -517,6 +484,7 @@ for(i in variaveis_analise){
 
 
 ## Com transformação media ----
+
 base_select_variaveis <- aa_analise  %>% filter(season!=2017) %>%
   group_by(variable,resultado) %>%
   summarise(valor  = mean(valor)) %>%
@@ -557,6 +525,7 @@ print(xtable(base_select_variaveis,
 
 
 vars_deletadas_trans <- setdiff(variaveis_analise,vars_selecionadas_trans)
+
 ## transformação 
 i <- variaveis_analise[1]
 for(i in variaveis_analise){

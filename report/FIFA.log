@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6210 64-bit) (preloaded format=pdflatex 2017.1.12)  23 JAN 2018 13:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6210 64-bit) (preloaded format=pdflatex 2017.1.12)  29 JAN 2018 12:00
 entering extended mode
 **./FIFA.tex
 (FIFA.tex
@@ -867,41 +867,41 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 
 {C:/Users/Igor/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2] [3]
-<images//aceleracao_result.pdf, id=95, 505.89pt x 505.89pt>
+<images//aceleracao_result.pdf, id=99, 505.89pt x 505.89pt>
 File: images//aceleracao_result.pdf Graphic file (type pdf)
 
 <use images//aceleracao_result.pdf>
-Package pdftex.def Info: images//aceleracao_result.pdf used on input line 186.
+Package pdftex.def Info: images//aceleracao_result.pdf used on input line 187.
 (pdftex.def)             Requested size: 142.26576pt x 113.80489pt.
 
-<images//aceleracao_descri.pdf, id=96, 505.89pt x 505.89pt>
+<images//aceleracao_descri.pdf, id=100, 505.89pt x 505.89pt>
 File: images//aceleracao_descri.pdf Graphic file (type pdf)
 
 <use images//aceleracao_descri.pdf>
-Package pdftex.def Info: images//aceleracao_descri.pdf used on input line 188.
+Package pdftex.def Info: images//aceleracao_descri.pdf used on input line 189.
 (pdftex.def)             Requested size: 142.26576pt x 113.80489pt.
- [4 <./images//aceleracao_result.pdf> <./images//aceleracao_descri.pdf>] [5]
-Overfull \hbox (29.55154pt too wide) in paragraph at lines 219--261
+ [4] [5 <./images//aceleracao_result.pdf> <./images//aceleracao_descri.pdf>]
+Overfull \hbox (15.95824pt too wide) in paragraph at lines 220--262
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 219--261
+Underfull \hbox (badness 10000) in paragraph at lines 220--262
 
  []
 
 
-LaTeX Warning: Float too large for page by 100.89789pt on input line 263.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 271.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 270.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 271.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 270.
 
-Overfull \hbox (21.68968pt too wide) in paragraph at lines 277--278
+Overfull \hbox (21.68968pt too wide) in paragraph at lines 276--277
 []\OT1/cmr/m/n/10 Os par^ametros de $\OML/cmm/m/it/10 $ \OT1/cmr/m/n/10 e $\OM
 L/cmm/m/it/10 $ \OT1/cmr/m/n/10 fo-ram ava-li-da-dos por meio do \OT1/cmr/m/it
 /10 grid-search\OT1/cmr/m/n/10 , sendo $\OML/cmm/m/it/10  \OT1/cmr/m/n/10 = (0
@@ -912,839 +912,293 @@ L/cmm/m/it/10 $ \OT1/cmr/m/n/10 fo-ram ava-li-da-dos por meio do \OT1/cmr/m/it
 r/m/n/10 1)$
  []
 
-<images//tunning_all.png, id=127, 526.96875pt x 338.76563pt>
-File: images//tunning_all.png Graphic file (type png)
 
-<use images//tunning_all.png>
-Package pdftex.def Info: images//tunning_all.png used on input line 282.
-(pdftex.def)             Requested size: 142.26738pt x 113.80896pt.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images//contour_dissimilaridade.pdf, id=129, 505.89pt x 505.89pt>
-File: images//contour_dissimilaridade.pdf Graphic file (type pdf)
 
-<use images//contour_dissimilaridade.pdf>
-Package pdftex.def Info: images//contour_dissimilaridade.pdf used on input line
- 284.
-(pdftex.def)             Requested size: 142.26576pt x 113.80489pt.
- [6 <./images//tunning_all.png> <./images//contour_dissimilaridade.pdf>] [7]
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-LaTeX Warning: Float too large for page by 109.4979pt on input line 480.
+[6]
 
-[8]
+LaTeX Warning: Text page 7 contains only floats.
+
+[7]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[8] [9]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[10] (FIFA.bbl) [11]
 File: images//aceleracao_result.pdf Graphic file (type pdf)
  <use images//aceleracao_result.pdf>
-Package pdftex.def Info: images//aceleracao_result.pdf used on input line 498.
+Package pdftex.def Info: images//aceleracao_result.pdf used on input line 512.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//altura_result.pdf, id=170, 505.89pt x 505.89pt>
+<images//altura_result.pdf, id=175, 505.89pt x 505.89pt>
 File: images//altura_result.pdf Graphic file (type pdf)
 
 <use images//altura_result.pdf>
-Package pdftex.def Info: images//altura_result.pdf used on input line 498.
+Package pdftex.def Info: images//altura_result.pdf used on input line 512.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//cabeceio_result.pdf, id=171, 505.89pt x 505.89pt>
+<images//cabeceio_result.pdf, id=176, 505.89pt x 505.89pt>
 File: images//cabeceio_result.pdf Graphic file (type pdf)
 
 <use images//cabeceio_result.pdf>
-Package pdftex.def Info: images//cabeceio_result.pdf used on input line 498.
+Package pdftex.def Info: images//cabeceio_result.pdf used on input line 512.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//carrinho_result.pdf, id=172, 505.89pt x 505.89pt>
+<images//carrinho_result.pdf, id=177, 505.89pt x 505.89pt>
 File: images//carrinho_result.pdf Graphic file (type pdf)
 
 <use images//carrinho_result.pdf>
-Package pdftex.def Info: images//carrinho_result.pdf used on input line 498.
+Package pdftex.def Info: images//carrinho_result.pdf used on input line 512.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//ch_delonge_result.pdf, id=173, 505.89pt x 505.89pt>
+<images//ch_delonge_result.pdf, id=178, 505.89pt x 505.89pt>
 File: images//ch_delonge_result.pdf Graphic file (type pdf)
 
 <use images//ch_delonge_result.pdf>
-Package pdftex.def Info: images//ch_delonge_result.pdf used on input line 499.
+Package pdftex.def Info: images//ch_delonge_result.pdf used on input line 513.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//cobr_falta_result.pdf, id=174, 505.89pt x 505.89pt>
+<images//cobr_falta_result.pdf, id=179, 505.89pt x 505.89pt>
 File: images//cobr_falta_result.pdf Graphic file (type pdf)
 
 <use images//cobr_falta_result.pdf>
-Package pdftex.def Info: images//cobr_falta_result.pdf used on input line 501.
+Package pdftex.def Info: images//cobr_falta_result.pdf used on input line 515.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//combativ__result.pdf, id=175, 505.89pt x 505.89pt>
+<images//combativ__result.pdf, id=180, 505.89pt x 505.89pt>
 File: images//combativ__result.pdf Graphic file (type pdf)
 
 <use images//combativ__result.pdf>
-Package pdftex.def Info: images//combativ__result.pdf used on input line 501.
+Package pdftex.def Info: images//combativ__result.pdf used on input line 515.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//contr_bola_result.pdf, id=176, 505.89pt x 505.89pt>
+<images//contr_bola_result.pdf, id=181, 505.89pt x 505.89pt>
 File: images//contr_bola_result.pdf Graphic file (type pdf)
 
 <use images//contr_bola_result.pdf>
-Package pdftex.def Info: images//contr_bola_result.pdf used on input line 501.
+Package pdftex.def Info: images//contr_bola_result.pdf used on input line 515.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//cruzamento_result.pdf, id=177, 505.89pt x 505.89pt>
+<images//cruzamento_result.pdf, id=182, 505.89pt x 505.89pt>
 File: images//cruzamento_result.pdf Graphic file (type pdf)
 
 <use images//cruzamento_result.pdf>
-Package pdftex.def Info: images//cruzamento_result.pdf used on input line 502.
+Package pdftex.def Info: images//cruzamento_result.pdf used on input line 516.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//div_empe_result.pdf, id=178, 505.89pt x 505.89pt>
+<images//div_empe_result.pdf, id=183, 505.89pt x 505.89pt>
 File: images//div_empe_result.pdf Graphic file (type pdf)
 
 <use images//div_empe_result.pdf>
-Package pdftex.def Info: images//div_empe_result.pdf used on input line 502.
+Package pdftex.def Info: images//div_empe_result.pdf used on input line 516.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//dribles_result.pdf, id=179, 505.89pt x 505.89pt>
+<images//dribles_result.pdf, id=184, 505.89pt x 505.89pt>
 File: images//dribles_result.pdf Graphic file (type pdf)
 
 <use images//dribles_result.pdf>
-Package pdftex.def Info: images//dribles_result.pdf used on input line 505.
+Package pdftex.def Info: images//dribles_result.pdf used on input line 519.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//duracaodocontrato_result.pdf, id=180, 505.89pt x 505.89pt>
+<images//duracaodocontrato_result.pdf, id=185, 505.89pt x 505.89pt>
 File: images//duracaodocontrato_result.pdf Graphic file (type pdf)
 
 <use images//duracaodocontrato_result.pdf>
 Package pdftex.def Info: images//duracaodocontrato_result.pdf used on input lin
-e 505.
+e 519.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//elast_gl_result.pdf, id=181, 505.89pt x 505.89pt>
+<images//elast_gl_result.pdf, id=186, 505.89pt x 505.89pt>
 File: images//elast_gl_result.pdf Graphic file (type pdf)
 
 <use images//elast_gl_result.pdf>
-Package pdftex.def Info: images//elast_gl_result.pdf used on input line 505.
+Package pdftex.def Info: images//elast_gl_result.pdf used on input line 519.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//finalizacao_result.pdf, id=182, 505.89pt x 505.89pt>
+<images//finalizacao_result.pdf, id=187, 505.89pt x 505.89pt>
 File: images//finalizacao_result.pdf Graphic file (type pdf)
 
 <use images//finalizacao_result.pdf>
-Package pdftex.def Info: images//finalizacao_result.pdf used on input line 506.
+Package pdftex.def Info: images//finalizacao_result.pdf used on input line 520.
 
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//folego_result.pdf, id=183, 505.89pt x 505.89pt>
+<images//folego_result.pdf, id=188, 505.89pt x 505.89pt>
 File: images//folego_result.pdf Graphic file (type pdf)
 
 <use images//folego_result.pdf>
-Package pdftex.def Info: images//folego_result.pdf used on input line 506.
+Package pdftex.def Info: images//folego_result.pdf used on input line 520.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//forca_result.pdf, id=184, 505.89pt x 505.89pt>
+<images//forca_result.pdf, id=189, 505.89pt x 505.89pt>
 File: images//forca_result.pdf Graphic file (type pdf)
 
 <use images//forca_result.pdf>
-Package pdftex.def Info: images//forca_result.pdf used on input line 509.
+Package pdftex.def Info: images//forca_result.pdf used on input line 523.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//forcachute_result.pdf, id=185, 505.89pt x 505.89pt>
+<images//forcachute_result.pdf, id=190, 505.89pt x 505.89pt>
 File: images//forcachute_result.pdf Graphic file (type pdf)
 
 <use images//forcachute_result.pdf>
-Package pdftex.def Info: images//forcachute_result.pdf used on input line 509.
+Package pdftex.def Info: images//forcachute_result.pdf used on input line 523.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//idade_result.pdf, id=186, 505.89pt x 505.89pt>
+<images//idade_result.pdf, id=191, 505.89pt x 505.89pt>
 File: images//idade_result.pdf Graphic file (type pdf)
 
 <use images//idade_result.pdf>
-Package pdftex.def Info: images//idade_result.pdf used on input line 509.
+Package pdftex.def Info: images//idade_result.pdf used on input line 523.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//lancamento_result.pdf, id=187, 505.89pt x 505.89pt>
+<images//lancamento_result.pdf, id=192, 505.89pt x 505.89pt>
 File: images//lancamento_result.pdf Graphic file (type pdf)
 
 <use images//lancamento_result.pdf>
-Package pdftex.def Info: images//lancamento_result.pdf used on input line 510.
+Package pdftex.def Info: images//lancamento_result.pdf used on input line 524.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//manejo_result.pdf, id=188, 505.89pt x 505.89pt>
+<images//manejo_result.pdf, id=193, 505.89pt x 505.89pt>
 File: images//manejo_result.pdf Graphic file (type pdf)
 
 <use images//manejo_result.pdf>
-Package pdftex.def Info: images//manejo_result.pdf used on input line 510.
+Package pdftex.def Info: images//manejo_result.pdf used on input line 524.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//marcacao_result.pdf, id=189, 505.89pt x 505.89pt>
+<images//marcacao_result.pdf, id=194, 505.89pt x 505.89pt>
 File: images//marcacao_result.pdf Graphic file (type pdf)
 
 <use images//marcacao_result.pdf>
-Package pdftex.def Info: images//marcacao_result.pdf used on input line 513.
+Package pdftex.def Info: images//marcacao_result.pdf used on input line 527.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//passecurto_result.pdf, id=190, 505.89pt x 505.89pt>
+<images//passecurto_result.pdf, id=195, 505.89pt x 505.89pt>
 File: images//passecurto_result.pdf Graphic file (type pdf)
 
 <use images//passecurto_result.pdf>
-Package pdftex.def Info: images//passecurto_result.pdf used on input line 513.
+Package pdftex.def Info: images//passecurto_result.pdf used on input line 527.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//pernaboa_result.pdf, id=191, 505.89pt x 505.89pt>
+<images//pernaboa_result.pdf, id=196, 505.89pt x 505.89pt>
 File: images//pernaboa_result.pdf Graphic file (type pdf)
 
 <use images//pernaboa_result.pdf>
-Package pdftex.def Info: images//pernaboa_result.pdf used on input line 513.
+Package pdftex.def Info: images//pernaboa_result.pdf used on input line 527.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//pernaruim_result.pdf, id=192, 505.89pt x 505.89pt>
+<images//pernaruim_result.pdf, id=197, 505.89pt x 505.89pt>
 File: images//pernaruim_result.pdf Graphic file (type pdf)
 
 <use images//pernaruim_result.pdf>
-Package pdftex.def Info: images//pernaruim_result.pdf used on input line 514.
+Package pdftex.def Info: images//pernaruim_result.pdf used on input line 528.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//peso_result.pdf, id=193, 505.89pt x 505.89pt>
+<images//peso_result.pdf, id=198, 505.89pt x 505.89pt>
 File: images//peso_result.pdf Graphic file (type pdf)
 
 <use images//peso_result.pdf>
-Package pdftex.def Info: images//peso_result.pdf used on input line 514.
+Package pdftex.def Info: images//peso_result.pdf used on input line 528.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//pique_result.pdf, id=194, 505.89pt x 505.89pt>
+<images//pique_result.pdf, id=199, 505.89pt x 505.89pt>
 File: images//pique_result.pdf Graphic file (type pdf)
 
 <use images//pique_result.pdf>
-Package pdftex.def Info: images//pique_result.pdf used on input line 517.
+Package pdftex.def Info: images//pique_result.pdf used on input line 531.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//pos_result.pdf, id=195, 505.89pt x 505.89pt>
+<images//pos_result.pdf, id=200, 505.89pt x 505.89pt>
 File: images//pos_result.pdf Graphic file (type pdf)
 
 <use images//pos_result.pdf>
-Package pdftex.def Info: images//pos_result.pdf used on input line 517.
+Package pdftex.def Info: images//pos_result.pdf used on input line 531.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//posicion_gl_result.pdf, id=196, 505.89pt x 505.89pt>
+<images//posicion_gl_result.pdf, id=201, 505.89pt x 505.89pt>
 File: images//posicion_gl_result.pdf Graphic file (type pdf)
 
 <use images//posicion_gl_result.pdf>
-Package pdftex.def Info: images//posicion_gl_result.pdf used on input line 517.
+Package pdftex.def Info: images//posicion_gl_result.pdf used on input line 531.
 
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//reacao_result.pdf, id=197, 505.89pt x 505.89pt>
+<images//reacao_result.pdf, id=202, 505.89pt x 505.89pt>
 File: images//reacao_result.pdf Graphic file (type pdf)
 
 <use images//reacao_result.pdf>
-Package pdftex.def Info: images//reacao_result.pdf used on input line 517.
+Package pdftex.def Info: images//reacao_result.pdf used on input line 531.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-<images//reflexos_result.pdf, id=198, 505.89pt x 505.89pt>
+<images//reflexos_result.pdf, id=203, 505.89pt x 505.89pt>
 File: images//reflexos_result.pdf Graphic file (type pdf)
 
 <use images//reflexos_result.pdf>
-Package pdftex.def Info: images//reflexos_result.pdf used on input line 518.
+Package pdftex.def Info: images//reflexos_result.pdf used on input line 532.
 (pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
 
-Overfull \hbox (24.45273pt too wide) in paragraph at lines 497--522
+Overfull \hbox (24.45273pt too wide) in paragraph at lines 511--536
 [][] 
  []
 
 
-LaTeX Warning: Float too large for page by 64.24966pt on input line 524.
-
-<images//aceleracao_result_trans.pdf, id=202, 505.89pt x 505.89pt>
-File: images//aceleracao_result_trans.pdf Graphic file (type pdf)
-
-<use images//aceleracao_result_trans.pdf>
-Package pdftex.def Info: images//aceleracao_result_trans.pdf used on input line
- 537.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//altura_result_trans.pdf, id=203, 505.89pt x 505.89pt>
-File: images//altura_result_trans.pdf Graphic file (type pdf)
-
-<use images//altura_result_trans.pdf>
-Package pdftex.def Info: images//altura_result_trans.pdf used on input line 537
-.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//cabeceio_result_trans.pdf, id=204, 505.89pt x 505.89pt>
-File: images//cabeceio_result_trans.pdf Graphic file (type pdf)
-
-<use images//cabeceio_result_trans.pdf>
-Package pdftex.def Info: images//cabeceio_result_trans.pdf used on input line 5
-37.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//carrinho_result_trans.pdf, id=205, 505.89pt x 505.89pt>
-File: images//carrinho_result_trans.pdf Graphic file (type pdf)
-
-<use images//carrinho_result_trans.pdf>
-Package pdftex.def Info: images//carrinho_result_trans.pdf used on input line 5
-37.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//ch_delonge_result_trans.pdf, id=206, 505.89pt x 505.89pt>
-File: images//ch_delonge_result_trans.pdf Graphic file (type pdf)
-
-<use images//ch_delonge_result_trans.pdf>
-Package pdftex.def Info: images//ch_delonge_result_trans.pdf used on input line
- 538.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//cobr_falta_result_trans.pdf, id=207, 505.89pt x 505.89pt>
-File: images//cobr_falta_result_trans.pdf Graphic file (type pdf)
-
-<use images//cobr_falta_result_trans.pdf>
-Package pdftex.def Info: images//cobr_falta_result_trans.pdf used on input line
- 540.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//combativ__result_trans.pdf, id=208, 505.89pt x 505.89pt>
-File: images//combativ__result_trans.pdf Graphic file (type pdf)
-
-<use images//combativ__result_trans.pdf>
-Package pdftex.def Info: images//combativ__result_trans.pdf used on input line 
-540.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//contr_bola_result_trans.pdf, id=209, 505.89pt x 505.89pt>
-File: images//contr_bola_result_trans.pdf Graphic file (type pdf)
-
-<use images//contr_bola_result_trans.pdf>
-Package pdftex.def Info: images//contr_bola_result_trans.pdf used on input line
- 540.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//cruzamento_result_trans.pdf, id=210, 505.89pt x 505.89pt>
-File: images//cruzamento_result_trans.pdf Graphic file (type pdf)
-
-<use images//cruzamento_result_trans.pdf>
-Package pdftex.def Info: images//cruzamento_result_trans.pdf used on input line
- 541.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//div_empe_result_trans.pdf, id=211, 505.89pt x 505.89pt>
-File: images//div_empe_result_trans.pdf Graphic file (type pdf)
-
-<use images//div_empe_result_trans.pdf>
-Package pdftex.def Info: images//div_empe_result_trans.pdf used on input line 5
-41.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//dribles_result_trans.pdf, id=212, 505.89pt x 505.89pt>
-File: images//dribles_result_trans.pdf Graphic file (type pdf)
-
-<use images//dribles_result_trans.pdf>
-Package pdftex.def Info: images//dribles_result_trans.pdf used on input line 54
-4.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//duracaodocontrato_result_trans.pdf, id=213, 505.89pt x 505.89pt>
-File: images//duracaodocontrato_result_trans.pdf Graphic file (type pdf)
-
-<use images//duracaodocontrato_result_trans.pdf>
-Package pdftex.def Info: images//duracaodocontrato_result_trans.pdf used on inp
-ut line 544.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//elast_gl_result_trans.pdf, id=214, 505.89pt x 505.89pt>
-File: images//elast_gl_result_trans.pdf Graphic file (type pdf)
-
-<use images//elast_gl_result_trans.pdf>
-Package pdftex.def Info: images//elast_gl_result_trans.pdf used on input line 5
-44.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//finalizacao_result_trans.pdf, id=215, 505.89pt x 505.89pt>
-File: images//finalizacao_result_trans.pdf Graphic file (type pdf)
-
-<use images//finalizacao_result_trans.pdf>
-Package pdftex.def Info: images//finalizacao_result_trans.pdf used on input lin
-e 545.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//folego_result_trans.pdf, id=216, 505.89pt x 505.89pt>
-File: images//folego_result_trans.pdf Graphic file (type pdf)
-
-<use images//folego_result_trans.pdf>
-Package pdftex.def Info: images//folego_result_trans.pdf used on input line 545
-.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//forca_result_trans.pdf, id=217, 505.89pt x 505.89pt>
-File: images//forca_result_trans.pdf Graphic file (type pdf)
-
-<use images//forca_result_trans.pdf>
-Package pdftex.def Info: images//forca_result_trans.pdf used on input line 548.
-
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//forcachute_result_trans.pdf, id=218, 505.89pt x 505.89pt>
-File: images//forcachute_result_trans.pdf Graphic file (type pdf)
-
-<use images//forcachute_result_trans.pdf>
-Package pdftex.def Info: images//forcachute_result_trans.pdf used on input line
- 548.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//idade_result_trans.pdf, id=219, 505.89pt x 505.89pt>
-File: images//idade_result_trans.pdf Graphic file (type pdf)
-
-<use images//idade_result_trans.pdf>
-Package pdftex.def Info: images//idade_result_trans.pdf used on input line 548.
-
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//lancamento_result_trans.pdf, id=220, 505.89pt x 505.89pt>
-File: images//lancamento_result_trans.pdf Graphic file (type pdf)
-
-<use images//lancamento_result_trans.pdf>
-Package pdftex.def Info: images//lancamento_result_trans.pdf used on input line
- 549.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//manejo_result_trans.pdf, id=221, 505.89pt x 505.89pt>
-File: images//manejo_result_trans.pdf Graphic file (type pdf)
-
-<use images//manejo_result_trans.pdf>
-Package pdftex.def Info: images//manejo_result_trans.pdf used on input line 549
-.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//marcacao_result_trans.pdf, id=222, 505.89pt x 505.89pt>
-File: images//marcacao_result_trans.pdf Graphic file (type pdf)
-
-<use images//marcacao_result_trans.pdf>
-Package pdftex.def Info: images//marcacao_result_trans.pdf used on input line 5
-52.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//passecurto_result_trans.pdf, id=223, 505.89pt x 505.89pt>
-File: images//passecurto_result_trans.pdf Graphic file (type pdf)
-
-<use images//passecurto_result_trans.pdf>
-Package pdftex.def Info: images//passecurto_result_trans.pdf used on input line
- 552.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//pernaboa_result_trans.pdf, id=224, 505.89pt x 505.89pt>
-File: images//pernaboa_result_trans.pdf Graphic file (type pdf)
-
-<use images//pernaboa_result_trans.pdf>
-Package pdftex.def Info: images//pernaboa_result_trans.pdf used on input line 5
-52.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//pernaruim_result_trans.pdf, id=225, 505.89pt x 505.89pt>
-File: images//pernaruim_result_trans.pdf Graphic file (type pdf)
-
-<use images//pernaruim_result_trans.pdf>
-Package pdftex.def Info: images//pernaruim_result_trans.pdf used on input line 
-553.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//peso_result_trans.pdf, id=226, 505.89pt x 505.89pt>
-File: images//peso_result_trans.pdf Graphic file (type pdf)
-
-<use images//peso_result_trans.pdf>
-Package pdftex.def Info: images//peso_result_trans.pdf used on input line 553.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//pique_result_trans.pdf, id=227, 505.89pt x 505.89pt>
-File: images//pique_result_trans.pdf Graphic file (type pdf)
-
-<use images//pique_result_trans.pdf>
-Package pdftex.def Info: images//pique_result_trans.pdf used on input line 556.
-
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//pos_result_trans_media.pdf, id=228, 505.89pt x 505.89pt>
-File: images//pos_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//pos_result_trans_media.pdf>
-Package pdftex.def Info: images//pos_result_trans_media.pdf used on input line 
-556.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//posicion_gl_result_trans.pdf, id=229, 505.89pt x 505.89pt>
-File: images//posicion_gl_result_trans.pdf Graphic file (type pdf)
-
-<use images//posicion_gl_result_trans.pdf>
-Package pdftex.def Info: images//posicion_gl_result_trans.pdf used on input lin
-e 556.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//reacao_result_trans.pdf, id=230, 505.89pt x 505.89pt>
-File: images//reacao_result_trans.pdf Graphic file (type pdf)
-
-<use images//reacao_result_trans.pdf>
-Package pdftex.def Info: images//reacao_result_trans.pdf used on input line 556
-.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//reflexos_result_trans.pdf, id=231, 505.89pt x 505.89pt>
-File: images//reflexos_result_trans.pdf Graphic file (type pdf)
-
-<use images//reflexos_result_trans.pdf>
-Package pdftex.def Info: images//reflexos_result_trans.pdf used on input line 5
-57.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-Overfull \hbox (24.45273pt too wide) in paragraph at lines 536--561
-[][] 
- []
-
-
-LaTeX Warning: Float too large for page by 64.24966pt on input line 563.
-
-<images//aceleracao_result_trans_media.pdf, id=232, 505.89pt x 505.89pt>
-File: images//aceleracao_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//aceleracao_result_trans_media.pdf>
-Package pdftex.def Info: images//aceleracao_result_trans_media.pdf used on inpu
-t line 573.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//altura_result_trans_media.pdf, id=233, 505.89pt x 505.89pt>
-File: images//altura_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//altura_result_trans_media.pdf>
-Package pdftex.def Info: images//altura_result_trans_media.pdf used on input li
-ne 573.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//cabeceio_result_trans_media.pdf, id=234, 505.89pt x 505.89pt>
-File: images//cabeceio_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//cabeceio_result_trans_media.pdf>
-Package pdftex.def Info: images//cabeceio_result_trans_media.pdf used on input 
-line 573.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//carrinho_result_trans_media.pdf, id=235, 505.89pt x 505.89pt>
-File: images//carrinho_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//carrinho_result_trans_media.pdf>
-Package pdftex.def Info: images//carrinho_result_trans_media.pdf used on input 
-line 573.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//ch_delonge_result_trans_media.pdf, id=236, 505.89pt x 505.89pt>
-File: images//ch_delonge_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//ch_delonge_result_trans_media.pdf>
-Package pdftex.def Info: images//ch_delonge_result_trans_media.pdf used on inpu
-t line 574.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//cobr_falta_result_trans_media.pdf, id=237, 505.89pt x 505.89pt>
-File: images//cobr_falta_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//cobr_falta_result_trans_media.pdf>
-Package pdftex.def Info: images//cobr_falta_result_trans_media.pdf used on inpu
-t line 576.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//combativ__result_trans_media.pdf, id=238, 505.89pt x 505.89pt>
-File: images//combativ__result_trans_media.pdf Graphic file (type pdf)
-
-<use images//combativ__result_trans_media.pdf>
-Package pdftex.def Info: images//combativ__result_trans_media.pdf used on input
- line 576.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//contr_bola_result_trans_media.pdf, id=239, 505.89pt x 505.89pt>
-File: images//contr_bola_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//contr_bola_result_trans_media.pdf>
-Package pdftex.def Info: images//contr_bola_result_trans_media.pdf used on inpu
-t line 576.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//cruzamento_result_trans_media.pdf, id=240, 505.89pt x 505.89pt>
-File: images//cruzamento_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//cruzamento_result_trans_media.pdf>
-Package pdftex.def Info: images//cruzamento_result_trans_media.pdf used on inpu
-t line 577.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//div_empe_result_trans_media.pdf, id=241, 505.89pt x 505.89pt>
-File: images//div_empe_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//div_empe_result_trans_media.pdf>
-Package pdftex.def Info: images//div_empe_result_trans_media.pdf used on input 
-line 577.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//dribles_result_trans_media.pdf, id=242, 505.89pt x 505.89pt>
-File: images//dribles_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//dribles_result_trans_media.pdf>
-Package pdftex.def Info: images//dribles_result_trans_media.pdf used on input l
-ine 580.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//duracaodocontrato_result_trans_media.pdf, id=243, 505.89pt x 505.89pt>
-File: images//duracaodocontrato_result_trans_media.pdf Graphic file (type pdf)
-<use images//duracaodocontrato_result_trans_media.pdf>
-Package pdftex.def Info: images//duracaodocontrato_result_trans_media.pdf used 
-on input line 580.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//elast_gl_result_trans_media.pdf, id=244, 505.89pt x 505.89pt>
-File: images//elast_gl_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//elast_gl_result_trans_media.pdf>
-Package pdftex.def Info: images//elast_gl_result_trans_media.pdf used on input 
-line 580.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//finalizacao_result_trans_media.pdf, id=245, 505.89pt x 505.89pt>
-File: images//finalizacao_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//finalizacao_result_trans_media.pdf>
-Package pdftex.def Info: images//finalizacao_result_trans_media.pdf used on inp
-ut line 581.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//folego_result_trans_media.pdf, id=246, 505.89pt x 505.89pt>
-File: images//folego_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//folego_result_trans_media.pdf>
-Package pdftex.def Info: images//folego_result_trans_media.pdf used on input li
-ne 581.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//forca_result_trans_media.pdf, id=247, 505.89pt x 505.89pt>
-File: images//forca_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//forca_result_trans_media.pdf>
-Package pdftex.def Info: images//forca_result_trans_media.pdf used on input lin
-e 584.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//forcachute_result_trans_media.pdf, id=248, 505.89pt x 505.89pt>
-File: images//forcachute_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//forcachute_result_trans_media.pdf>
-Package pdftex.def Info: images//forcachute_result_trans_media.pdf used on inpu
-t line 584.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//idade_result_trans_media.pdf, id=249, 505.89pt x 505.89pt>
-File: images//idade_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//idade_result_trans_media.pdf>
-Package pdftex.def Info: images//idade_result_trans_media.pdf used on input lin
-e 584.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//lancamento_result_trans_media.pdf, id=250, 505.89pt x 505.89pt>
-File: images//lancamento_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//lancamento_result_trans_media.pdf>
-Package pdftex.def Info: images//lancamento_result_trans_media.pdf used on inpu
-t line 585.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//manejo_result_trans_media.pdf, id=251, 505.89pt x 505.89pt>
-File: images//manejo_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//manejo_result_trans_media.pdf>
-Package pdftex.def Info: images//manejo_result_trans_media.pdf used on input li
-ne 585.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//marcacao_result_trans_media.pdf, id=252, 505.89pt x 505.89pt>
-File: images//marcacao_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//marcacao_result_trans_media.pdf>
-Package pdftex.def Info: images//marcacao_result_trans_media.pdf used on input 
-line 588.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//passecurto_result_trans_media.pdf, id=253, 505.89pt x 505.89pt>
-File: images//passecurto_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//passecurto_result_trans_media.pdf>
-Package pdftex.def Info: images//passecurto_result_trans_media.pdf used on inpu
-t line 588.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//pernaboa_result_trans_media.pdf, id=254, 505.89pt x 505.89pt>
-File: images//pernaboa_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//pernaboa_result_trans_media.pdf>
-Package pdftex.def Info: images//pernaboa_result_trans_media.pdf used on input 
-line 588.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//pernaruim_result_trans_media.pdf, id=255, 505.89pt x 505.89pt>
-File: images//pernaruim_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//pernaruim_result_trans_media.pdf>
-Package pdftex.def Info: images//pernaruim_result_trans_media.pdf used on input
- line 589.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//peso_result_trans_media.pdf, id=256, 505.89pt x 505.89pt>
-File: images//peso_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//peso_result_trans_media.pdf>
-Package pdftex.def Info: images//peso_result_trans_media.pdf used on input line
- 589.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//pique_result_trans_media.pdf, id=257, 505.89pt x 505.89pt>
-File: images//pique_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//pique_result_trans_media.pdf>
-Package pdftex.def Info: images//pique_result_trans_media.pdf used on input lin
-e 592.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-File: images//pos_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//pos_result_trans_media.pdf>
-Package pdftex.def Info: images//pos_result_trans_media.pdf used on input line 
-592.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//posicion_gl_result_trans_media.pdf, id=258, 505.89pt x 505.89pt>
-File: images//posicion_gl_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//posicion_gl_result_trans_media.pdf>
-Package pdftex.def Info: images//posicion_gl_result_trans_media.pdf used on inp
-ut line 592.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//reacao_result_trans_media.pdf, id=259, 505.89pt x 505.89pt>
-File: images//reacao_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//reacao_result_trans_media.pdf>
-Package pdftex.def Info: images//reacao_result_trans_media.pdf used on input li
-ne 592.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-<images//reflexos_result_trans_media.pdf, id=260, 505.89pt x 505.89pt>
-File: images//reflexos_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//reflexos_result_trans_media.pdf>
-Package pdftex.def Info: images//reflexos_result_trans_media.pdf used on input 
-line 593.
-(pdftex.def)             Requested size: 71.13188pt x 71.12515pt.
-
-Overfull \hbox (24.45273pt too wide) in paragraph at lines 572--597
-[][] 
- []
-
-
-LaTeX Warning: Float too large for page by 76.24966pt on input line 599.
-
-File: images//aceleracao_result.pdf Graphic file (type pdf)
-<use images//aceleracao_result.pdf>
-Package pdftex.def Info: images//aceleracao_result.pdf used on input line 612.
-(pdftex.def)             Requested size: 156.49014pt x 156.49234pt.
-File: images//aceleracao_result_trans.pdf Graphic file (type pdf)
- <use images//aceleracao_result_trans.pdf>
-Package pdftex.def Info: images//aceleracao_result_trans.pdf used on input line
- 612.
-(pdftex.def)             Requested size: 156.49014pt x 156.49234pt.
-File: images//aceleracao_result_trans_media.pdf Graphic file (type pdf)
-
-<use images//aceleracao_result_trans_media.pdf>
-Package pdftex.def Info: images//aceleracao_result_trans_media.pdf used on inpu
-t line 612.
-(pdftex.def)             Requested size: 156.49014pt x 156.49234pt.
-
-Overfull \hbox (75.4658pt too wide) in paragraph at lines 611--616
-[][] 
- []
-
-(FIFA.bbl [9] [10 <./images//altura_result.pdf> <./images//cabeceio_result.pdf>
- <./images//carrinho_result.pdf> <./images//ch_delonge_result.pdf> <./images//c
-obr_falta_result.pdf> <./images//combativ__result.pdf> <./images//contr_bola_re
-sult.pdf> <./images//cruzamento_result.pdf> <./images//div_empe_result.pdf> <./
-images//dribles_result.pdf> <./images//duracaodocontrato_result.pdf> <./images/
-/elast_gl_result.pdf> <./images//finalizacao_result.pdf> <./images//folego_resu
-lt.pdf> <./images//forca_result.pdf> <./images//forcachute_result.pdf> <./image
-s//idade_result.pdf> <./images//lancamento_result.pdf> <./images//manejo_result
-.pdf> <./images//marcacao_result.pdf> <./images//passecurto_result.pdf> <./imag
-es//pernaboa_result.pdf> <./images//pernaruim_result.pdf> <./images//peso_resul
-t.pdf> <./images//pique_result.pdf> <./images//pos_result.pdf> <./images//posic
-ion_gl_result.pdf> <./images//reacao_result.pdf> <./images//reflexos_result.pdf
->] [11 <./images//aceleracao_result_trans.pdf> <./images//altura_result_trans.p
-df> <./images//cabeceio_result_trans.pdf> <./images//carrinho_result_trans.pdf>
- <./images//ch_delonge_result_trans.pdf> <./images//cobr_falta_result_trans.pdf
-> <./images//combativ__result_trans.pdf> <./images//contr_bola_result_trans.pdf
-> <./images//cruzamento_result_trans.pdf> <./images//div_empe_result_trans.pdf>
- <./images//dribles_result_trans.pdf> <./images//duracaodocontrato_result_trans
-.pdf> <./images//elast_gl_result_trans.pdf> <./images//finalizacao_result_trans
-.pdf> <./images//folego_result_trans.pdf> <./images//forca_result_trans.pdf> <.
-/images//forcachute_result_trans.pdf> <./images//idade_result_trans.pdf> <./ima
-ges//lancamento_result_trans.pdf> <./images//manejo_result_trans.pdf> <./images
-//marcacao_result_trans.pdf> <./images//passecurto_result_trans.pdf> <./images/
-/pernaboa_result_trans.pdf> <./images//pernaruim_result_trans.pdf> <./images//p
-eso_result_trans.pdf> <./images//pique_result_trans.pdf> <./images//pos_result_
-trans_media.pdf> <./images//posicion_gl_result_trans.pdf> <./images//reacao_res
-ult_trans.pdf> <./images//reflexos_result_trans.pdf>] [12 <./images//aceleracao
-_result_trans_media.pdf> <./images//altura_result_trans_media.pdf> <./images//c
-abeceio_result_trans_media.pdf> <./images//carrinho_result_trans_media.pdf> <./
-images//ch_delonge_result_trans_media.pdf> <./images//cobr_falta_result_trans_m
-edia.pdf> <./images//combativ__result_trans_media.pdf> <./images//contr_bola_re
-sult_trans_media.pdf> <./images//cruzamento_result_trans_media.pdf> <./images//
-div_empe_result_trans_media.pdf> <./images//dribles_result_trans_media.pdf> <./
-images//duracaodocontrato_result_trans_media.pdf> <./images//elast_gl_result_tr
-ans_media.pdf> <./images//finalizacao_result_trans_media.pdf> <./images//folego
-_result_trans_media.pdf> <./images//forca_result_trans_media.pdf> <./images//fo
-rcachute_result_trans_media.pdf> <./images//idade_result_trans_media.pdf> <./im
-ages//lancamento_result_trans_media.pdf> <./images//manejo_result_trans_media.p
-df> <./images//marcacao_result_trans_media.pdf> <./images//passecurto_result_tr
-ans_media.pdf> <./images//pernaboa_result_trans_media.pdf> <./images//pernaruim
-_result_trans_media.pdf> <./images//peso_result_trans_media.pdf> <./images//piq
-ue_result_trans_media.pdf> <./images//posicion_gl_result_trans_media.pdf> <./im
-ages//reacao_result_trans_media.pdf> <./images//reflexos_result_trans_media.pdf
->])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 689.
- [13] [14] [15] [16] [17] [18]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 689.
- (FIFA.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 689.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 689.
+LaTeX Warning: Float too large for page by 64.24966pt on input line 538.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 540.
+[12] [13 <./images//altura_result.pdf> <./images//cabeceio_result.pdf> <./image
+s//carrinho_result.pdf> <./images//ch_delonge_result.pdf> <./images//cobr_falta
+_result.pdf> <./images//combativ__result.pdf> <./images//contr_bola_result.pdf>
+ <./images//cruzamento_result.pdf> <./images//div_empe_result.pdf> <./images//d
+ribles_result.pdf> <./images//duracaodocontrato_result.pdf> <./images//elast_gl
+_result.pdf> <./images//finalizacao_result.pdf> <./images//folego_result.pdf> <
+./images//forca_result.pdf> <./images//forcachute_result.pdf> <./images//idade_
+result.pdf> <./images//lancamento_result.pdf> <./images//manejo_result.pdf> <./
+images//marcacao_result.pdf> <./images//passecurto_result.pdf> <./images//perna
+boa_result.pdf> <./images//pernaruim_result.pdf> <./images//peso_result.pdf> <.
+/images//pique_result.pdf> <./images//pos_result.pdf> <./images//posicion_gl_re
+sult.pdf> <./images//reacao_result.pdf> <./images//reflexos_result.pdf>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 540.
+
+(FIFA.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 540.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 540.
 Package rerunfilecheck Info: File `FIFA.out' has not changed.
-(rerunfilecheck)             Checksum: F49A008F904470E1E41E90A25F214DC7;539.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 689.
+(rerunfilecheck)             Checksum: 3D933DF804CE24F9CD02B72D7CDCF81E;623.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 540.
  ) 
 Here is how much of TeX's memory you used:
- 10742 strings out of 493333
- 161945 string characters out of 3139197
- 372148 words of memory out of 3000000
- 13943 multiletter control sequences out of 15000+200000
- 13581 words of font info for 52 fonts, out of 3000000 for 9000
+ 10412 strings out of 493333
+ 149987 string characters out of 3139197
+ 305692 words of memory out of 3000000
+ 13690 multiletter control sequences out of 15000+200000
+ 11728 words of font info for 45 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 44i,13n,49p,1413b,465s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 44i,13n,49p,1159b,424s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx7.pfb><C:/Program Fil
-es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Program Files/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fon
-ts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
-/public/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
-msfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
-m/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi9.p
-fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Pr
-ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Fil
-es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 
-2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/
-type1/public/amsfonts/cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publ
-ic/amsfonts/cm/cmss8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfon
-ts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
-sy6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><
-C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Progr
-am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti7.pfb><C:/Program Files/
-MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti8.pfb><C:/Program Files/MiKTeX 2.
-9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files/MiKTeX 2.9/fonts/
-type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on FIFA.pdf (18 pages, 890604 bytes).
+es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTe
+X 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fo
+nts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
+msfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pf
+b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Prog
+ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/Program Files
+/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 
+2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Program Files/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
+blic/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/ams
+fonts/cm/cmti7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
+cmti8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pf
+b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
+Output written on FIFA.pdf (13 pages, 439872 bytes).
 PDF statistics:
- 1026 PDF objects out of 1200 (max. 8388607)
- 59 named destinations out of 1000 (max. 500000)
- 541 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 472 PDF objects out of 1000 (max. 8388607)
+ 48 named destinations out of 1000 (max. 500000)
+ 244 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -5,7 +5,7 @@ library(data.table)
 library(tidyr)
 library(plotly)
 library(xtable)
-arquivos_modelo <- list.files("data/result/tuning/","T_.*_selecionadas.rds",full.names = T)
+arquivos_modelo <- list.files("data/result/tuning_f/","T_.*_selecionadas.rds",full.names = T)
 base_modelos_treino <- rbindlist(lapply(arquivos_modelo,readRDS))
 
 resultados_modelos <- base_modelos_treino %>%
