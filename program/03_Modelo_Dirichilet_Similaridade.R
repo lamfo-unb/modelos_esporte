@@ -95,10 +95,10 @@ is_geral <- NULL
 base_temp_j <- NULL
 
 ## Parâmetros estimate via grid search
-ks <- c(0,1,5);k <- 0.5
-alpha_regulas <- c(0,.5,1);alpha_regula <- 0.5
-sigmas <- c(1,5);sigma <- 10
-gamas  <- c(1,3); gama <- 10
+ks <- seq(0,5,by = 0.5);k <- 0.5
+alpha_regulas <- seq(0,1,by = .25);alpha_regula <- 0.5
+sigmas <- seq(0,5,by = 1);sigmas[1] <- 0.1
+gamas  <- seq(0,3,by = 1);gamas[1] <- 0.1 
 
 a <- expand.grid(ks,alpha_regulas,sigmas,gamas)
 resultado_foward <- NULL
@@ -200,7 +200,7 @@ for(gama in gamas){
                                             acurracia_out = acurracia_out),
                                  acurracias,
                                  acurracias_out)
-            file_name <- paste0("data/result/tuning_f/T_K",k*10,"_A",alpha_regula*10,"_S",sigma*10,"_G",gama*10,"_similaridade.rds")
+            file_name <- paste0("data/result/tuning_ff/T_K",k*10,"_A",alpha_regula*10,"_S",sigma*10,"_G",gama*10,"_similaridade.rds")
             saveRDS(base_temp_f,file_name)
             resultado_foward <- rbind(resultado_foward,
                                   base_temp_f)

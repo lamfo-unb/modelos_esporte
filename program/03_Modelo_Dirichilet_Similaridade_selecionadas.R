@@ -4,6 +4,7 @@ library(data.table)
 library(stringr)
 library(maxLik)
 base <- readRDS("data/result/base_modelo_dirichilet_score.rds")
+vars_select <- readRDS("data/result/variaveis_modelo_select_dissimilaridade.rds")
 base <- data.table(base)
 base$resultado <- base$score_casa-base$score_fora
 
@@ -87,8 +88,9 @@ s_t <- 2016
 ## Variáveis auxiliares
 varsmodelo <- setdiff(names(base),c("season","Casa","Fora","score_casa",
                       "score_fora","resultado"))
-# varsmodelo <- as.character(vars_selecionadas)
-# varsmodelo <- c("Aceleração")
+
+varsmodelo <- vars_select$vars_selecionadas
+
 
 logref <- -Inf
 acurraciaref <- 0
@@ -96,10 +98,10 @@ is_geral <- NULL
 base_temp_j <- NULL
 
 ## Parâmetros estimate via grid search
-ks <- c(0,1,5);k <- 0.5
-alpha_regulas <- c(0,.5,1);alpha_regula <- 0.5
-sigmas <- c(1,5);sigma <- 10
-gamas  <- c(1,3); gama <- 10
+ks <- seq(0,5,by = 0.5);k <- 0.5
+alpha_regulas <- seq(0,1,by = .25);alpha_regula <- 0.5
+sigmas <- seq(0,5,by = 1);sigmas[1] <- 0.1
+gamas  <- seq(0,3,by = 1);gamas[1] <- 0.1 
 
 a <- expand.grid(ks,alpha_regulas,sigmas,gamas)
 resultado_foward <- NULL
@@ -199,7 +201,7 @@ for(gama in gamas){
                                             acurracia_out = acurracia_out),
                                  acurracias,
                                  acurracias_out)
-            file_name <- paste0("data/result/tuning_f/T_K",k*10,"_A",alpha_regula*10,"_S",sigma*10,"_G",gama*10,"_selecionadas.rds")
+            file_name <- paste0("data/result/tuning_ff/T_K",k*10,"_A",alpha_regula*10,"_S",sigma*10,"_G",gama*10,"_selecionadas.rds")
             saveRDS(base_temp_f,file_name)
             resultado_foward <- rbind(resultado_foward,
                                   base_temp_f)
@@ -213,5 +215,3 @@ for(gama in gamas){
 }
 
 
-# ### modelo escolhido ----
-# saveRDS(base_temp_f,"data/result/modelo_est_selecionadas.rds")
