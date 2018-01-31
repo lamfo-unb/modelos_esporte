@@ -113,13 +113,13 @@ sigma <- 1
 k <- 0
 alpha_regula <- 0
 
-for(gama in gamas){
-  for(sigma in sigmas){
-    for(k in ks){
+for(gama in rev(gamas)){
+  for(sigma in rev(sigmas)){
+    for(k in rev(ks)){
       if(k==0){
         alpha_regulasf <- 0
       }else{
-        alpha_regulasf <- alpha_regulas
+        alpha_regulasf <- rev(alpha_regulas)
       }
       for(alpha_regula in alpha_regulasf){
         logref <- -Inf
@@ -143,7 +143,7 @@ for(gama in gamas){
           theta_temp <-res_temp$estimate
           
           etheta_temp <- try(diag(-solve(res_temp$hessian))^(.5),silent = T)
-          etheta_temp <- ifelse(inherits(etheta_temp,"try-error"),0,y)
+          etheta_temp <- ifelse(inherits(etheta_temp,"try-error"),0,etheta_temp)
 
         
           
