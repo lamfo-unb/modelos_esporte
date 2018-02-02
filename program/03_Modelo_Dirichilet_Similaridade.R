@@ -95,13 +95,20 @@ is_geral <- NULL
 base_temp_j <- NULL
 
 ## Parâmetros estimate via grid search
-ks <- seq(0,5,by = 0.5);k <- 0.5
-alpha_regulas <- seq(0,1,by = .25);alpha_regula <- 0.5
-sigmas <- seq(0,5,by = 1);sigmas[1] <- 0.1
-gamas  <- seq(0,3,by = 1);gamas[1] <- 0.1 
+ks <- seq(0,5,by = 1);
+alpha_regulas <- seq(0,1,by = .25);
+sigmas <- seq(1,3,by = 1)
+gamas  <- seq(1,3,by = 1)
+
 
 a <- expand.grid(ks,alpha_regulas,sigmas,gamas)
 resultado_foward <- NULL
+
+
+gama <- 1
+sigma <- 1
+k <- 0
+alpha_regula <- 0
 
 for(gama in gamas){
   for(sigma in sigmas){
@@ -131,7 +138,11 @@ for(gama in gamas){
           
           
           theta_temp <-res_temp$estimate
-          etheta_temp <-diag(-solve(res_temp$hessian))^(.5)
+          
+          etheta_temp <- try(diag(-solve(res_temp$hessian))^(.5),silent = T)
+          etheta_temp <- ifelse(inherits(etheta_temp,"try-error"),0,etheta_temp)
+          
+          
           varsmodel_temp <- c("Int",varsmodelo)
           nometheta_temp_generico <- rep(paste0("b",str_pad(1:ncol(xr)-1,"000")),
                                          each=ncol(yr))
